@@ -1,0 +1,760 @@
+{
+ "lgtlist": [
+  [
+   "1248",
+   "Bordeaux"
+  ],
+  [
+   "1351",
+   "Garnet"
+  ],
+  [
+   "2210",
+   "Key Lime"
+  ],
+  [
+   "2467",
+   "Admiral"
+  ],
+  [
+   "2559",
+   "Midnight"
+  ],
+  [
+   "2608",
+   "Lilac"
+  ],
+  [
+   "2624",
+   "Blue Hawaii"
+  ],
+  [
+   "2663",
+   "Iceberg"
+  ],
+  [
+   "2664",
+   "Eclipse"
+  ],
+  [
+   "2708",
+   "Sky Blue"
+  ],
+  [
+   "3026",
+   "Wheat"
+  ],
+  [
+   "3088",
+   "Fired Clay"
+  ],
+  [
+   "3449",
+   "Aztec Leather"
+  ],
+  [
+   "3620",
+   "Taupetone"
+  ],
+  [
+   "3684",
+   "Cedar Berry"
+  ],
+  [
+   "3693",
+   "Cameo"
+  ],
+  [
+   "3693",
+   "Cameo on back order"
+  ],
+  [
+   "3800",
+   "Rustola"
+  ],
+  [
+   "3835",
+   "Henna"
+  ],
+  [
+   "3836",
+   "Egyptian"
+  ],
+  [
+   "4257",
+   "Olivier"
+  ],
+  [
+   "4322",
+   "Green Mist"
+  ],
+  [
+   "4361",
+   "Bottle Green"
+  ],
+  [
+   "4361",
+   "Bottle Green Sold Out"
+  ],
+  [
+   "4433",
+   "Lemon Drop"
+  ],
+  [
+   "5227",
+   "Tulip"
+  ],
+  [
+   "5408",
+   "Dark Jade"
+  ],
+  [
+   "5553",
+   "B. Noir"
+  ],
+  [
+   "5553",
+   "Black Noir"
+  ],
+  [
+   "6524",
+   "New Peach"
+  ],
+  [
+   "6555",
+   "Paradise"
+  ],
+  [
+   "7000",
+   "Aqua"
+  ],
+  [
+   "7000",
+   "Aqua - Sold Out"
+  ],
+  [
+   "7301",
+   "Mayan"
+  ],
+  [
+   "7324",
+   "Lupine"
+  ],
+  [
+   "7329",
+   "Blue Spruce"
+  ],
+  [
+   "8031",
+   "Sunny Sienna"
+  ],
+  [
+   "8200",
+   "Cinnamon"
+  ],
+  [
+   "8207",
+   "Saffron"
+  ],
+  [
+   "8216",
+   "Cinnabar"
+  ],
+  [
+   "8216",
+   "Cinnabar Sold Out"
+  ],
+  [
+   "8221",
+   "Marmalade"
+  ],
+  [
+   "9090",
+   "Night Orchid"
+  ],
+  [
+   "9270",
+   "Ultraviolet"
+  ],
+  [
+   "9360",
+   "DaVinci"
+  ],
+  [
+   "9364",
+   "Wisteria"
+  ],
+  [
+   "9366",
+   "Rhapsody"
+  ],
+  [
+   "9380",
+   "Petunia"
+  ],
+  [
+   "9381",
+   "Heather"
+  ]
+ ],
+ "spec_list": [
+  [
+   "0371",
+   "Pale Yellow"
+  ],
+  [
+   "08",
+   "Icy Mauve"
+  ],
+  [
+   "1002",
+   "Neon Green"
+  ],
+  [
+   "1111",
+   "Wine"
+  ],
+  [
+   "1111",
+   "Wine H.P"
+  ],
+  [
+   "1351",
+   "Garnet"
+  ],
+  [
+   "1351",
+   "Garnet - Sold Out"
+  ],
+  [
+   "2702",
+   "Dark Royal"
+  ],
+  [
+   "2706",
+   "Slate Blue"
+  ],
+  [
+   "3185",
+   "Golden Harvest"
+  ],
+  [
+   "3684",
+   "Cedar Berry"
+  ],
+  [
+   "3684",
+   "Cedar Berry - Sold Out"
+  ],
+  [
+   "3715",
+   "Brownstone"
+  ],
+  [
+   "3754",
+   "Khaki Venzia"
+  ],
+  [
+   "3813",
+   "Stone"
+  ],
+  [
+   "3835",
+   "Henna"
+  ],
+  [
+   "3835",
+   "Henna - Sold Out"
+  ],
+  [
+   "3886",
+   "Egyptian"
+  ],
+  [
+   "3886",
+   "Egyptian - Sold Out"
+  ],
+  [
+   "3946",
+   "Brown"
+  ],
+  [
+   "3955",
+   "Ivory"
+  ],
+  [
+   "3959",
+   "Tan"
+  ],
+  [
+   "4419",
+   "Bottle Green Venzia"
+  ],
+  [
+   "4434",
+   "Willow"
+  ],
+  [
+   "4434",
+   "Willow - Sold Out"
+  ],
+  [
+   "4441",
+   "Willow"
+  ],
+  [
+   "4449",
+   "Brass"
+  ],
+  [
+   "4466",
+   "Olive Oil"
+  ],
+  [
+   "4466",
+   "Olive Oil Sold Out"
+  ],
+  [
+   "4467",
+   "Oasis"
+  ],
+  [
+   "4477",
+   "Tea Leaf Light"
+  ],
+  [
+   "4477",
+   "Tea Leaf Lt"
+  ],
+  [
+   "4585",
+   "Grey H.P"
+  ],
+  [
+   "4585",
+   "Grey HP"
+  ],
+  [
+   "4588",
+   "Blue Grey HP"
+  ],
+  [
+   "477",
+   "Grey H.P"
+  ],
+  [
+   "477",
+   "Grey HP"
+  ],
+  [
+   "5018",
+   "Golden Rod"
+  ],
+  [
+   "5151",
+   "Black Onyx"
+  ],
+  [
+   "5264",
+   "Pea Green"
+  ],
+  [
+   "5408",
+   "Dark Jade"
+  ],
+  [
+   "5420",
+   "Grey"
+  ],
+  [
+   "5663",
+   "Ivory"
+  ],
+  [
+   "5698",
+   "Storm"
+  ],
+  [
+   "5711",
+   "Whitesnake"
+  ],
+  [
+   "5720",
+   "Black Venzia"
+  ],
+  [
+   "6044",
+   "Brown Light"
+  ],
+  [
+   "6536",
+   "Peach"
+  ],
+  [
+   "6544",
+   "Dried Rose"
+  ],
+  [
+   "6544",
+   "Dried Rose - Sold Out"
+  ],
+  [
+   "6549",
+   "Shell"
+  ],
+  [
+   "6551",
+   "Tearose"
+  ],
+  [
+   "6551",
+   "Tearose Sold Out"
+  ],
+  [
+   "6565",
+   "Mystic Mauve"
+  ],
+  [
+   "6884",
+   "Dark Grey"
+  ],
+  [
+   "7301",
+   "Mayan"
+  ],
+  [
+   "7308",
+   "Vibrant Teal"
+  ],
+  [
+   "8207",
+   "Saffron"
+  ],
+  [
+   "8900",
+   "Grey"
+  ],
+  [
+   "9370",
+   "Purple Venzia"
+  ],
+  [
+   "9375",
+   "Abysse"
+  ],
+  [
+   "9387",
+   "Smokey Plum"
+  ],
+  [
+   "9396",
+   "Purple Vine"
+  ],
+  [
+   "9993",
+   "Black"
+  ]
+ ],
+ "wide_list": [
+  [
+   "1200",
+   "Lime"
+  ],
+  [
+   "1292",
+   "Flash Red"
+  ],
+  [
+   "1317",
+   "Colonial Red"
+  ],
+  [
+   "1361",
+   "Sachet"
+  ],
+  [
+   "1419",
+   "Black Berry"
+  ],
+  [
+   "143-210",
+   "Leopard"
+  ],
+  [
+   "173-232-58",
+   "Small Pony Cream/Brown"
+  ],
+  [
+   "178-023",
+   "Small Zebra"
+  ],
+  [
+   "2119",
+   "Island Blue"
+  ],
+  [
+   "2424",
+   "Lt. Blue"
+  ],
+  [
+   "2467",
+   "Admiral"
+  ],
+  [
+   "2559",
+   "Midnight"
+  ],
+  [
+   "2559",
+   "Midnight Navy"
+  ],
+  [
+   "2662",
+   "Lapis"
+  ],
+  [
+   "2664",
+   "Eclipse"
+  ],
+  [
+   "2664",
+   "Eclispe"
+  ],
+  [
+   "2714",
+   "Blue"
+  ],
+  [
+   "2720",
+   "Mirage"
+  ],
+  [
+   "2805",
+   "Cobalt top of page"
+  ],
+  [
+   "2894",
+   "Imperial Blue"
+  ],
+  [
+   "3088",
+   "Fired Clay"
+  ],
+  [
+   "3131",
+   "Country Cream"
+  ],
+  [
+   "3184",
+   "Sandy"
+  ],
+  [
+   "3449",
+   "Aztec Leather"
+  ],
+  [
+   "3615",
+   "Brownstone"
+  ],
+  [
+   "3623",
+   "Sable"
+  ],
+  [
+   "3693",
+   "Cameo"
+  ],
+  [
+   "4011",
+   "Azure Blue"
+  ],
+  [
+   "4083",
+   "Sandlewood"
+  ],
+  [
+   "4118",
+   "Misty Spruce"
+  ],
+  [
+   "4229",
+   "New Jade"
+  ],
+  [
+   "4257",
+   "Oliver"
+  ],
+  [
+   "4512",
+   "Green Grape"
+  ],
+  [
+   "452",
+   "Spanish Gold"
+  ],
+  [
+   "4529",
+   "Petit Pois"
+  ],
+  [
+   "4599",
+   "Active Green"
+  ],
+  [
+   "5227",
+   "Tulip"
+  ],
+  [
+   "5247",
+   "Candle Glow"
+  ],
+  [
+   "5553",
+   "Black Noir"
+  ],
+  [
+   "5832",
+   "White"
+  ],
+  [
+   "5837",
+   "White - extra supple"
+  ],
+  [
+   "5872",
+   "White - extra supple"
+  ],
+  [
+   "5890",
+   "Stone Gray"
+  ],
+  [
+   "6502",
+   "Oriental Teal"
+  ],
+  [
+   "6502",
+   "Oriental Teal - Sold Out"
+  ],
+  [
+   "6581",
+   "Opal"
+  ],
+  [
+   "6587",
+   "Ceramic"
+  ],
+  [
+   "6588",
+   "Rose Quartz"
+  ],
+  [
+   "6635",
+   "Rapture Rose"
+  ],
+  [
+   "6642",
+   "Zinnia"
+  ],
+  [
+   "6647",
+   "Sangria"
+  ],
+  [
+   "684",
+   "Soft Ivy"
+  ],
+  [
+   "7330",
+   "Atlantis"
+  ],
+  [
+   "7337",
+   "Splash Blue"
+  ],
+  [
+   "7349",
+   "Mantauk"
+  ],
+  [
+   "7349",
+   "Montauk"
+  ],
+  [
+   "7361",
+   "Teal Blue"
+  ],
+  [
+   "7369",
+   "Navajo Turquoise"
+  ],
+  [
+   "7369",
+   "Navajo Turquoise - Sold Out"
+  ],
+  [
+   "7565",
+   "Raspberry"
+  ],
+  [
+   "8031",
+   "Sunny Sienna"
+  ],
+  [
+   "8031",
+   "Sunny Sienna - Sold Out"
+  ],
+  [
+   "8215",
+   "Bird of Paradise"
+  ],
+  [
+   "8225",
+   "Guava"
+  ],
+  [
+   "8226",
+   "Tiara"
+  ],
+  [
+   "8226",
+   "Tiara - Sold Out"
+  ],
+  [
+   "8267",
+   "Sedona"
+  ],
+  [
+   "8269",
+   "Inca Gold"
+  ],
+  [
+   "8276",
+   "Burnt Orange"
+  ],
+  [
+   "9372",
+   "Eggplant"
+  ],
+  [
+   "9378",
+   "Purple Shadow"
+  ],
+  [
+   "9395",
+   "Princess Purple"
+  ],
+  [
+   "9403",
+   "Punch"
+  ],
+  [
+   "9464",
+   "Royal Purple"
+  ],
+  [
+   "9467",
+   "Bright Violet"
+  ]
+ ]
+}

@@ -1,0 +1,30 @@
+/*
+ * lisa.css — Reset
+ *
+ * These rules are adapted from
+ * "A (more) Modern CSS Reset" by Andy Bell (Piccalilli)
+ * https://piccalil.li/blog/a-more-modern-css-reset/
+ * Licensed under CC BY 3.0 — http://creativecommons.org/licenses/by/3.0/
+ */
+
+*,
+*::before,
+*::after { 
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+body, h1, h2, h3, h4, p,
+figure, blockquote, dl, dd { margin-block-end: 0; }
+
+ul[role='list'],
+ol[role='list'] { list-style: none; }
+
+body { min-height: 100vh; }

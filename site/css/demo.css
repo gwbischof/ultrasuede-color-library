@@ -1,0 +1,715 @@
+/*
+ * Ultrasuede Color Library — demo page styles.
+ *
+ * Everything lisa.css already covers is left to it; this file only adds the
+ * two things it has no component for: the swatch tile and the split layout
+ * inside the detail popover.
+ */
+
+/* Page title */
+
+/*
+ * A heading rather than a link, but it keeps the muted colour and the regular
+ * weight lisa gives a navbar link — it is the name of the page, not a thing to
+ * press, and nothing about it should have changed except that.
+ */
+.nav-title {
+    color: var(--lisa-nav-footer-link-color);
+    font-weight: var(--lisa-font-weight-normal, normal);
+}
+
+/* Section heads */
+
+.section-label {
+    color: var(--lisa-foreground-muted-color);
+}
+
+.subsection-head {
+    color: var(--lisa-foreground-muted-color);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Swatch grid */
+
+/*
+ * Six per row, declared by lisa's .grid-cols-6 on the grid itself; .gap-1
+ * sets the gap.
+ *
+ * Six rather than eight because at eight a tile was under 100px and the
+ * longest names — "Imperial Blue", "Country Cream" — wrapped to a second line;
+ * at six there is room for every name in the set on one line, which is what
+ * lets the text block below reserve a single line.
+ *
+ * The columns are restated as minmax(0, 1fr) rather than lisa's 1fr, which is
+ * minmax(auto, 1fr): under that, a track refuses to go narrower than its
+ * widest item's min-content, so the single column holding "Brownstone" came
+ * out 5px wider than the others and threw the whole grid out of true. A 0
+ * floor lets all six tracks stay equal and hands the overflow to the name,
+ * which is clamped below.
+ */
+.swatch-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+/*
+ * Below the wrapper's own width six columns stop being swatches and start
+ * being stamps, so the count steps down twice.
+ */
+@media (max-width: 900px) {
+    .swatch-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+    /*
+     * Two columns rather than three: at three a tile on a phone is under 100px
+     * and the swatch stops being a swatch. Two puts it near 170px, about the
+     * size it has on the desktop grid, which is the point of the image.
+     *
+     * And at 170px the second line stops needing to be reserved, so it isn't:
+     * no name in the set wraps at this width. The reserve the three-column step
+     * used to carry is gone with it — it was 61px of block for 31px of text,
+     * since the 1.3em and 1.25em were resolved against .swatch-text at the body
+     * size while the two lines inside it are set at the small one, and at two
+     * across, where nothing wraps, every tile was paying that in full. Nothing
+     * is lost by dropping it: a thumb's height comes from its own width through
+     * aspect-ratio rather than from the grid row, so should a longer name ever
+     * wrap here, the swatches in its row stay lined up and only the space below
+     * them opens.
+     */
+    .swatch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/*
+ * The tile is a <button>, so it is keyboard reachable and announces itself as
+ * a control — but lisa's button styling is for a real button, so the accent
+ * fill and border are taken back off here.
+ */
+.swatch {
+    background-color: transparent;
+    border-radius: var(--lisa-border-radius);
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    font: inherit;
+    padding: var(--lisa-space-1);
+    text-align: left;
+    transition: background-color var(--lisa-hover-transition-time) ease;
+    width: 100%;
+}
+
+/*
+ * The wash is a pointer's affordance and nothing else. A touch reports a hover
+ * it never takes back, so on a phone every tile a swipe crossed stayed lit and
+ * the grid ended a scroll wearing a trail of highlights no gesture cleared.
+ *
+ * Two rules rather than one guarded rule, because lisa styles every button on
+ * hover and .swatch is a button: guarding the wash alone would only hand the
+ * touch a different stuck fill, the accent one, which is louder than what it
+ * replaced. So the unguarded rule takes lisa's hover off everywhere, and the
+ * wash goes back on only where a pointer can actually lift off the tile.
+ */
+.swatch:hover {
+    background-color: transparent;
+    border: 0;
+}
+
+@media (hover: hover) {
+    .swatch:hover {
+        background-color: var(--lisa-background-subtle-color);
+    }
+}
+
+.swatch:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+}
+
+/*
+ * A square well holds the swatch photo. Where an entry has no image the well
+ * is filled with the sampled hex instead, and where it has neither it stays
+ * the muted background — so every tile is the same shape either way.
+ */
+.swatch-thumb {
+    aspect-ratio: 1;
+    background-color: var(--lisa-background-subtle-color);
+    border-radius: calc(var(--lisa-border-radius) / 2);
+    display: block;
+    margin-bottom: var(--lisa-space-1);
+    overflow: hidden;
+    width: 100%;
+}
+
+/*
+ * The shader canvas is square and the well is square, so it needs no object-fit
+ * of its own — but it is sized in device pixels and scaled down by CSS, which
+ * is the whole reason it stays sharp on a 2x screen.
+ */
+.swatch-thumb :is(img, canvas) {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+/*
+ * Name over code, one line each. At six across every name in the set fits on
+ * one line, so nothing has to be reserved for a second — but the clamp stays
+ * at two so a name longer than any of these wraps rather than being cut off,
+ * at the cost of that one row sitting a line taller.
+ *
+ * Both lines set at the small size: the body size would put the longest
+ * single-word names past the tile edge and break them mid-word.
+ */
+.swatch-text {
+    display: block;
+}
+
+.swatch-name {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    font-size: var(--lisa-font-size-sm);
+    line-clamp: 2;
+    line-height: 1.3;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+/*
+ * The SKU, colour number or pattern-colourway. Quieter and tighter than the
+ * name so it reads as a qualifier on it rather than as a second line of it —
+ * which is the whole job, since the pair of Bobcats differ only here.
+ */
+.swatch-code {
+    color: var(--lisa-foreground-muted-color);
+    display: block;
+    font-family: var(--lisa-font-family-code);
+    font-size: var(--lisa-font-size-sm);
+    line-height: 1.25;
+}
+
+/* Record grid
+ *
+ * The colours with no colour. Four across rather than six because there is no
+ * square holding the width open any more and the tile is only a name and a
+ * number — at six the names would run edge to edge with nothing around them.
+ */
+.record-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+    .record-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+    .record-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/*
+ * Nothing but the name and the number, with only the hover wash the swatch
+ * tiles already have to mark it out. The name is left at the body size — this
+ * is a line of a list, and the small size the swatch tiles use is there only
+ * because a name has to fit the width of an image.
+ */
+.record .swatch-name {
+    font-size: var(--lisa-font-size-md);
+}
+
+/* Detail popover */
+
+/*
+ * Wider than lisa's default, because the panel is two columns. The image takes
+ * 40% of the space inside the padding and does not flex; the details take
+ * whatever is left, with min-width: 0 so a long archive URL wraps instead of
+ * pushing the column open.
+ */
+#swatch-detail {
+    --lisa-popover-width: 720px;
+    --lisa-popover-background-color: var(--lisa-background-color);
+    /*
+     * The panel itself does not scroll; the column inside it does, and it is
+     * given the panel's whole height to do it in.
+     *
+     * The vertical padding belongs to that column rather than to the panel, so
+     * it scrolls along with the content. At rest it reads as it always did —
+     * an inset above the title and below the switch. Under a scroll it travels
+     * with everything else, and the content runs right up to the panel's top
+     * and bottom edges.
+     *
+     * Holding the padding out here instead, on the panel, is what the box used
+     * to do, and it cost more than it looked: the content was clipped at the
+     * padding's inner edge, so a scrolled panel ended in a band of empty white
+     * with the rest of the list cut off behind it and no way to bring it into
+     * view. Better to let the column reach the edge and pass the button.
+     *
+     * Sideways is still the panel's, so a scrollbar rides the panel's own edge
+     * rather than the picture's.
+     */
+    overflow: hidden;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+/*
+ * Out of the flow altogether, so the scrolling column can take the full height
+ * of the panel and begin at the very top of it. Put back exactly where the
+ * in-flow button used to land: inset from the corner by the padding, then
+ * backed off by the overhang — the half of the 44px tap target that hangs past
+ * the 16px glyph — so the glyph sits on the padding's corner while the target
+ * reaches out into the panel's margin.
+ *
+ * Content scrolls underneath it, which is the price of the column reaching the
+ * edge. It is charged where the panel is emptiest: the top right corner is the
+ * tail of the title's line, and .detail-head's padding-right holds the title
+ * itself clear of the button at every width.
+ */
+#swatch-detail button[data-dismiss] {
+    margin: 0;
+    position: absolute;
+    right: calc(var(--lisa-popover-padding) - var(--lisa-popover-dismiss-overhang));
+    top: calc(var(--lisa-popover-padding) - var(--lisa-popover-dismiss-overhang));
+    z-index: 1;
+}
+
+/*
+ * The scrolling column. min-height is the flex item's own — a flex item's
+ * auto minimum is its content, which refuses to shrink and would push the panel
+ * past its cap instead of scrolling — and the shrink is given back over lisa's
+ * .popover:popover-open > * { flex-shrink: 0 }, which is there to stop exactly
+ * this from happening to items that are not meant to scroll.
+ */
+#swatch-detail .detail {
+    flex-shrink: 1;
+    min-height: 0;
+    overflow-y: auto;
+    /*
+     * Full bleed on all four sides, by two different routes. Sideways the box
+     * is widened back into the panel's side padding and that padding is put
+     * back inside it, which keeps the content's inset exactly as it was while
+     * moving the scrollbar off the picture and onto the panel's edge. Top and
+     * bottom need no margin, because the panel has no padding left there to
+     * escape — the whole inset is the padding below, and it scrolls.
+     */
+    margin-left: calc(-1 * var(--lisa-popover-padding));
+    margin-right: calc(-1 * var(--lisa-popover-padding));
+    padding: var(--lisa-popover-padding);
+}
+
+/*
+ * The panel is a grid rather than a row of two columns, because the name has to
+ * sit in the right-hand column here and above the image on a phone, and only a
+ * grid can move one cell without moving the rest of the column with it. The
+ * image spans both rows, so the head is the top of the column beside it and the
+ * facts follow underneath.
+ *
+ * The rows are auto and 1fr rather than both auto: the image is the tallest
+ * thing in the panel and a spanning item hands its extra height to the rows it
+ * crosses, so with two auto rows the surplus would be split between them and
+ * open a gap between the name and the facts. Giving the second row the 1fr
+ * sends all of it there, below everything, where it is only the bottom of the
+ * column standing level with the bottom of the picture.
+ *
+ * There is no row-gap: the head and the body are one reading column broken in
+ * two only so the phone can take the top of it, and the space between the
+ * name's block and the facts is the margin that block already carries.
+ */
+.detail {
+    align-items: start;
+    column-gap: var(--lisa-space-3);
+    display: grid;
+    grid-template-areas: "media head"
+                         "media body";
+    grid-template-columns: 40% 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+.detail-media {
+    grid-area: media;
+}
+
+/*
+ * Both halves of the right-hand column clear the dismiss button in the panel's
+ * top right corner: the head holds the title the button would otherwise sit on,
+ * and the button is a thumb tall and hangs past the head into the body's row.
+ */
+.detail-head {
+    grid-area: head;
+    min-width: 0;
+    padding-right: calc(var(--lisa-popover-dismiss-size) + var(--lisa-popover-gap));
+}
+
+.detail-body {
+    grid-area: body;
+    min-width: 0;
+    padding-right: calc(var(--lisa-popover-dismiss-size) + var(--lisa-popover-gap));
+}
+
+.detail-media :is(img, canvas) {
+    border-radius: calc(var(--lisa-border-radius) / 2);
+    display: block;
+    width: 100%;
+}
+
+/*
+ * Both sides live in the panel at once and the switch hides one of them, but
+ * the rule above is a class deep and so beats the browser's own
+ * [hidden] { display: none }. Without this the two would stack.
+ */
+.detail-media :is(img, canvas)[hidden] {
+    display: none;
+}
+
+/*
+ * Where the panel offers both a shader and a photograph, the box is held
+ * square. Without it the first switch to Photo collapses the media column to
+ * nothing — an <img> with no bytes yet has no height — so the whole panel
+ * resizes, then snaps back a moment later when the image arrives. Nothing is
+ * cropped by this: every photograph that shares a panel with a shader is
+ * square already. The Light Jungle prints, which have a photograph and no
+ * shader and so no switch to flash, keep their own 3:2 frame.
+ */
+.detail-media-pair :is(img, canvas) {
+    aspect-ratio: 1;
+    background-color: var(--lisa-background-subtle-color);
+    object-fit: cover;
+}
+
+/*
+ * Shader or photograph, under the image. Two buttons sharing one border, so it
+ * reads as one control with a side selected rather than as two things to press;
+ * lisa's accent fill is taken back off the unselected half, the same way the
+ * swatch tile does it.
+ */
+.detail-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: var(--lisa-space-2);
+}
+
+.detail-switch button {
+    background-color: transparent;
+    border: var(--lisa-input-border-width) solid var(--lisa-background-muted-color);
+    border-radius: 0;
+    color: var(--lisa-foreground-muted-color);
+    font-size: var(--lisa-font-size-sm);
+    padding: calc(var(--lisa-space-1) / 2) var(--lisa-space-1);
+}
+
+.detail-switch button:first-child {
+    border-radius: calc(var(--lisa-border-radius) / 2) 0 0
+                   calc(var(--lisa-border-radius) / 2);
+}
+
+.detail-switch button:last-child {
+    border-left-width: 0;
+    border-radius: 0 calc(var(--lisa-border-radius) / 2)
+                   calc(var(--lisa-border-radius) / 2) 0;
+}
+
+.detail-switch button[aria-pressed="true"],
+.detail-switch button:hover,
+.detail-switch button:active {
+    background-color: var(--lisa-background-subtle-color);
+    border-color: var(--lisa-background-muted-color);
+    color: var(--lisa-foreground-color);
+}
+
+.detail-switch button:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+    /* the shared border would otherwise clip the ring on the inner edge */
+    z-index: 1;
+}
+
+.detail-swatch {
+    aspect-ratio: 1;
+    border-radius: calc(var(--lisa-border-radius) / 2);
+    width: 100%;
+}
+
+/*
+ * The list of sightings in a record entry's panel. The dates are what the list
+ * is read down, so each holds a column of its own and they stay aligned, with
+ * the page or catalogue that capture came off set beside it with clear space
+ * between the two.
+ */
+.detail-captures {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--lisa-space-1) / 2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.detail-captures li {
+    display: flex;
+    gap: var(--lisa-space-2);
+}
+
+/*
+ * The date holds a column of its own rather than being sized by its own text:
+ * a catalogue is dated to the month and a capture to the day, so left to
+ * themselves the two lengths would leave the names beside them ragged.
+ */
+.detail-captures a {
+    flex: 0 0 auto;
+    min-width: 9ch;
+}
+
+.capture-in {
+    color: var(--lisa-foreground-muted-color);
+}
+
+.detail-title {
+    line-height: var(--lisa-line-height-heading);
+}
+
+.detail-sub {
+    color: var(--lisa-foreground-muted-color);
+    font-family: var(--lisa-font-family-code);
+}
+
+/*
+ * A print's inks, one row each. The rows line up on the chips rather than on
+ * the text, so the column of colour reads down the panel as a palette.
+ */
+.detail-inks {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--lisa-space-1) / 4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.detail-inks li {
+    align-items: center;
+    display: flex;
+    gap: var(--lisa-space-1);
+}
+
+/*
+ * The label of a row whose value is a stack of controls sits against the first
+ * of them, which is a little lower than plain text: the buttons carry padding
+ * of their own.
+ */
+.detail-facts dt.fact-inks {
+    padding-top: calc(var(--lisa-space-1) / 4);
+}
+
+/*
+ * The facts are a description list: a fixed label column and a value column
+ * that takes the rest. Rows are separated by space rather than rules, to keep
+ * the panel quiet next to the swatch.
+ */
+.detail-facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: var(--lisa-space-2);
+    row-gap: var(--lisa-space-1);
+}
+
+.detail-facts dt {
+    color: var(--lisa-foreground-muted-color);
+    font-size: var(--lisa-font-size-sm);
+}
+
+.detail-facts dd {
+    font-size: var(--lisa-font-size-sm);
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+/*
+ * A qualification on the value above it — at present only the line saying the
+ * photograph is of another weight of the same colour. It breaks to its own line
+ * under the value and takes the muted colour the labels have, so it reads as
+ * something said about the row rather than as another value in it.
+ */
+.fact-note {
+    display: block;
+    color: var(--lisa-foreground-muted-color);
+}
+
+/*
+ * Anything that copies itself when pressed. lisa's button styling is for a real
+ * button and these are not that — both are values in the fact list, sitting in
+ * the same column as a hex and an archive link — so the fill and the border
+ * come back off and only the hover wash is kept.
+ *
+ * The padding is pulled straight back off the left, so a value still lines up
+ * with the rows above and below it while the wash has room to sit around it.
+ */
+.copy {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    border-radius: calc(var(--lisa-border-radius) / 2);
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    gap: 0.5em;
+    margin-left: calc(var(--lisa-space-1) / -2);
+    padding: calc(var(--lisa-space-1) / 4) calc(var(--lisa-space-1) / 2);
+    text-align: left;
+    transition: background-color var(--lisa-hover-transition-time) ease;
+}
+
+/* Same split as .swatch, and for the same reason — see the note there. */
+.copy:hover {
+    background-color: transparent;
+    border: 0;
+}
+
+@media (hover: hover) {
+    .copy:hover {
+        background-color: var(--lisa-background-subtle-color);
+    }
+}
+
+.copy:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+}
+
+/*
+ * The mark at the head of a copy control: a chip of the colour on the hex row,
+ * the copy glyph on the shader row. Both are square and both a little shorter
+ * than the line of text beside them, so the hover wash clears them top and
+ * bottom — and being the same size is what makes the two rows read as a pair
+ * rather than as a value and a button that happen to be stacked.
+ *
+ * Both dimensions are given rather than one plus the ratio: a flex item
+ * stretched to its line has no definite cross size when the main size is
+ * resolved, so aspect-ratio alone leaves the chip zero wide, and the icon
+ * carries a width of its own from the source that has to be overridden anyway.
+ */
+.detail-chip,
+.copy-icon {
+    flex: 0 0 auto;
+    height: 1.1em;
+    width: 1.1em;
+}
+
+.detail-chip {
+    border-radius: 3px;
+}
+
+/*
+ * Quieter than the label it sits beside. It is a mark saying what the row is,
+ * the way the chip is, and neither should be louder than the words.
+ */
+.copy-icon {
+    color: var(--lisa-foreground-muted-color);
+}
+
+/*
+ * A row whose value is a control rather than a line of text. The label is
+ * centred against it: a button stands taller than the line it sits in, and a
+ * label left at the top of that row reads as belonging to the row above.
+ */
+.detail-facts dt.fact-control {
+    align-self: center;
+}
+
+/* Announcements for the screen reader, and for nothing else. */
+.visually-hidden {
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+/*
+ * One column on narrow screens: 40% of a phone is not a usable image.
+ *
+ * 560px, the same figure the swatch grid and the page gutter step at, so the
+ * page has one width at which it becomes a phone rather than three. It used to
+ * be 600 here, which left a 40px band where the panel had already stacked while
+ * the grid behind it was still four across in a 40px gutter.
+ *
+ * The name and its number come up above the picture. On a panel this narrow the
+ * image is the full width of the column, so a name beside it is not an option
+ * and a name under it reads as a caption on the photograph rather than as the
+ * title of the panel — which is what the head being its own grid cell is for.
+ */
+@media (max-width: 560px) {
+    .detail {
+        grid-template-areas: "head"
+                             "media"
+                             "body";
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto 1fr;
+        row-gap: var(--lisa-space-2);
+    }
+
+    /*
+     * The body is well below the dismiss button at this width, so it takes its
+     * full width back. The head does not: it is the top of the column now, the
+     * button floats over its top right corner, and the padding is what keeps
+     * the title from running under the glyph.
+     */
+    .detail-body {
+        padding-right: 0;
+    }
+
+    /*
+     * The last line of the head carries a margin meant to separate it from the
+     * facts under it; above an image it is doubled up with the row gap.
+     */
+    .detail-head > :last-child {
+        margin-bottom: 0;
+    }
+
+    /*
+     * The label column stops paying for itself down here: the panel is a phone
+     * wide, the longest label takes two thirds of it, and what is left is too
+     * narrow for the value beside it — a hex ends up broken a character to the
+     * line. So the rows stack, label over value, and each gets the full width.
+     */
+    .detail-facts {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: calc(var(--lisa-space-1) / 2);
+    }
+
+    .detail-facts dt:not(:first-child) {
+        margin-top: var(--lisa-space-1);
+    }
+
+    /* the value is on its own line now, so the label has nothing to sit against */
+    .detail-facts dt.fact-inks {
+        padding-top: 0;
+    }
+
+}
+
+/* Mobile
+ *
+ * The breakpoint the swatch grid already steps down at, reused for the page
+ * gutter so the two move together.
+ */
+
+/*
+ * lisa's wrapper gutter is --lisa-space-4, 40px a side. On a 375px phone that
+ * is a fifth of the screen spent on margin, which the grid inside it pays for
+ * in tile width — so down here it comes back to --lisa-space-2. The navbar and
+ * the footer take the same cut: they are centred on the same measure, and left
+ * at 40px their text would stand inset from the grid it sits above and below.
+ */
+@media (max-width: 560px) {
+    .wrapper,
+    .wrapper-wide,
+    nav,
+    footer {
+        padding-left: var(--lisa-space-2);
+        padding-right: var(--lisa-space-2);
+    }
+}

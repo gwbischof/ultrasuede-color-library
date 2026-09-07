@@ -1,0 +1,21 @@
+/*
+ * lisa.css — Typography
+ */
+
+body {
+    font-family: var(--lisa-font-family);
+    line-height: var(--lisa-line-height);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: var(--lisa-line-height-heading);
+}
+
+/* Text size */
+
+.text-sm { font-size: var(--lisa-font-size-sm); }
+.text-md { font-size: var(--lisa-font-size-md); }
+.text-lg { font-size: var(--lisa-font-size-lg); }
+.text-xl { font-size: var(--lisa-font-size-xl); }
+.text-2xl { font-size: var(--lisa-font-size-2xl); }
+.text-3xl { font-size: var(--lisa-font-size-3xl); }

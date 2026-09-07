@@ -1,0 +1,944 @@
+/*
+ * lisa.css — Components
+ */
+
+/* Link */
+
+a {
+    color: var(--lisa-accent-color);
+    text-decoration: var(--lisa-link-text-decoration);
+    transition: all var(--lisa-hover-transition-time) ease;
+}
+
+a:visited {
+    color: var(--lisa-accent-light-color);
+}
+
+a:hover {
+    color: var(--lisa-accent-dark-color);
+    text-decoration: var(--lisa-link-hover-text-decoration);
+}
+
+/* Definition */
+
+dfn, abbr {
+    font-style: normal;
+    text-decoration: underline var(--lisa-definition-text-decoration);
+    text-decoration-thickness: var(--lisa-definition-text-decoration-thickness);
+    text-underline-offset: var(--lisa-definition-text-underline-offset);
+    text-decoration-color: var(--lisa-definition-text-decoration-color);
+}
+
+/* Tooltip */
+
+/*
+ * Any element carrying data-tooltip shows that text in a bubble on hover and
+ * focus — a definition or an abbreviation above, a .tooltip-icon below, or
+ * anything else. Use data-tooltip rather than title, or the native tooltip
+ * stacks on top of it. Give a non-interactive element tabindex="0" so the
+ * tooltip can be reached from the keyboard.
+ *
+ * The bubble is ::before and the caret is ::after, which spends the whole
+ * budget: an element that needs a pseudo-element of its own cannot also carry a
+ * tooltip. That rules out putting one on a mask-painted icon in particular,
+ * since a mask applies to the element's whole subtree and would clip the bubble
+ * away — see .tooltip-icon below.
+ */
+
+[data-tooltip] {
+    cursor: help;
+    position: relative;
+}
+
+/*
+ * The offsets here place the bubble above the element; the three placement
+ * blocks further down move it to another side. Anchoring is one length either
+ * way: the bubble stands --lisa-tooltip-caret-size clear of the element for the
+ * caret to fill, plus --lisa-tooltip-offset of clear air between the caret's
+ * tip and the element itself.
+ */
+
+[data-tooltip]::before,
+[data-tooltip]::after {
+    background-color: var(--lisa-tooltip-background-color);
+    bottom: calc(100% + var(--lisa-tooltip-caret-size) + var(--lisa-tooltip-offset));
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity var(--lisa-hover-transition-time) ease;
+    z-index: 1;
+}
+
+[data-tooltip]::before {
+    border-radius: var(--lisa-border-radius);
+    color: var(--lisa-tooltip-color);
+    content: attr(data-tooltip);
+    font-size: var(--lisa-font-size-sm);
+    max-width: var(--lisa-tooltip-max-width);
+    padding: var(--lisa-tooltip-padding-y) var(--lisa-tooltip-padding-x);
+    text-align: center;
+    transform: translateX(-50%);
+    width: max-content;
+}
+
+/*
+ * The caret is a square rotated 45deg, so only one corner of it shows. A square
+ * of side s pokes out s * 0.7071 past its center, so the side is scaled by
+ * 1.4142 to make the visible caret exactly --lisa-tooltip-caret-size deep — the
+ * tip then lands --lisa-tooltip-offset short of the element.
+ *
+ * The square is centered on the bubble's near edge, so half of it is the caret
+ * and half is buried in the bubble. Both are the one flat color, with no
+ * outline to carry across the joint, so the two read as a single shape without
+ * anything having to line up.
+ */
+[data-tooltip]::after {
+    content: "";
+    height: calc(var(--lisa-tooltip-caret-size) * 1.4142);
+    transform: translate(-50%, 50%) rotate(45deg);
+    width: calc(var(--lisa-tooltip-caret-size) * 1.4142);
+}
+
+/*
+ * Placement. data-tooltip-placement takes "top" (the default, set above),
+ * "right", "bottom" or "left". Each block re-anchors both pseudo-elements to
+ * the new side and turns the caret to face back at the element — the rotation
+ * stays 45deg throughout, so all that changes is which way the square is
+ * translated off the bubble's edge. Placement is fixed rather than chosen
+ * against the viewport, so a tooltip near an edge is placed the way it was
+ * asked for.
+ */
+
+[data-tooltip][data-tooltip-placement="bottom"]::before,
+[data-tooltip][data-tooltip-placement="bottom"]::after {
+    bottom: auto;
+    top: calc(100% + var(--lisa-tooltip-caret-size) + var(--lisa-tooltip-offset));
+}
+
+[data-tooltip][data-tooltip-placement="bottom"]::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+[data-tooltip][data-tooltip-placement="right"]::before,
+[data-tooltip][data-tooltip-placement="right"]::after {
+    bottom: auto;
+    left: calc(100% + var(--lisa-tooltip-caret-size) + var(--lisa-tooltip-offset));
+    top: 50%;
+}
+
+[data-tooltip][data-tooltip-placement="right"]::before {
+    transform: translateY(-50%);
+}
+
+[data-tooltip][data-tooltip-placement="right"]::after {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+[data-tooltip][data-tooltip-placement="left"]::before,
+[data-tooltip][data-tooltip-placement="left"]::after {
+    bottom: auto;
+    left: auto;
+    right: calc(100% + var(--lisa-tooltip-caret-size) + var(--lisa-tooltip-offset));
+    top: 50%;
+}
+
+[data-tooltip][data-tooltip-placement="left"]::before {
+    transform: translateY(-50%);
+}
+
+[data-tooltip][data-tooltip-placement="left"]::after {
+    transform: translate(50%, -50%) rotate(45deg);
+}
+
+/*
+ * Image variant. The URL cannot come from an attribute, so it is passed in
+ * --lisa-tooltip-image and data-tooltip-image turns on the space for it. The
+ * image is a background rather than markup, since the bubble is a
+ * pseudo-element and has no children to hold an <img>.
+ *
+ * The image is pinned to the left and the text always reads to its right, so
+ * the padding on that side has to clear the image plus
+ * --lisa-tooltip-image-gap, the breathing room between the two. The text goes
+ * left-aligned as well: a centered ragged column beside a hard image edge
+ * reads as a misalignment.
+ */
+
+[data-tooltip][data-tooltip-image]::before {
+    align-items: center;
+    background-image: var(--lisa-tooltip-image);
+    background-position: left var(--lisa-tooltip-padding-x) center;
+    background-repeat: no-repeat;
+    background-size: var(--lisa-tooltip-image-width) auto;
+    display: flex;
+    min-height: calc(
+        var(--lisa-tooltip-image-height) +
+        (2 * var(--lisa-tooltip-padding-y))
+    );
+    padding-left: calc(
+        var(--lisa-tooltip-padding-x) +
+        var(--lisa-tooltip-image-width) +
+        var(--lisa-tooltip-image-gap)
+    );
+    text-align: left;
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after,
+[data-tooltip]:focus::before,
+[data-tooltip]:focus::after {
+    opacity: 1;
+}
+
+/* Tooltip icon */
+
+/*
+ * An empty element with class="tooltip-icon" draws the bundled Lucide info
+ * circle and carries a tooltip of its own — the icon is the whole affordance,
+ * so it takes data-tooltip and data-tooltip-placement directly and needs no
+ * wrapper. Give it tabindex="0" and a label, since there is no text to read.
+ *
+ * The glyph is a background image rather than the mask the loader and the other
+ * bundled icons use. A mask applies to the element's whole subtree, so it would
+ * clip away the bubble and the caret and nothing would ever appear on hover.
+ * The same goes for opacity and filter, which would fade the bubble along with
+ * the glyph — so the icon has no dimmed resting state, and the tooltip opening
+ * is the hover feedback. The cost of a background is that the stroke color
+ * lives inside --lisa-tooltip-icon rather than in a color token: override that
+ * token to recolor the glyph or to swap in a different icon entirely.
+ */
+
+.tooltip-icon {
+    background: var(--lisa-tooltip-icon) center / contain no-repeat;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    height: var(--lisa-tooltip-icon-size);
+    vertical-align: middle;
+    width: var(--lisa-tooltip-icon-size);
+}
+
+.tooltip-icon:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+}
+
+/* Button */
+
+button {
+    background-color: var(--lisa-accent-color);
+    border-radius: var(--lisa-border-radius);
+    border: var(--lisa-input-border-width) solid var(--lisa-accent-color);
+    color: var(--lisa-foreground-color);
+    transition: all var(--lisa-hover-transition-time) ease;
+}
+
+button:hover {
+    background-color: var(--lisa-accent-dark-color);
+    border: var(--lisa-input-border-width) solid var(--lisa-accent-dark-color);
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: var(--lisa-background-muted-color);
+    border: var(--lisa-input-border-width) solid var(--lisa-background-muted-color);
+    cursor: not-allowed;
+}
+
+/* Loader */
+
+/*
+ * The icon ships in --lisa-loader-icon as a data URI and is painted as a mask,
+ * so the element needs no markup of its own and takes its color from
+ * --lisa-loader-color. Override the token to swap in a different icon.
+ */
+
+.loader {
+    animation: lisa-spin var(--lisa-loader-speed) linear infinite;
+    background-color: var(--lisa-loader-color);
+    display: inline-block;
+    flex-shrink: 0;
+    height: var(--lisa-loader-size);
+    mask: var(--lisa-loader-icon) center / contain no-repeat;
+    vertical-align: middle;
+    width: var(--lisa-loader-size);
+}
+
+@keyframes lisa-spin {
+    to { transform: rotate(1turn); }
+}
+
+/* Slow the spin rather than stopping it, so it still reads as "working". */
+@media (prefers-reduced-motion: reduce) {
+    .loader { animation-duration: calc(var(--lisa-loader-speed) * 2); }
+}
+
+/* Progress */
+
+/*
+ * The native <progress> element, restyled. It carries its own value, max and
+ * accessible role, so the markup is one tag and needs no wrapper. Track and
+ * fill are separate pseudo-elements that no engine agrees on, so the rules
+ * below are repeated per engine rather than merged into one selector list — a
+ * single unrecognized selector would drop the whole block.
+ *
+ * The fill is rounded on its leading edge only; its trailing edge stays flat so
+ * a partial bar ends on a clean vertical cut rather than a floating pill. At
+ * full width that flat edge lands on the track's own rounded corner, and the
+ * track's overflow clips it back to the pill shape — so "round only when full"
+ * needs no value math.
+ */
+
+progress {
+    appearance: none;
+    background-color: var(--lisa-progress-track-color);
+    border: 0;
+    border-radius: var(--lisa-progress-border-radius);
+    display: block;
+    height: var(--lisa-progress-height);
+    overflow: hidden;
+    width: 100%;
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--lisa-progress-track-color);
+    border-radius: var(--lisa-progress-border-radius);
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--lisa-progress-color);
+    border-radius: var(--lisa-progress-border-radius) 0 0 var(--lisa-progress-border-radius);
+    transition: width var(--lisa-progress-transition-time) ease;
+}
+
+progress::-moz-progress-bar {
+    background-color: var(--lisa-progress-color);
+    border-radius: var(--lisa-progress-border-radius) 0 0 var(--lisa-progress-border-radius);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    progress::-webkit-progress-value { transition: none; }
+}
+
+/* Dropdown */
+
+/*
+ * Built on <details>, so opening and closing works without JavaScript. Loading
+ * lisa.js adds closing on an outside click. The chevron ships in
+ * --lisa-dropdown-icon as a data URI and is painted as a mask, the same way
+ * the loader works.
+ */
+
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown > summary {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    gap: var(--lisa-space-1);
+    list-style: none;
+    user-select: none;
+    width: fit-content;
+}
+
+/* Safari draws its own disclosure triangle unless this is hidden. */
+.dropdown > summary::-webkit-details-marker { display: none; }
+
+.dropdown > summary::after {
+    background-color: currentColor;
+    content: "";
+    flex-shrink: 0;
+    height: var(--lisa-dropdown-icon-size);
+    mask: var(--lisa-dropdown-icon) center / contain no-repeat;
+    width: var(--lisa-dropdown-icon-size);
+}
+
+.dropdown[open] > summary::after { transform: rotate(180deg); }
+
+.dropdown > summary:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+}
+
+/*
+ * The button variant gives the summary padding and a hover background. The
+ * panel shifts right by that padding so its item text still lines up with the
+ * summary text rather than with the button's edge.
+ */
+
+.dropdown[data-variant="button"] > summary {
+    border-radius: var(--lisa-border-radius);
+    padding: var(--lisa-dropdown-summary-padding-y) var(--lisa-dropdown-summary-padding-x);
+    transition: background-color var(--lisa-hover-transition-time) ease;
+}
+
+.dropdown[data-variant="button"] > summary:hover {
+    background-color: var(--lisa-dropdown-summary-hover-background-color);
+}
+
+.dropdown[data-variant="button"] > :is(ul, ol) {
+    left: calc(
+        var(--lisa-dropdown-summary-padding-x) -
+        var(--lisa-dropdown-border-width) -
+        var(--lisa-dropdown-item-padding-x)
+    );
+}
+
+/*
+ * Items run edge to edge so a hover fills the full width of the menu, so the
+ * panel carries no horizontal padding. Pulling it left by its own border plus
+ * the item padding lines the item text up with the summary text above it.
+ */
+.dropdown > :is(ul, ol) {
+    background-color: var(--lisa-dropdown-background-color);
+    border-radius: var(--lisa-border-radius);
+    border: var(--lisa-dropdown-border-width) solid var(--lisa-dropdown-border-color);
+    left: calc(-1 * (var(--lisa-dropdown-border-width) + var(--lisa-dropdown-item-padding-x)));
+    list-style: none;
+    min-width: var(--lisa-dropdown-min-width);
+    overflow: hidden;
+    padding: var(--lisa-dropdown-item-padding-y) 0;
+    position: absolute;
+    top: calc(100% + var(--lisa-dropdown-offset));
+    width: max-content;
+    z-index: 10;
+}
+
+.dropdown > :is(ul, ol) :is(a, a:visited, button) {
+    background-color: transparent;
+    border-radius: 0;
+    border: 0;
+    color: var(--lisa-foreground-color);
+    display: block;
+    font: inherit;
+    padding: var(--lisa-dropdown-item-padding-y) var(--lisa-dropdown-item-padding-x);
+    text-align: left;
+    text-decoration: none;
+    transition: background-color var(--lisa-hover-transition-time) ease;
+    width: 100%;
+}
+
+.dropdown > :is(ul, ol) :is(a, button):hover,
+.dropdown > :is(ul, ol) :is(a, button):focus-visible {
+    background-color: var(--lisa-dropdown-item-hover-background-color);
+    color: var(--lisa-foreground-color);
+    cursor: pointer;
+}
+
+/* Breadcrumb */
+
+/*
+ * Put .breadcrumb on a <nav aria-label="Breadcrumb"> wrapping a list, or on the
+ * list itself. The chevron ships in --lisa-breadcrumb-separator as a data URI
+ * and is painted as a mask, the same way the loader and dropdown icons work, so
+ * it takes the breadcrumb color and the markup stays free of SVG. Mark the last
+ * crumb with aria-current="page" to give it the full foreground color.
+ */
+
+.breadcrumb {
+    color: var(--lisa-breadcrumb-color);
+    font-size: var(--lisa-breadcrumb-font-size);
+}
+
+/* The nav component centers and pads itself; a breadcrumb sits inline instead. */
+nav.breadcrumb {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+}
+
+:is(ol, ul).breadcrumb,
+.breadcrumb > :is(ol, ul) {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--lisa-breadcrumb-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb li {
+    align-items: center;
+    display: flex;
+    gap: var(--lisa-breadcrumb-gap);
+}
+
+.breadcrumb li + li::before {
+    background-color: currentColor;
+    content: "";
+    flex-shrink: 0;
+    height: var(--lisa-breadcrumb-separator-size);
+    mask: var(--lisa-breadcrumb-separator) center / contain no-repeat;
+    width: var(--lisa-breadcrumb-separator-size);
+}
+
+.breadcrumb a,
+.breadcrumb a:visited {
+    color: var(--lisa-breadcrumb-color);
+    text-decoration: var(--lisa-link-text-decoration);
+}
+
+.breadcrumb a:hover {
+    color: var(--lisa-breadcrumb-current-color);
+    text-decoration: var(--lisa-link-hover-text-decoration);
+}
+
+.breadcrumb [aria-current="page"] {
+    color: var(--lisa-breadcrumb-current-color);
+}
+
+/* Notification */
+
+/*
+ * .notifications is a fixed region pinned to the top right; notifications stack
+ * inside it, newest first. Rather than offsetting from the viewport edge, the
+ * region is laid out as a wrapper of its own — centered, capped at the wrapper
+ * width, with the wrapper's padding — and its contents pushed to the end. That
+ * lands the right edge exactly on a .wrapper-wide's content edge at any
+ * viewport, without 100vw math that a scrollbar would throw off.
+ */
+
+.notifications {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: var(--lisa-notification-gap);
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--lisa-notification-align-width);
+    padding-left: var(--lisa-notification-inset-x);
+    padding-right: var(--lisa-notification-inset-x);
+    pointer-events: none;
+    position: fixed;
+    right: 0;
+    top: var(--lisa-notification-inset-top);
+    z-index: var(--lisa-notification-z-index);
+}
+
+/* Each notification takes pointer events back; the region itself stays through. */
+.notification {
+    align-items: flex-start;
+    background-color: var(--lisa-notification-background-color);
+    border-radius: var(--lisa-border-radius);
+    border: var(--lisa-notification-border-width) solid var(--lisa-notification-border-color);
+    color: var(--lisa-notification-color);
+    display: flex;
+    gap: var(--lisa-notification-padding);
+    justify-content: space-between;
+    max-width: 100%;
+    padding: var(--lisa-notification-padding);
+    pointer-events: auto;
+    width: var(--lisa-notification-width);
+}
+
+.notification > :is(p, div) {
+    margin: 0;
+}
+
+/*
+ * The dismiss control is a bare button carrying the bundled Lucide x as a mask,
+ * the same way the loader and breadcrumb icons work.
+ */
+.notification button[data-dismiss] {
+    background-color: var(--lisa-notification-dismiss-color);
+    border-radius: 0;
+    border: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    height: var(--lisa-notification-dismiss-size);
+    mask: var(--lisa-notification-dismiss-icon) center / contain no-repeat;
+    padding: 0;
+    width: var(--lisa-notification-dismiss-size);
+}
+
+.notification button[data-dismiss]:hover {
+    background-color: var(--lisa-notification-dismiss-hover-color);
+}
+
+.notification button[data-dismiss]:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+}
+
+/* Modal */
+
+/*
+ * Put .modal on a <dialog>. The element brings its own backdrop, Esc to close,
+ * and a focus trap that makes the rest of the page inert, so the markup is one
+ * tag and needs no ARIA. Open it with showModal(), or with a [data-modal]
+ * control when lisa.js is loaded; close it with a <form method="dialog">
+ * inside, which needs no script, or with a [data-dismiss] button, which does.
+ *
+ * The class is what opts in, not the tag: a <dialog> is a general-purpose
+ * element and a plain one is left alone, so the width and padding below are not
+ * imposed on every dialog on the page.
+ *
+ * A closed dialog is display:none, so the flex column that lays the contents
+ * out is hung off [open] — putting display on the element itself would show the
+ * dialog while it is closed.
+ */
+
+.modal {
+    background-color: var(--lisa-modal-background-color);
+    border-radius: var(--lisa-border-radius);
+    border: var(--lisa-modal-border-width) solid var(--lisa-modal-border-color);
+    color: var(--lisa-modal-color);
+    margin: auto;
+    max-height: calc(100% - (2 * var(--lisa-modal-inset)));
+    max-width: calc(100% - (2 * var(--lisa-modal-inset)));
+    overflow: auto;
+    padding: var(--lisa-modal-padding);
+    width: var(--lisa-modal-width);
+}
+
+.modal[open] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lisa-modal-gap);
+}
+
+.modal::backdrop {
+    background-color: var(--lisa-modal-backdrop-color);
+}
+
+/*
+ * The page behind a modal is inert, so it should not scroll behind it either.
+ * Where the scrollbar takes up layout space this shifts the page as it goes;
+ * add scrollbar-gutter: stable to html to hold the space open and it will not.
+ */
+html:has(.modal:modal) {
+    overflow: hidden;
+}
+
+/* A header or footer inside a dialog is a band, not the page-level wrapper. */
+.modal :is(header, footer, nav) {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+}
+
+/*
+ * The dismiss control is a bare button carrying the bundled Lucide x as a mask,
+ * the same way the notification's does. It is pulled out of the flex column and
+ * into the padding's top right corner, so it sits beside the title rather than
+ * taking a row of its own. A dialog is positioned by the user agent already —
+ * absolute when it is open, fixed when it is modal — so it anchors the button
+ * without being given a position here, and giving it one would override the
+ * fixed case and leave a modal scrolling with the page behind it.
+ */
+.modal button[data-dismiss] {
+    background-color: var(--lisa-modal-dismiss-color);
+    border-radius: 0;
+    border: 0;
+    cursor: pointer;
+    height: var(--lisa-modal-dismiss-size);
+    mask: var(--lisa-modal-dismiss-icon) center / contain no-repeat;
+    padding: 0;
+    position: absolute;
+    right: var(--lisa-modal-padding);
+    top: var(--lisa-modal-padding);
+    width: var(--lisa-modal-dismiss-size);
+}
+
+.modal button[data-dismiss]:hover {
+    background-color: var(--lisa-modal-dismiss-hover-color);
+}
+
+.modal button[data-dismiss]:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+}
+
+/* A title runs the width of the dialog, so hold it clear of that corner. */
+.modal:has(> button[data-dismiss]) > :is(h1, h2, h3, h4, h5, h6) {
+    padding-right: calc(var(--lisa-modal-dismiss-size) + var(--lisa-modal-gap));
+}
+
+/* Popover */
+
+/*
+ * Put .popover on an element carrying the popover attribute, and it wears the
+ * modal's face. It arrives the same way — a panel centered in the top layer
+ * over the page — and it holds the page the same way while it is open: nothing
+ * behind it scrolls, and nothing behind it can be clicked. What still sets it
+ * apart from a .modal is what it asks of the reader. It answers nothing, traps
+ * no focus, and a click anywhere outside closes it, so it is the one to reach
+ * for to show detail about something; reach for a .modal to ask a question
+ * about it.
+ *
+ * The holding is written out below rather than inherited: a <dialog> opened
+ * with showModal() makes the rest of the document inert on its own, and a
+ * popover has no equivalent. Only .popover asks for it, so a bare [popover] —
+ * an anchored menu, a tooltip — is still the light thing it was.
+ *
+ * The class opts in the same way .modal does. A popover is the more general of
+ * the two — an anchored menu is one as well — so a plain one is left alone and
+ * keeps the width and placement it was given.
+ *
+ * Where the modal needs a script to open, this needs none at all: a
+ * <button popovertarget="the-id"> toggles it and a popovertargetaction="hide"
+ * button inside closes it, so the whole component is markup. [data-dismiss]
+ * closes it as well when lisa.js is loaded, the same as it closes a
+ * notification or a modal.
+ *
+ * A closed popover is display:none, so the flex column is hung off
+ * :popover-open the way the modal's is hung off [open].
+ */
+
+.popover {
+    background-color: var(--lisa-popover-background-color);
+    border-radius: var(--lisa-border-radius);
+    border: var(--lisa-popover-border-width) solid var(--lisa-popover-border-color);
+    color: var(--lisa-popover-color);
+    margin: auto;
+    /*
+     * The panel is a panel and not a page, so it is held to
+     * --lisa-popover-max-height however much it is given to say; past that the
+     * content scrolls inside it. The inset is still the other half of the
+     * min(), for a viewport short enough that a proportion of it is the looser
+     * of the two limits. The measure is dvh rather than vh so that a phone
+     * browser retracting its toolbar changes the panel's height with the
+     * viewport, instead of the cap quietly meaning more than it says.
+     */
+    max-height: min(var(--lisa-popover-max-height),
+                    calc(100% - (2 * var(--lisa-popover-inset))));
+    max-width: calc(100% - (2 * var(--lisa-popover-inset)));
+    overflow: auto;
+    padding: var(--lisa-popover-padding);
+    width: var(--lisa-popover-width);
+}
+
+.popover:popover-open {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lisa-popover-gap);
+}
+
+/*
+ * Once the panel is capped it is a column of flex items in a box too short for
+ * them, and a flex item's answer to that is to shrink: the picture squeezes,
+ * the dismiss button flattens, and the panel that was supposed to scroll
+ * quietly crushes its contents into the space instead. Each item keeps its own
+ * height, and the overflow goes where it was meant to go.
+ */
+.popover:popover-open > * {
+    flex-shrink: 0;
+}
+
+/*
+ * Lighter than the modal's: the page is held, but the panel is only showing
+ * something rather than asking for something, so it reads as the page stepping
+ * back rather than as the page being seized.
+ */
+.popover::backdrop {
+    background-color: var(--lisa-popover-backdrop-color);
+}
+
+/*
+ * The page behind an open popover does not scroll, the same rule the modal
+ * uses. Where the scrollbar takes up layout space this shifts the page as it
+ * goes; add scrollbar-gutter: stable to html to hold the space open and it
+ * will not.
+ */
+html:has(.popover:popover-open) {
+    overflow: hidden;
+}
+
+/*
+ * And it does not take clicks. The backdrop paints over the page but is not
+ * hit-tested, so without this a click outside lands on whatever is beneath it
+ * — dismissing the popover and pressing that button in the one gesture, which
+ * on a grid of things that each open the panel means it closes and reopens on
+ * something else. Turning pointer events off for the body and back on for the
+ * panel leaves that click to fall through to <html>, which is outside the
+ * popover and so still light-dismisses it: clicking away still closes, it just
+ * no longer presses anything on the way.
+ *
+ * A modal dialog is given them back, since one may be opened from inside the
+ * panel and its own inertness is what should govern the page then.
+ */
+html:has(.popover:popover-open) body {
+    pointer-events: none;
+}
+
+.popover:popover-open,
+html:has(.popover:popover-open) dialog:modal {
+    pointer-events: auto;
+}
+
+/* A header or footer inside a popover is a band, not the page-level wrapper. */
+.popover :is(header, footer, nav) {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+}
+
+/*
+ * The dismiss control is drawn as the modal's is — the bundled Lucide x as a
+ * mask over a bare button — but it is not placed the same way, because the
+ * height cap makes the panel a scroller and an absolutely positioned button
+ * inside a scroller scrolls out of the panel with the content. It stays a flex
+ * item and is made sticky instead, so it keeps the top right corner however
+ * far down the content is read.
+ *
+ * Two things come with staying in the flow. The negative bottom margin takes
+ * back the row the button would otherwise hold, and the gap after it, so the
+ * content still begins at the top of the panel and the button sits over its
+ * corner rather than above it. And the box is grown to
+ * --lisa-popover-dismiss-target, a thumb's width, while the glyph stays
+ * --lisa-popover-dismiss-size: a mask is painted where it is painted but the
+ * whole box is what takes the tap, and 16px of it is a miss on a phone. The
+ * growth hangs outward into the panel's padding by the overhang — as margin,
+ * and as the sticky offset too, since sticky otherwise clamps the box back to
+ * the very padding the margin is reaching into — so the x is drawn in exactly
+ * the place it was and only the part you can hit is bigger.
+ */
+.popover button[data-dismiss] {
+    align-self: flex-end;
+    background-color: var(--lisa-popover-dismiss-color);
+    border-radius: 0;
+    border: 0;
+    cursor: pointer;
+    height: var(--lisa-popover-dismiss-target);
+    margin-bottom: calc(var(--lisa-popover-dismiss-overhang) -
+                        var(--lisa-popover-dismiss-target) -
+                        var(--lisa-popover-gap));
+    margin-right: calc(-1 * var(--lisa-popover-dismiss-overhang));
+    margin-top: calc(-1 * var(--lisa-popover-dismiss-overhang));
+    mask: var(--lisa-popover-dismiss-icon) center /
+          var(--lisa-popover-dismiss-size) no-repeat;
+    padding: 0;
+    position: sticky;
+    top: calc(-1 * var(--lisa-popover-dismiss-overhang));
+    width: var(--lisa-popover-dismiss-target);
+    z-index: 1;
+}
+
+.popover button[data-dismiss]:hover {
+    background-color: var(--lisa-popover-dismiss-hover-color);
+}
+
+.popover button[data-dismiss]:focus-visible {
+    outline: var(--lisa-focus-ring-width) solid var(--lisa-focus-ring-color);
+    outline-offset: var(--lisa-focus-ring-offset);
+}
+
+/*
+ * A title runs the width of the popover, so hold it clear of that corner —
+ * clear of the whole control and not just the x drawn in the middle of it, or
+ * the last word of a long title is sitting under a close button.
+ */
+.popover:has(> button[data-dismiss]) > :is(h1, h2, h3, h4, h5, h6) {
+    padding-right: calc(var(--lisa-popover-dismiss-target) -
+                        var(--lisa-popover-dismiss-overhang) +
+                        var(--lisa-popover-gap));
+}
+
+/* Table of contents */
+
+/*
+ * Put .toc on a <nav aria-labelledby="..."> holding an optional heading and a
+ * list of in-page links, ahead of a long post. Nested lists indent by
+ * --lisa-toc-indent per level, so the same rules cover any heading depth.
+ */
+
+.toc {
+    color: var(--lisa-toc-color);
+    font-size: var(--lisa-toc-font-size);
+}
+
+/* The nav component centers and pads itself; a table of contents sits inline. */
+nav.toc {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+}
+
+.toc > :is(h1, h2, h3, h4, h5, h6) {
+    color: var(--lisa-toc-title-color);
+    font-size: var(--lisa-toc-font-size);
+    letter-spacing: 0.08em;
+    margin: 0 0 var(--lisa-toc-title-margin);
+    text-transform: uppercase;
+}
+
+.toc :is(ol, ul) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lisa-toc-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Each nested level steps in, and the gap opens back up under its parent. */
+.toc :is(ol, ul) :is(ol, ul) {
+    margin-top: var(--lisa-toc-gap);
+    padding-left: var(--lisa-toc-indent);
+}
+
+.toc a,
+.toc a:visited {
+    color: var(--lisa-toc-color);
+    text-decoration: var(--lisa-link-text-decoration);
+}
+
+.toc a:hover {
+    color: var(--lisa-toc-hover-color);
+    text-decoration: var(--lisa-link-hover-text-decoration);
+}
+
+.toc [aria-current="true"],
+.toc [aria-current="location"] {
+    color: var(--lisa-toc-hover-color);
+}
+
+/* Navbar and Footer */
+
+nav, footer {
+    max-width: var(--lisa-max-wrapper-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--lisa-space-4);
+}
+
+nav a, nav a:visited, footer a, footer a:visited {
+    color: var(--lisa-nav-footer-link-color);
+    text-decoration: var(--lisa-nav-footer-link-text-decoration);
+}
+
+nav a:hover, footer a:hover {
+    color: var(--lisa-nav-footer-link-hover-color);
+    text-decoration: var(--lisa-nav-footer-link-hover-text-decoration);
+}
+
+/* Wrappers */
+
+.wrapper {
+    max-width: var(--lisa-max-wrapper-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--lisa-space-4);
+    padding-right: var(--lisa-space-4);
+}
+
+.wrapper-wide {
+    max-width: var(--lisa-max-wrapper-wide-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--lisa-space-4);
+    padding-right: var(--lisa-space-4);
+}
+
+.article {
+    max-width: var(--lisa-max-article-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--lisa-space-4);
+    padding-right: var(--lisa-space-4);
+}

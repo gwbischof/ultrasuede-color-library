@@ -1,0 +1,31 @@
+{
+  "tried": 304,
+  "hits": {
+    "4619": [
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/4619.jpg",
+        "bytes": 125097
+      },
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/4619_thumbnail.jpg",
+        "bytes": 124410
+      }
+    ],
+    "7369": [
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/7369S.jpg",
+        "bytes": 1619
+      },
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/7369s.jpg",
+        "bytes": 16240
+      }
+    ],
+    "8200": [
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/8200.jpg",
+        "bytes": 7821
+      }
+    ]
+  }
+}

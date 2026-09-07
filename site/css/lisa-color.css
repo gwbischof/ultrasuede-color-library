@@ -1,0 +1,8 @@
+/*
+ * lisa.css — Color
+ */
+
+body {
+    background-color: var(--lisa-background-color);
+    color: var(--lisa-foreground-color);
+}

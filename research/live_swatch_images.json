@@ -1,0 +1,78 @@
+{
+  "177-231": {
+    "code": "177-231",
+    "kind": "pattern",
+    "out": "images/jungle/bobca231.jpg",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/177-231.jpg",
+    "image": "images/jungle/bobca231.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": true
+  },
+  "2805": {
+    "code": "2805",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/2805.jpg",
+    "image": "images/fields/2805.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  },
+  "3968": {
+    "code": "3968",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/3968.jpg",
+    "image": "images/fields/3968.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  },
+  "4599": {
+    "code": "4598",
+    "weight": "ST",
+    "evidence": "Field's January 2007 Ultrasuede sheet prints #4599 Active Green under ULTRASUEDE® LIGHT Solids and #4598 Active Green under Soft",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/4598.jpg",
+    "image": "images/fields/4598.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  },
+  "6647": {
+    "code": "6647",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/6647.jpg",
+    "image": "images/fields/6647.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  },
+  "7369S": {
+    "code": "7369S",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/7369S.jpg",
+    "image": "images/fields/7369S.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  },
+  "8276": {
+    "code": "8275",
+    "weight": "ST",
+    "evidence": "Field's February 2010 Ultrasuede sheet prints #8276 Burnt Orange under ULTRASUEDE® LIGHT and #8275 Burnt Orange under Soft",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/8275.jpg",
+    "image": "images/fields/8275.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  },
+  "8281": {
+    "code": "8281",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/8281.jpg",
+    "image": "images/fields/8281.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  },
+  "9378": {
+    "code": "9378",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/9378.jpg",
+    "image": "images/fields/9378.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": true
+  },
+  "9464": {
+    "code": "9464",
+    "source": "https://shop.fieldsfabrics.com/assets/images/ultrasuede/9464.jpg",
+    "image": "images/fields/9464.jpg",
+    "retrieved": "2026-09-07",
+    "cropped": false
+  }
+}

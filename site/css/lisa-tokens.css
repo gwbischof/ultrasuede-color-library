@@ -1,0 +1,193 @@
+/*
+ * lisa.css — Tokens
+ */
+
+:root {
+    /* Typography */
+    --lisa-font-family: system-ui, Helvetica, Arial, "Helvetica Neue", sans-serif;
+    --lisa-font-family-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    --lisa-font-size-sm: 12px;
+    --lisa-font-size-md: 16px;
+    --lisa-font-size-lg: 18px;
+    --lisa-font-size-xl: 22px;
+    --lisa-font-size-2xl: 32px;
+    --lisa-font-size-3xl: 48px;
+    --lisa-line-height: 1.6;
+    --lisa-line-height-heading: 1.2;
+
+    /* Layout */
+    --lisa-space-1: 8px;
+    --lisa-space-2: 16px;
+    --lisa-space-3: 32px;
+    --lisa-space-4: 40px;
+    --lisa-space-5: 80px;
+    --lisa-space-6: 120px;
+    --lisa-max-wrapper-width: 920px;
+    --lisa-max-wrapper-wide-width: 1400px;
+    --lisa-max-article-width: 540px;
+
+    /* Color */
+    --lisa-accent-color: #4f46e5;
+    --lisa-accent-dark-color: #3730a3;
+    --lisa-accent-light-color: #6366f1;
+    --lisa-accent-pale-color: #a5b4fc;
+
+    --lisa-success-color: #0d9488;
+    --lisa-failure-color: #b62f41;
+
+    /*
+     * One purple-tinted neutral ramp, read light-on-dark before and dark-on-
+     * light now: the same five values, with the two ends swapped over.
+     *
+     * Flipping them leaves one hole. Going down from #f3f1f3 the next value on
+     * the ramp is #a89ea9, and that is a 28-point drop in L* where the dark
+     * theme's first step was only 9 — far too heavy for a colour whose whole
+     * job is to be a hint of a step off the page. #e0dce0 is that first step at
+     * the light end: a quarter of the way from #f3f1f3 to #a89ea9, which puts
+     * it 7 points of L* below the background, near enough the same gentle
+     * nudge #322833 was above #1d161e.
+     */
+    --lisa-foreground-color: #1d161e;
+    --lisa-foreground-muted-color: #463947;
+
+    --lisa-background-color: #f3f1f3;
+    --lisa-background-subtle-color: #e0dce0;
+    --lisa-background-muted-color: #a89ea9;
+
+    /* Borders */
+    --lisa-border-radius: 8px;
+    --lisa-container-border-width: 1px;
+    --lisa-input-border-width: 1px;
+
+    /* Transitions */
+    --lisa-hover-transition-time: 0ms;
+
+    /* Definition */
+    --lisa-definition-text-decoration: dotted;
+    --lisa-definition-text-decoration-thickness: 1px;
+    --lisa-definition-text-decoration-color: var(--lisa-accent-light-color);
+    --lisa-definition-text-underline-offset: 4px;
+
+    /* Tooltip */
+    --lisa-tooltip-background-color: var(--lisa-background-subtle-color);
+    --lisa-tooltip-color: var(--lisa-foreground-color);
+    --lisa-tooltip-caret-size: 6px;
+    --lisa-tooltip-offset: 4px;
+    --lisa-tooltip-max-width: 240px;
+    --lisa-tooltip-padding-x: var(--lisa-space-2);
+    --lisa-tooltip-padding-y: var(--lisa-space-2);
+    --lisa-tooltip-image-width: 64px;
+    --lisa-tooltip-image-height: 64px;
+    --lisa-tooltip-image-gap: var(--lisa-space-2);
+    --lisa-tooltip-icon-size: 16px;
+    --lisa-tooltip-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f3f1f3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E");
+
+    /* Loader */
+    --lisa-loader-size: 24px;
+    --lisa-loader-color: currentColor;
+    --lisa-loader-speed: 650ms;
+    --lisa-loader-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 12a9 9 0 1 1-6.219-8.56'/%3E%3C/svg%3E");
+
+    /* Progress */
+    --lisa-progress-height: 8px;
+    --lisa-progress-color: var(--lisa-accent-color);
+    --lisa-progress-track-color: var(--lisa-background-muted-color);
+    --lisa-progress-border-radius: 999px;
+    --lisa-progress-transition-time: 200ms;
+
+    /* Dropdown */
+    --lisa-dropdown-background-color: var(--lisa-background-subtle-color);
+    --lisa-dropdown-border-color: var(--lisa-background-muted-color);
+    --lisa-dropdown-border-width: var(--lisa-container-border-width);
+    --lisa-dropdown-min-width: 120px;
+    --lisa-dropdown-offset: var(--lisa-space-1);
+    --lisa-dropdown-item-hover-background-color: var(--lisa-background-muted-color);
+    --lisa-dropdown-item-padding-x: var(--lisa-space-2);
+    --lisa-dropdown-item-padding-y: var(--lisa-space-1);
+    --lisa-dropdown-summary-padding-x: var(--lisa-space-2);
+    --lisa-dropdown-summary-padding-y: var(--lisa-space-1);
+    --lisa-dropdown-summary-hover-background-color: var(--lisa-background-subtle-color);
+    --lisa-dropdown-icon-size: 16px;
+    --lisa-dropdown-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+    /* Breadcrumb */
+    --lisa-breadcrumb-font-size: var(--lisa-font-size-sm);
+    --lisa-breadcrumb-color: var(--lisa-foreground-muted-color);
+    --lisa-breadcrumb-current-color: var(--lisa-foreground-color);
+    --lisa-breadcrumb-gap: var(--lisa-space-1);
+    --lisa-breadcrumb-separator-size: 16px;
+    --lisa-breadcrumb-separator: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+
+    /* Notification */
+    --lisa-notification-align-width: var(--lisa-max-wrapper-wide-width);
+    --lisa-notification-inset-top: var(--lisa-space-2);
+    --lisa-notification-inset-x: var(--lisa-space-4);
+    --lisa-notification-width: 320px;
+    --lisa-notification-gap: var(--lisa-space-1);
+    --lisa-notification-padding: var(--lisa-space-2);
+    --lisa-notification-background-color: var(--lisa-background-subtle-color);
+    --lisa-notification-border-color: var(--lisa-background-muted-color);
+    --lisa-notification-border-width: var(--lisa-container-border-width);
+    --lisa-notification-color: var(--lisa-foreground-color);
+    --lisa-notification-dismiss-color: var(--lisa-foreground-muted-color);
+    --lisa-notification-dismiss-hover-color: var(--lisa-foreground-color);
+    --lisa-notification-dismiss-size: 16px;
+    --lisa-notification-dismiss-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E");
+    --lisa-notification-z-index: 100;
+
+    /* Modal */
+    --lisa-modal-width: 480px;
+    --lisa-modal-inset: var(--lisa-space-2);
+    --lisa-modal-padding: var(--lisa-space-3);
+    --lisa-modal-gap: var(--lisa-space-2);
+    --lisa-modal-background-color: var(--lisa-background-subtle-color);
+    --lisa-modal-border-color: var(--lisa-background-muted-color);
+    --lisa-modal-border-width: var(--lisa-container-border-width);
+    --lisa-modal-color: var(--lisa-foreground-color);
+    --lisa-modal-backdrop-color: color-mix(in srgb, var(--lisa-background-color) 70%, transparent);
+    --lisa-modal-dismiss-color: var(--lisa-foreground-muted-color);
+    --lisa-modal-dismiss-hover-color: var(--lisa-foreground-color);
+    --lisa-modal-dismiss-size: 16px;
+    --lisa-modal-dismiss-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E");
+
+    /* Popover */
+    --lisa-popover-width: 400px;
+    --lisa-popover-max-height: 80dvh;
+    --lisa-popover-inset: var(--lisa-space-2);
+    --lisa-popover-padding: var(--lisa-space-3);
+    --lisa-popover-gap: var(--lisa-space-2);
+    --lisa-popover-background-color: var(--lisa-background-subtle-color);
+    --lisa-popover-border-color: var(--lisa-background-muted-color);
+    --lisa-popover-border-width: var(--lisa-container-border-width);
+    --lisa-popover-color: var(--lisa-foreground-color);
+    --lisa-popover-backdrop-color: color-mix(in srgb, var(--lisa-background-color) 40%, transparent);
+    --lisa-popover-dismiss-color: var(--lisa-foreground-muted-color);
+    --lisa-popover-dismiss-hover-color: var(--lisa-foreground-color);
+    --lisa-popover-dismiss-size: 16px;
+    --lisa-popover-dismiss-target: 44px;
+    --lisa-popover-dismiss-overhang: calc((var(--lisa-popover-dismiss-target) -
+                                           var(--lisa-popover-dismiss-size)) / 2);
+    --lisa-popover-dismiss-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E");
+
+    /* Table of contents */
+    --lisa-toc-font-size: var(--lisa-font-size-sm);
+    --lisa-toc-color: var(--lisa-foreground-muted-color);
+    --lisa-toc-hover-color: var(--lisa-foreground-color);
+    --lisa-toc-title-color: var(--lisa-foreground-color);
+    --lisa-toc-title-margin: var(--lisa-space-2);
+    --lisa-toc-gap: var(--lisa-space-1);
+    --lisa-toc-indent: var(--lisa-space-2);
+
+    /* Link */
+    --lisa-link-text-decoration: none;
+    --lisa-link-hover-text-decoration: underline;
+    --lisa-nav-footer-link-text-decoration: none;
+    --lisa-nav-footer-link-hover-text-decoration: none;
+    --lisa-nav-footer-link-color: var(--lisa-foreground-muted-color);
+    --lisa-nav-footer-link-hover-color: var(--lisa-foreground-color);
+
+    /* Focus ring */
+    --lisa-focus-ring-width: 4px;
+    --lisa-focus-ring-offset: 0px;
+    --lisa-focus-ring-color: color-mix(in srgb, var(--lisa-accent-color) 50%, transparent);
+}

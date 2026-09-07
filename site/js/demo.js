@@ -1,0 +1,845 @@
+/*
+ * Ultrasuede Color Library — demo page.
+ *
+ * Reads lt.json, renders the three LT subsections as swatch grids, and fills a
+ * single shared popover with the entry that was clicked.
+ */
+
+(function () {
+    "use strict";
+
+    var popover = document.getElementById("swatch-detail");
+    var head = document.getElementById("detail-head");
+    var media = document.getElementById("detail-media");
+    var body = document.getElementById("detail-body");
+    /* The column that scrolls, now that the panel around it does not. */
+    var detail = popover.querySelector(".detail");
+
+    /*
+     * Render sizes in device pixels, fixed rather than measured. A tile is
+     * about 117 CSS pixels at six across, so 256 covers a 2x screen, and the
+     * popover's image column is about 270.
+     */
+    var TILE_PX = 256;
+    var DETAIL_PX = 512;
+
+    /*
+     * Which of the two the popover is showing. Reset to the shader every time a
+     * swatch is opened rather than carried over: the choice belongs to the
+     * swatch being looked at, not to the reader, and a sticky "Photo" means the
+     * next swatch opens on whichever of the two it happens to have — the shader
+     * for one, a watermarked thumbnail for the next.
+     */
+    var showPhoto = false;
+
+    /* ---- small DOM helpers ------------------------------------------------ */
+
+    function el(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) { node.className = className; }
+        if (text != null) { node.textContent = text; }
+        return node;
+    }
+
+    function clear(node) {
+        while (node.firstChild) { node.removeChild(node.firstChild); }
+    }
+
+    /*
+     * Lucide's copy glyph, built rather than pasted in as markup — the page has
+     * one icon in it, and one icon does not earn a sprite sheet, a fetch or the
+     * only innerHTML in the file.
+     *
+     * Sized and coloured entirely from CSS, so the width and height attributes
+     * the source carries are deliberately left off: they map to presentation
+     * attributes, which is a specified width, and a specified width is one
+     * aspect-ratio cannot then work around.
+     */
+    var SVG_NS = "http://www.w3.org/2000/svg";
+
+    function copyIcon() {
+        var svg = document.createElementNS(SVG_NS, "svg");
+        svg.setAttribute("class", "copy-icon");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("fill", "none");
+        svg.setAttribute("stroke", "currentColor");
+        svg.setAttribute("stroke-width", "2");
+        svg.setAttribute("stroke-linecap", "round");
+        svg.setAttribute("stroke-linejoin", "round");
+        /* the button says what it does in words beside it */
+        svg.setAttribute("aria-hidden", "true");
+
+        var rect = document.createElementNS(SVG_NS, "rect");
+        rect.setAttribute("x", "8");
+        rect.setAttribute("y", "8");
+        rect.setAttribute("width", "14");
+        rect.setAttribute("height", "14");
+        rect.setAttribute("rx", "2");
+        rect.setAttribute("ry", "2");
+        svg.appendChild(rect);
+
+        var path = document.createElementNS(SVG_NS, "path");
+        path.setAttribute("d",
+            "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2");
+        svg.appendChild(path);
+
+        return svg;
+    }
+
+    /* ---- copying -----------------------------------------------------------
+     *
+     * navigator.clipboard is only there in a secure context, which this page is
+     * over localhost but is not over a plain http host — so the old
+     * selection-and-execCommand route stays as the fallback. It is deprecated
+     * rather than gone, and "deprecated" beats "the button does nothing".
+     */
+
+    function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text).then(function () {
+                return true;
+            }, function () {
+                return legacyCopy(text);
+            });
+        }
+        return Promise.resolve(legacyCopy(text));
+    }
+
+    function legacyCopy(text) {
+        var area = el("textarea");
+        area.value = text;
+        /* off-screen rather than hidden: a display:none field cannot be selected */
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.top = "-1000px";
+        document.body.appendChild(area);
+        area.select();
+        var ok = false;
+        try {
+            ok = document.execCommand("copy");
+        } catch (e) {
+            ok = false;
+        }
+        document.body.removeChild(area);
+        return ok;
+    }
+
+    /*
+     * Wires a control up to copy `text()`.
+     *
+     * Nothing is drawn in acknowledgement: the buttons say what they do, and a
+     * badge appearing and timing out beside the value is more movement than a
+     * copy is worth. The announcement stays, because it is the only way the
+     * copy is perceivable at all without sight of the clipboard.
+     */
+    function copyOnClick(button, text, what) {
+        button.addEventListener("click", function () {
+            copyText(text()).then(function (ok) {
+                if (ok) { say(what + " copied"); }
+            });
+        });
+        return button;
+    }
+
+    /*
+     * One polite live region for the whole page. Cleared first so copying the
+     * same thing twice is announced twice rather than once.
+     */
+    var announcer = null;
+
+    function say(message) {
+        if (!announcer) {
+            announcer = el("div", "visually-hidden");
+            announcer.setAttribute("role", "status");
+            announcer.setAttribute("aria-live", "polite");
+            document.body.appendChild(announcer);
+        }
+        announcer.textContent = "";
+        setTimeout(function () { announcer.textContent = message; }, 50);
+    }
+
+    /*
+     * Archive URLs are long and say nothing useful in full, so a link shows
+     * its host and the capture date the Wayback path carries.
+     */
+    function link(url, label) {
+        var a = el("a", null, label || url);
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        return a;
+    }
+
+    function archiveLabel(url) {
+        var stamp = url.match(/web\.archive\.org\/web\/(\d{4})(\d{2})(\d{2})/);
+        if (stamp) {
+            return "Wayback capture " + stamp[1] + "-" + stamp[2] + "-" + stamp[3];
+        }
+        try {
+            return new URL(url).hostname.replace(/^www\./, "");
+        } catch (e) {
+            return url;
+        }
+    }
+
+    /* ---- swatch media ------------------------------------------------------
+     *
+     * A swatch can be drawn three ways, in this order of preference: the nap
+     * shader, the archived photograph, a flat fill of the sampled hex.
+     *
+     * The shader comes first because the photographs are the weakest thing in
+     * the dataset — 100px thumbnails, some of them JPEG mush, eighteen of them
+     * watermarked across the middle, and six no bigger than 57px square —
+     * while the numbers sampled out of them are clean. It falls back on its own
+     * if WebGL is missing.
+     *
+     * The Light Jungle patterns are printed rather than piece-dyed and carry no
+     * nap block, so they keep their photograph: an animal print is not a colour
+     * with a texture over it, and there is nothing here that could invent one.
+     */
+
+    function canRender(entry) {
+        return Boolean(entry.nap) && Nap.supported();
+    }
+
+    function photoOf(entry) {
+        return entry.image_large || entry.image || null;
+    }
+
+    /*
+     * Nothing to draw: no shader, no photograph, not even a sampled colour.
+     * That is what the missing-image section is, and it is the entry that says
+     * so rather than the section it happens to be listed in — which is how the
+     * one Bobcat colourway Toray never captured ends up in a list that is
+     * otherwise colours.
+     */
+    function blank(entry) {
+        return !canRender(entry) && !photoOf(entry) && !entry.hex;
+    }
+
+    /*
+     * Whether an entry is drawn at all. Kept out of blank() because it is a
+     * different question: blank() asks what an entry has, this asks whether the
+     * record wants it shown. An entry the file marks on_page: false keeps
+     * everything it has and simply is not rendered — see off_page_reason.
+     */
+    function onPage(entry) {
+        return entry.on_page !== false;
+    }
+
+    function napCanvas(entry, size, label) {
+        var canvas = el("canvas", "swatch-render");
+        if (!Nap.paint(canvas, entry, size)) { return null; }
+        if (label) {
+            canvas.setAttribute("role", "img");
+            canvas.setAttribute("aria-label", label);
+        } else {
+            /* the tile says the name in text right underneath */
+            canvas.setAttribute("aria-hidden", "true");
+        }
+        return canvas;
+    }
+
+    function photoImg(entry, src, lazy) {
+        var img = el("img");
+        img.src = src;
+        img.alt = entry.name;
+        if (lazy) { img.loading = "lazy"; }
+        return img;
+    }
+
+    /*
+     * The identifier, the same string on the tile and in the popover's subtitle.
+     *
+     * A colour carries a full SKU (8801-2467); a Field's custom colour was never
+     * given one and carries the bare colour number it is ordered by; a pattern
+     * is a pattern number and a colourway, written pattern-colour to match the
+     * shape of the SKU rather than spelled out.
+     */
+    function codeOf(entry, kind) {
+        if (kind === "pattern") { return entry.pattern + "-" + entry.color; }
+        return entry.sku || entry.code || "";
+    }
+
+
+    /* ---- tiles ------------------------------------------------------------ */
+
+    /*
+     * Every entry becomes the same tile: a square well, a name and a code line.
+     * The well falls back to the sampled hex where there is neither a shader nor
+     * a photo, so an entry with no archived image still reads as a tile rather
+     * than a hole in the grid.
+     */
+    /*
+     * A colour that has no colour: a name and its number, and nothing else. It
+     * deliberately does not get the square well the swatches have — a grid of
+     * empty wells would read as a grid of images that failed to load, and what
+     * is missing here is the picture, not the loading of it. The dates stay in
+     * the panel, where the list of sightings gives them somewhere to mean
+     * something.
+     */
+    function record(entry, kind) {
+        var button = el("button", "swatch record");
+        button.type = "button";
+
+        var text = el("span", "swatch-text");
+        text.appendChild(el("span", "swatch-name", entry.name));
+        text.appendChild(el("span", "swatch-code", codeOf(entry, kind)));
+        button.appendChild(text);
+
+        button.addEventListener("click", function () {
+            show(entry, kind);
+        });
+
+        return button;
+    }
+
+    function tile(entry, kind) {
+        if (blank(entry)) { return record(entry, kind); }
+
+        var button = el("button", "swatch");
+        button.type = "button";
+
+        var well = el("span", "swatch-thumb");
+        var canvas = canRender(entry) ? napCanvas(entry, TILE_PX, null) : null;
+        if (canvas) {
+            well.appendChild(canvas);
+        } else if (entry.image) {
+            well.appendChild(photoImg(entry, entry.image, true));
+        } else {
+            well.style.backgroundColor = entry.hex;
+        }
+        button.appendChild(well);
+
+        /*
+         * Name over identifier. All three shapes are numeric and hyphenated the
+         * same way — 8801-2467, 181-023, 1419 — so one code face carries them
+         * all and the line reads as the same kind of thing across the page.
+         *
+         * Patterns need theirs most of all: six
+         * of the eleven Light Jungle patterns were sold in two colourways, so a
+         * name on its own puts two tiles reading "Bobcat" next to each other
+         * and they look like a bug in the data rather than what they are.
+         */
+        var text = el("span", "swatch-text");
+        text.appendChild(el("span", "swatch-name", entry.name));
+        text.appendChild(el("span", "swatch-code", codeOf(entry, kind)));
+        button.appendChild(text);
+
+        button.addEventListener("click", function () {
+            show(entry, kind);
+        });
+
+        return button;
+    }
+
+    /*
+     * `kind` is a string for a grid holding one kind of thing, or a function of
+     * the entry for the one grid that mixes them.
+     */
+    function renderGrid(id, entries, kind) {
+        var grid = document.getElementById(id);
+        entries.forEach(function (entry) {
+            grid.appendChild(
+                tile(entry, typeof kind === "function" ? kind(entry) : kind));
+        });
+    }
+
+    /* ---- detail popover --------------------------------------------------- */
+
+    /*
+     * `className` lands on both halves of the row, and exists for the one row
+     * whose value is a control rather than a line of text: a button is taller
+     * than the line it replaces, and its label has to be centred against it
+     * instead of sitting at the top of the row like the others.
+     */
+    function fact(facts, label, value, className) {
+        if (value == null || value === "" || (Array.isArray(value) && !value.length)) {
+            return;
+        }
+        facts.appendChild(el("dt", className, label));
+        var dd = el("dd", className);
+        if (value instanceof Node) {
+            dd.appendChild(value);
+        } else if (Array.isArray(value)) {
+            dd.textContent = value.join(", ");
+        } else {
+            dd.textContent = String(value);
+        }
+        facts.appendChild(dd);
+    }
+
+    /*
+     * The hex, with a chip of the colour standing next to it, and the pair of
+     * them a button that copies the value.
+     *
+     * A hex is there to be pasted somewhere else — it is the one thing on this
+     * page with an obvious destination — so the value itself is the control
+     * rather than a copy icon sitting next to it. The chip comes along because
+     * the two read as one object; pressing the colour to take the colour is the
+     * whole gesture.
+     */
+    function colorValue(hex) {
+        var button = el("button", "copy");
+        button.type = "button";
+        button.setAttribute("aria-label", "Copy " + hex);
+
+        var chip = el("span", "detail-chip");
+        chip.style.backgroundColor = hex;
+        button.appendChild(chip);
+        button.appendChild(el("span", null, hex));
+
+        return copyOnClick(button, function () { return hex; }, "Hex value");
+    }
+
+    /*
+     * The colourway a print was run in, where the record says what it was.
+     *
+     * lt.json has one for all ten colour numbers, but only three of them —
+     * 023 Cream/Black, 231 Tan/Black, 232 Cream/Brown — were ever named in
+     * Field's Fabrics' catalogues. The other seven are named off the
+     * photographs, and the panel shows nothing for them: not the name, which
+     * would be a word standing where a record should be, and so not the hexes
+     * either, which without it are a set of colours with nothing to call them.
+     * They stay in the file, marked name_source: estimated, for anyone reading
+     * the data.
+     */
+    function documented(entry) {
+        var way = entry.colorway;
+        return way && way.name_source === "fields_catalog" ? way : null;
+    }
+
+    /*
+     * A print's colours, one copyable hex per ink, lightest first — which for
+     * every one of these prints is the ground and then what was printed on it.
+     *
+     * No name against any of them: for three of the ten colourways the names
+     * are on the line under the code already, and for the other seven there is
+     * no name to give.
+     */
+    function inkValue(way) {
+        var list = el("ul", "detail-inks");
+        way.colors.forEach(function (ink) {
+            var item = el("li");
+            item.appendChild(colorValue(ink.hex));
+            list.appendChild(item);
+        });
+        return list;
+    }
+
+    /*
+     * The short list. lt.json carries a great deal more per entry — listing
+     * dates, colour-card appearances, sample-order windows, the Field's
+     * exclusivity evidence, an older sampling of the same colour — and all of
+     * it stays in the file for anyone reading the data directly. The panel
+     * shows only what tells you about the colour in front of you: what it is,
+     * what it was called or numbered before, and the capture it came from. The
+     * rest was provenance for the dataset, not for the swatch.
+     */
+    function facts_for(entry, kind) {
+        var facts = el("dl", "detail-facts");
+
+        /*
+         * The identifier — SKU, or pattern/colour number — is already the
+         * subtitle under the name, so it is not repeated as a row here.
+         */
+        if (kind === "pattern") {
+            /*
+             * A print is not one colour, so it gets the inks it was run in
+             * rather than a hex — and it gets them from its colour number,
+             * which is what that number is: 023 is Cream/Black on all six
+             * prints that carry it, not a serial for any one of them.
+             *
+             * Only where the record says what the combination was, though.
+             * The hexes for the other seven are as good a measurement, but
+             * they would be a set of colours with nothing to call them and no
+             * source behind them, which is not what this panel is for — see
+             * documented().
+             */
+            var way = documented(entry);
+            if (way) {
+                fact(facts, "Estimated color", inkValue(way), "fact-inks");
+            }
+        } else if (entry.hex) {
+            /*
+             * "Estimated" rather than "sampled": the number is a median taken
+             * off a small archived JPEG, not a reading off the cloth.
+             */
+            fact(facts, "Estimated color", colorValue(entry.hex));
+        }
+
+        /*
+         * Directly under the hex, because the two are the same fact at two
+         * resolutions: the colour as one number, and the colour as the whole
+         * recipe that number was pulled out of.
+         */
+        fact(facts, "Shader", shaderValue(entry), "fact-control");
+
+        if (kind === "color" && entry.former_skus && entry.former_skus.length) {
+            fact(facts, "Former SKUs", entry.former_skus.map(function (s) {
+                return typeof s === "string" ? s : (s.sku || s.name || JSON.stringify(s));
+            }));
+        }
+
+        if (kind === "historical") { fact(facts, "Sold as", entry.widths); }
+
+        /*
+         * The other ways Field's printed the name, which is worth showing
+         * because some of them are Field's own typos — "Eclispe", "Bourdeax" —
+         * and a reader searching for the colour may well have it spelled that
+         * way rather than this one.
+         *
+         * It is a fact about the paper record, though, and so it is shown
+         * where the paper record is what the reader is being given: the
+         * missing-image section, where a list of sightings is the whole of the
+         * evidence. A colour off those same pre-2011 lists whose archived scan
+         * later turned up is a custom colour now, and it is shown as one — the
+         * same rows as every other custom colour, and no footnotes from the
+         * grid it used to sit in.
+         */
+        if (kind !== "custom" && entry.name_variants) {
+            fact(facts, "Also printed as", entry.name_variants.filter(
+                function (name) { return name !== entry.name; }));
+        }
+
+        if (entry.see_also) {
+            fact(facts, "See also",
+                 "#" + entry.see_also.code + " — " + entry.see_also.note);
+        }
+
+        if (kind === "custom" && entry.former_names && entry.former_names.length) {
+            fact(facts, "Former names", entry.former_names.map(function (n) {
+                return n.name;
+            }));
+        }
+
+        /*
+         * Labelled "Source" rather than "Archive" because of what it is for:
+         * it is the capture that shows this colorway existed, and the reader
+         * should be able to go and see it.
+         */
+        if (kind === "historical") {
+            /*
+             * Every capture rather than the latest one alone, and only here. A
+             * colour with nothing to show is only as good as the number of
+             * times the record says it existed, so the list of sightings is
+             * the evidence itself — and it says which page or catalogue each
+             * one came off. A colour that came back with a picture does not
+             * need the argument made: it cites its latest capture as its
+             * source, the same as every other swatch on the page.
+             */
+            var list = el("ul", "detail-captures");
+            entry.captures.forEach(function (capture) {
+                var item = el("li");
+                item.appendChild(link(capture.archive_url, capture.date));
+                item.appendChild(el("span", "capture-in", capture["in"]));
+                list.appendChild(item);
+            });
+            fact(facts, "Seen in", list);
+        } else if (entry.source) {
+            fact(facts, "Source", sourceValue(entry));
+        }
+
+        return facts;
+    }
+
+    /*
+     * The capture the entry came from, and — where the picture above it is not
+     * a picture of this cloth — a line saying so.
+     *
+     * A handful of the pre-2011 colours were never photographed in Light, but
+     * Field's sold the same colour in ST under its own number and photographed
+     * that. The colour is the colour; the nap is not the same cloth, and the
+     * reader is told before they take the swatch for a Light one. It sits under
+     * the source because that is what it qualifies — where the picture came
+     * from — and `based_on` in lt.json carries the number and the catalogue
+     * sheet that pairs the two, for anyone who wants to check it.
+     */
+    function sourceValue(entry) {
+        var value = document.createDocumentFragment();
+        value.appendChild(link(entry.source, archiveLabel(entry.source)));
+        if (entry.based_on) {
+            value.appendChild(el("span", "fact-note",
+                "This swatch is based on the " + entry.based_on.weight +
+                " version."));
+        }
+        return value;
+    }
+
+    /*
+     * The shader, as a row of the facts under the hex.
+     *
+     * What is worth taking away from this page is the recipe as much as the
+     * number: a colour here is a median, an axis and a contrast run through a
+     * noise field, and the listing handed over has those three frozen into it
+     * so it compiles and draws this swatch on its own, with no lt.json and none
+     * of this page around it.
+     *
+     * It sits in the list rather than in a block of its own because it is the
+     * same kind of statement as the rows around it — here is the hex, here is
+     * the shader, here is the capture they came from — and a label and a value
+     * is all any of them needs. The value names the language rather than the
+     * gesture, for the same reason the hex row's value is the hex: what is
+     * copied is the thing named.
+     *
+     * Built from the entry's nap block rather than from anything the renderer
+     * did, so a browser with no WebGL — which shows the flat hex in the panel
+     * beside this — still has the shader to give. An entry with no nap block,
+     * which is every Light Jungle print, gets no row at all rather than a
+     * button that copies nothing.
+     */
+    function shaderValue(entry) {
+        var code = Nap.source(entry);
+        if (!code) { return null; }
+
+        var button = el("button", "copy");
+        button.type = "button";
+        /*
+         * The glyph stands where the hex row's chip stands, and says the same
+         * thing about the row it is in — but the label beside it names what is
+         * being taken, not what pressing does, so the accessible name says it.
+         */
+        button.setAttribute("aria-label", "Copy GLSL");
+        button.appendChild(copyIcon());
+        button.appendChild(el("span", null, "GLSL"));
+
+        return copyOnClick(button, function () { return code; }, "GLSL");
+    }
+
+    /*
+     * What the colour number in the code above it means, in words: the inks the
+     * print was run in, lightest first. Field's Fabrics' name for the
+     * combination, and only theirs — see documented().
+     */
+    function colorwayLine(way) {
+        return el("p", "detail-colorway text-sm mb-2",
+                  way.colors.map(function (ink) {
+                      return ink.name;
+                  }).join(" / "));
+    }
+
+    /*
+     * The two-button switch under the popover's image. It is only built where
+     * there is actually a choice to make — an entry with no photograph, or a
+     * pattern with no shader, gets no switch rather than a dead half of one.
+     */
+    function mediaSwitch() {
+        var group = el("div", "detail-switch");
+        group.setAttribute("role", "group");
+        group.setAttribute("aria-label", "Swatch rendering");
+
+        var halves = [];
+
+        function sync() {
+            halves.forEach(function (half) {
+                half[0].setAttribute("aria-pressed",
+                    String(showPhoto === half[1]));
+            });
+        }
+
+        [["Shader", false], ["Photo", true]].forEach(function (option) {
+            var button = el("button", null, option[0]);
+            button.type = "button";
+            halves.push([button, option[1]]);
+            button.addEventListener("click", function () {
+                if (showPhoto === option[1]) { return; }
+                showPhoto = option[1];
+                showSide();
+                sync();
+            });
+            group.appendChild(button);
+        });
+
+        sync();
+        return group;
+    }
+
+    /*
+     * Pull the popover's photograph into the cache while the reader is still
+     * looking at the shader. The switch is two clicks from being wanted at the
+     * most, and this is the difference between it appearing at once and it
+     * arriving after a visible beat — the tile only ever loaded the small
+     * image, so the large one is a cold fetch the first time.
+     */
+    /* The two renderings currently in the panel, so the switch can toggle them. */
+    var sides = { canvas: null, photo: null };
+
+    /*
+     * Both sides are built once, when the panel opens, and the switch only
+     * changes which one is hidden. Rebuilding the <img> on each switch is what
+     * made the photograph flash: a fresh element has to be fetched, decoded and
+     * laid out before it can paint, and none of that is free even when the
+     * bytes are already cached. Built up front it is decoded and ready long
+     * before anyone reaches the button, and switching costs one attribute.
+     *
+     * Building it up front is also the preload — a hidden <img> is still
+     * fetched — so the photograph starts downloading the moment the swatch is
+     * clicked rather than when the reader asks for it.
+     */
+    function buildMedia(entry) {
+        clear(media);
+        sides.canvas = null;
+        sides.photo = null;
+
+        var photo = photoOf(entry);
+
+        /*
+         * The render is attempted even when the photograph is the side being
+         * shown. It costs a fraction of a millisecond, and it is the only
+         * honest way to know whether the switch has two working sides — a
+         * context loss would otherwise leave it offering a shader that cannot
+         * draw, with "Shader" lit over a photograph.
+         */
+        var canvas = canRender(entry)
+            ? napCanvas(entry, DETAIL_PX,
+                entry.name + " — drawn from its sampled color")
+            : null;
+
+        if (canvas) {
+            sides.canvas = canvas;
+            media.appendChild(canvas);
+        }
+
+        if (photo) {
+            sides.photo = photoImg(entry, photo, false);
+            /*
+             * Decoding off the main thread, so the first reveal is a paint and
+             * nothing else. Deliberately not awaited and not gated on: it never
+             * settles while the tab is in the background, and a photograph that
+             * only appears once the window is focused would be a worse bug than
+             * the one this is here to fix.
+             */
+            if (sides.photo.decode) {
+                sides.photo.decode().catch(function () { return null; });
+            }
+            media.appendChild(sides.photo);
+        }
+
+        if (!canvas && !photo) {
+            var block = el("div", "detail-swatch");
+            block.style.backgroundColor = entry.hex || "var(--lisa-background-muted-color)";
+            media.appendChild(block);
+        }
+
+        /* Only a panel with both sides has a switch, and so a square box. */
+        var pair = Boolean(canvas && photo);
+        media.classList.toggle("detail-media-pair", pair);
+        if (pair) { media.appendChild(mediaSwitch()); }
+
+        showSide();
+    }
+
+    /* Which of the built sides is visible. The photo stands in where there is
+     * no shader to draw, which is every Light Jungle print. */
+    function showSide() {
+        var usePhoto = Boolean(sides.photo) && (showPhoto || !sides.canvas);
+        if (sides.canvas) { sides.canvas.hidden = usePhoto; }
+        if (sides.photo) { sides.photo.hidden = !usePhoto; }
+    }
+
+    function show(entry, kind) {
+        clear(head);
+        clear(body);
+        showPhoto = false;
+
+        /*
+         * One panel serves every tile, so the box keeps whatever scroll the
+         * last entry was left at. Read a long entry to the bottom, close it,
+         * open a short one, and it opens part-read.
+         */
+        detail.scrollTop = 0;
+
+        /*
+         * With no hex, no photograph and no shader there is nothing to put in
+         * the image column, so the panel drops it rather than standing an empty
+         * box there and giving the text 60% of the width for no reason.
+         */
+        var empty = blank(entry);
+        media.hidden = empty;
+        if (!empty) { buildMedia(entry); } else { clear(media); }
+
+        /*
+         * The name and the number that qualifies it go in the head rather than
+         * at the top of the body. On the wide panel that is the same place —
+         * the head is the first row of the right-hand column and the rows are
+         * flush — but it is a cell of the grid rather than a paragraph of the
+         * body, which is what lets the phone layout lift the pair above the
+         * image without the facts coming with them.
+         */
+        head.appendChild(el("h2", "detail-title text-xl", entry.name));
+
+        var way = documented(entry);
+        var sub = codeOf(entry, kind);
+        if (sub) {
+            head.appendChild(el("p", "detail-sub text-sm" + (way ? "" : " mb-2"),
+                                sub));
+        }
+        if (way) { head.appendChild(colorwayLine(way)); }
+
+        body.appendChild(facts_for(entry, kind));
+
+        popover.showPopover();
+    }
+
+    /* ---- boot ------------------------------------------------------------- */
+
+    fetch("lt.json")
+        .then(function (response) {
+            if (!response.ok) { throw new Error("lt.json: HTTP " + response.status); }
+            return response.json();
+        })
+        .then(function (data) {
+            /*
+             * The missing-image grid holds what the record names but cannot
+             * show. It is built to mix — a pattern with no capture belongs here
+             * as much as a colour does, sorted in by name, because a reader
+             * looking for a name should not have to know which of the two it
+             * is — but the last such pattern has since been found, so today the
+             * list is historical colours alone. Hence the flat "colors" label;
+             * if a pattern ever falls back in, that word needs widening again.
+             */
+            var shown = data.patterns.filter(function (p) { return !blank(p); });
+            var missing = data.historical_colors
+                .concat(data.patterns.filter(blank))
+                .sort(function (a, b) { return a.name.localeCompare(b.name); });
+
+            var sections = [
+                ["colors", data.colors, "color", "colors"],
+                ["patterns", shown, "pattern", "patterns"],
+                ["custom", data.custom_colors, "custom", "colors"],
+                ["missing", missing, function (entry) {
+                    return entry.pattern ? "pattern" : "historical";
+                }, "colors"]
+            ];
+
+            /*
+             * One count per subsection, and the total over the section head.
+             * The breakdown used to live up there as four figures separated by
+             * dots, which asked the reader to hold the whole page in their head
+             * to read the top of it; each number now sits against the grid it
+             * counts, and the head says how much there is altogether.
+             */
+            var total = 0;
+            sections.forEach(function (section) {
+                /*
+                 * An entry marked on_page: false stays in lt.json and is left
+                 * off the page — the file is the record and nothing is dropped
+                 * from it to change what is drawn. Each one says why in its own
+                 * off_page_reason.
+                 */
+                var key = section[0], entries = section[1].filter(onPage);
+                renderGrid("grid-" + key, entries, section[2]);
+                document.getElementById("count-" + key).textContent =
+                    entries.length + " " + section[3];
+                total += entries.length;
+            });
+            document.getElementById("lt-counts").textContent =
+                total + " colors and patterns";
+        })
+        .catch(function (error) {
+            var main = document.querySelector("main");
+            main.appendChild(el("p", "text-sm",
+                "Could not load lt.json — " + error.message +
+                ". Serve this page over HTTP rather than opening the file directly."));
+        });
+}());

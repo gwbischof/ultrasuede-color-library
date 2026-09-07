@@ -1,0 +1,35 @@
+{
+  "tried": 608,
+  "hits": {
+    "2714": [
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/blue.jpg",
+        "bytes": 445898
+      },
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/blue_thumbnail.jpg",
+        "bytes": 13242
+      }
+    ],
+    "2465": [
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/royal.jpg",
+        "bytes": 662921
+      },
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/royal_thumbnail.jpg",
+        "bytes": 14424
+      }
+    ],
+    "8200": [
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/cinnamon.jpg",
+        "bytes": 101755
+      },
+      {
+        "url": "https://shop.fieldsfabrics.com/assets/images/cinnamon_thumbnail.jpg",
+        "bytes": 8032
+      }
+    ]
+  }
+}
