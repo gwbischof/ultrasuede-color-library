@@ -828,7 +828,9 @@
          * it without linking to it. */
         { id: "lx", file: "lx.json", label: "LX", preferPhoto: true,
           sourceLabel: "Toray storefront (Japan)" },
-        { id: "st", file: "st.json", label: "ST" },
+        /* 418px Toray swatches, clean and unwatermarked — comfortably over the
+         * ~351 device pixels a tile needs, so the photograph leads here too. */
+        { id: "st", file: "st.json", label: "ST", preferPhoto: true },
         /* sourceLabel: show what the source IS without linking to it. These two
          * are bought from small Japanese retailers and Garrett would rather not
          * hand their shopfronts to everyone reading. The URLs stay in the JSON
