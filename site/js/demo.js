@@ -801,6 +801,7 @@
         { id: "st", file: "st.json", label: "ST" },
         { id: "lamous-th", file: "lamous-th.json", label: "Lamous TH" },
         { id: "shammy", file: "shammy.json", label: "Shammy 707J" },
+        { id: "ds102", file: "texvision-ds102.json", label: "Texvision DS102" },
         { id: "lt", file: "lt.json", label: "LT",
           labels: { patterns: "Jungle prints" } }
     ];
