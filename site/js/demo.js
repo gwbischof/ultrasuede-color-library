@@ -307,15 +307,22 @@
         button.type = "button";
 
         var well = el("span", "swatch-thumb");
-        var canvas = canRender(entry) ? napCanvas(entry, TILE_PX, null) : null;
         /*
          * photoOf, not entry.image: the small copy is 100px and the well is
          * about 117 CSS pixels, so on a 3x screen the small one is a 3.5x
-         * upscale and reads as blurred. Only entries with no shader come down
-         * this path — every Lamous colour, and the Jungle prints — so this is a
-         * minority of tiles, and they are lazy.
+         * upscale and reads as blurred.
          */
-        var photo = canvas ? null : photoOf(entry);
+        var photo = photoOf(entry);
+        /*
+         * The shader leads in the grid, except where the product says its
+         * photographs are better — LX's are 800px frames from Toray's own
+         * storefront, and they beat what the shader draws. That is the same
+         * `preferPhoto` the popover honours, so a product's tile and its detail
+         * view now open on the same side rather than disagreeing.
+         */
+        var canvas = (preferPhoto && photo)
+            ? null
+            : (canRender(entry) ? napCanvas(entry, TILE_PX, null) : null);
         if (canvas) {
             well.appendChild(canvas);
         } else if (photo) {
