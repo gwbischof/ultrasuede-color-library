@@ -43,6 +43,15 @@
     132,
     97
    ],
+   "nap": {
+    "axis": [
+     1.0331,
+     0.9759,
+     1.1416
+    ],
+    "contrast": 15.01,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CA0.jpg",
    "image_large": "images/large/3942-CA0.jpg",
    "source_image_width": 3667,
@@ -62,6 +71,15 @@
     168,
     146
    ],
+   "nap": {
+    "axis": [
+     0.9443,
+     1.0005,
+     1.1589
+    ],
+    "contrast": 11.13,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CA5.jpg",
    "image_large": "images/large/3942-CA5.jpg",
    "source_image_width": 3667,
@@ -81,6 +99,15 @@
     126,
     105
    ],
+   "nap": {
+    "axis": [
+     1.0044,
+     0.997,
+     1.0172
+    ],
+    "contrast": 12.64,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CB1.jpg",
    "image_large": "images/large/3942-CB1.jpg",
    "source_image_width": 3667,
@@ -100,6 +127,15 @@
     51,
     33
    ],
+   "nap": {
+    "axis": [
+     1.0541,
+     1.0117,
+     0.7253
+    ],
+    "contrast": 9.77,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CB8.jpg",
    "image_large": "images/large/3942-CB8.jpg",
    "source_image_width": 3667,
@@ -119,6 +155,15 @@
     35,
     25
    ],
+   "nap": {
+    "axis": [
+     1.12,
+     0.9761,
+     0.883
+    ],
+    "contrast": 6.3,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CB9.jpg",
    "image_large": "images/large/3942-CB9.jpg",
    "source_image_width": 3667,
@@ -138,6 +183,15 @@
     116,
     140
    ],
+   "nap": {
+    "axis": [
+     1.0251,
+     0.9893,
+     1.0318
+    ],
+    "contrast": 11.32,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CC6.jpg",
    "image_large": "images/large/3942-CC6.jpg",
    "source_image_width": 3667,
@@ -157,6 +211,15 @@
     141,
     67
    ],
+   "nap": {
+    "axis": [
+     0.926,
+     0.972,
+     1.4949
+    ],
+    "contrast": 8.83,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CC9.jpg",
    "image_large": "images/large/3942-CC9.jpg",
    "source_image_width": 3667,
@@ -176,6 +239,15 @@
     222,
     216
    ],
+   "nap": {
+    "axis": [
+     0.984,
+     1.0035,
+     1.0123
+    ],
+    "contrast": 2.72,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CD8.jpg",
    "image_large": "images/large/3942-CD8.jpg",
    "source_image_width": 1519,
@@ -195,6 +267,15 @@
     179,
     177
    ],
+   "nap": {
+    "axis": [
+     0.991,
+     1.0026,
+     1.001
+    ],
+    "contrast": 12.86,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CN1.jpg",
    "image_large": "images/large/3942-CN1.jpg",
    "source_image_width": 397,
@@ -214,6 +295,15 @@
     109,
     69
    ],
+   "nap": {
+    "axis": [
+     0.9797,
+     1.0097,
+     0.9637
+    ],
+    "contrast": 16.82,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CQ8.jpg",
    "image_large": "images/large/3942-CQ8.jpg",
    "source_image_width": 397,
@@ -233,6 +323,15 @@
     103,
     117
    ],
+   "nap": {
+    "axis": [
+     0.1817,
+     1.2383,
+     1.0488
+    ],
+    "contrast": 3.68,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CT5.jpg",
    "image_large": "images/large/3942-CT5.jpg",
    "source_image_width": 1519,
@@ -252,6 +351,15 @@
     72,
     31
    ],
+   "nap": {
+    "axis": [
+     0.9539,
+     1.0253,
+     0.8854
+    ],
+    "contrast": 6.71,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-CT6.jpg",
    "image_large": "images/large/3942-CT6.jpg",
    "source_image_width": 1519,
@@ -271,6 +379,15 @@
     15,
     12
    ],
+   "nap": {
+    "axis": [
+     1.1867,
+     0.9581,
+     0.8652
+    ],
+    "contrast": 4.18,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GA3.jpg",
    "image_large": "images/large/3942-GA3.jpg",
    "source_image_width": 3667,
@@ -290,6 +407,15 @@
     20,
     20
    ],
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 2.69,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GB2.jpg",
    "image_large": "images/large/3942-GB2.jpg",
    "source_image_width": 1519,
@@ -309,6 +435,15 @@
     15,
     23
    ],
+   "nap": {
+    "axis": [
+     0.8967,
+     1.0096,
+     1.2085
+    ],
+    "contrast": 2.98,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GB7.jpg",
    "image_large": "images/large/3942-GB7.jpg",
    "source_image_width": 3667,
@@ -328,6 +463,15 @@
     22,
     22
    ],
+   "nap": {
+    "axis": [
+     1.0548,
+     0.9831,
+     1.006
+    ],
+    "contrast": 4.33,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GC1.jpg",
    "image_large": "images/large/3942-GC1.jpg",
    "source_image_width": 3667,
@@ -347,6 +491,15 @@
     55,
     30
    ],
+   "nap": {
+    "axis": [
+     1.1318,
+     0.9952,
+     0.6595
+    ],
+    "contrast": 9.62,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GD8.jpg",
    "image_large": "images/large/3942-GD8.jpg",
    "source_image_width": 3667,
@@ -366,6 +519,15 @@
     1,
     2
    ],
+   "nap": {
+    "axis": [
+     3.924,
+     0.2047,
+     0.2685
+    ],
+    "contrast": 3.83,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GF2.jpg",
    "image_large": "images/large/3942-GF2.jpg",
    "source_image_width": 3667,
@@ -385,6 +547,15 @@
     32,
     24
    ],
+   "nap": {
+    "axis": [
+     1.0762,
+     0.9853,
+     0.9212
+    ],
+    "contrast": 6.59,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GH0.jpg",
    "image_large": "images/large/3942-GH0.jpg",
    "source_image_width": 1519,
@@ -404,6 +575,15 @@
     8,
     29
    ],
+   "nap": {
+    "axis": [
+     1.6954,
+     0.7572,
+     1.357
+    ],
+    "contrast": 2.9,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GH5.jpg",
    "image_large": "images/large/3942-GH5.jpg",
    "source_image_width": 3667,
@@ -423,6 +603,15 @@
     137,
     139
    ],
+   "nap": {
+    "axis": [
+     1.0091,
+     0.9971,
+     1.0023
+    ],
+    "contrast": 13.6,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GV0.jpg",
    "image_large": "images/large/3942-GV0.jpg",
    "source_image_width": 3667,
@@ -442,6 +631,15 @@
     51,
     35
    ],
+   "nap": {
+    "axis": [
+     1.0055,
+     0.9996,
+     0.9878
+    ],
+    "contrast": 8.89,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-GV9.jpg",
    "image_large": "images/large/3942-GV9.jpg",
    "source_image_width": 397,
@@ -461,6 +659,15 @@
     22,
     36
    ],
+   "nap": {
+    "axis": [
+     1.0459,
+     0.9829,
+     1.0342
+    ],
+    "contrast": 8.34,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-WA4.jpg",
    "image_large": "images/large/3942-WA4.jpg",
    "source_image_width": 397,
@@ -480,6 +687,15 @@
     28,
     69
    ],
+   "nap": {
+    "axis": [
+     0.9631,
+     1.0049,
+     1.0598
+    ],
+    "contrast": 4.52,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-WA6.jpg",
    "image_large": "images/large/3942-WA6.jpg",
    "source_image_width": 1519,
@@ -499,6 +715,15 @@
     56,
     85
    ],
+   "nap": {
+    "axis": [
+     0.8176,
+     1.0545,
+     0.9974
+    ],
+    "contrast": 2.8,
+    "contrast_source": "measured"
+   },
    "image": "images/3942-WA7.jpg",
    "image_large": "images/large/3942-WA7.jpg",
    "source_image_width": 1519,

@@ -32,6 +32,12 @@ import urllib.request
 import numpy as np
 from PIL import Image
 
+# The nap measurement is shared with LT rather than reimplemented — same
+# de-noising, same five bands, same meaning — so a shader drawn from an LX
+# entry and one drawn from an LT entry are the same kind of picture.
+# build_dataset guards its own entry point, so importing it runs nothing.
+from build_dataset import nap
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SNAPSHOT = ROOT / 'scraping' / 'lx_products.json'
 IMAGES = ROOT / 'images'
@@ -175,6 +181,11 @@ def build():
             sys.exit(f'missing image {large.name} — run with --fetch')
 
         rgb = sample_color(large)
+        # corners=False: Toray's frames are edge-to-edge fabric with no
+        # watermark, so the centre is read directly. Every LX photograph clears
+        # NAP_MEASURABLE (the smallest is 397px), so contrast is measured for
+        # all 25 and none falls back to the fitted curve.
+        nap_block = nap(str(large), rgb)
         src = max(p['images'], key=lambda i: i.get('width') or 0)
         colors.append({
             'name': p['title'].strip(),
@@ -183,6 +194,7 @@ def build():
             'code': code,
             'hex': hexstr(rgb),
             'rgb': rgb,
+            'nap': nap_block,
             'image': f'images/{STYLE}-{code}.jpg',
             'image_large': f'images/large/{STYLE}-{code}.jpg',
             'source_image_width': src.get('width'),

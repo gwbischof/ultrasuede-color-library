@@ -1,8 +1,8 @@
 /*
  * Ultrasuede Color Library — demo page.
  *
- * Reads lt.json, renders the three LT subsections as swatch grids, and fills a
- * single shared popover with the entry that was clicked.
+ * Reads one JSON file per product, renders each product's subsections as swatch
+ * grids, and fills a single shared popover with the entry that was clicked.
  */
 
 (function () {
@@ -337,8 +337,7 @@
      * `kind` is a string for a grid holding one kind of thing, or a function of
      * the entry for the one grid that mixes them.
      */
-    function renderGrid(id, entries, kind) {
-        var grid = document.getElementById(id);
+    function renderGrid(grid, entries, kind) {
         entries.forEach(function (entry) {
             grid.appendChild(
                 tile(entry, typeof kind === "function" ? kind(entry) : kind));
@@ -783,63 +782,164 @@
 
     /* ---- boot ------------------------------------------------------------- */
 
-    fetch("lt.json")
-        .then(function (response) {
-            if (!response.ok) { throw new Error("lt.json: HTTP " + response.status); }
-            return response.json();
-        })
-        .then(function (data) {
-            /*
-             * The missing-image grid holds what the record names but cannot
-             * show. It is built to mix — a pattern with no capture belongs here
-             * as much as a colour does, sorted in by name, because a reader
-             * looking for a name should not have to know which of the two it
-             * is — but the last such pattern has since been found, so today the
-             * list is historical colours alone. Hence the flat "colors" label;
-             * if a pattern ever falls back in, that word needs widening again.
-             */
-            var shown = data.patterns.filter(function (p) { return !blank(p); });
-            var missing = data.historical_colors
-                .concat(data.patterns.filter(blank))
-                .sort(function (a, b) { return a.name.localeCompare(b.name); });
+    /*
+     * The products, in the order they appear on the page: current lines first,
+     * discontinued ones after. `labels` overrides a subsection heading where a
+     * product has its own word for it — LT's patterns are the Light Jungle
+     * prints and calling them that is worth more than calling them "Patterns".
+     */
+    var PRODUCTS = [
+        { id: "lx", file: "lx.json", label: "LX" },
+        { id: "lt", file: "lt.json", label: "LT",
+          labels: { patterns: "Jungle prints" } }
+    ];
 
-            var sections = [
-                ["colors", data.colors, "color", "colors"],
-                ["patterns", shown, "pattern", "patterns"],
-                ["custom", data.custom_colors, "custom", "colors"],
-                ["missing", missing, function (entry) {
-                    return entry.pattern ? "pattern" : "historical";
-                }, "colors"]
-            ];
-
+    /*
+     * Subsections, in page order. `pick` pulls the entries for one out of a
+     * product file, so a product that has no patterns and no historical colours
+     * simply yields nothing for those and they are left off its section rather
+     * than standing empty.
+     */
+    var SUBSECTIONS = [
+        {
+            key: "colors", label: "Official colors", unit: "colors",
+            kind: "color",
+            pick: function (d) { return d.colors || []; }
+        },
+        {
+            key: "patterns", label: "Patterns", unit: "patterns",
+            kind: "pattern",
+            /* a pattern with nothing to show belongs in "missing", not here */
+            pick: function (d) {
+                return (d.patterns || []).filter(function (p) { return !blank(p); });
+            }
+        },
+        {
+            key: "custom", label: "Custom colors", unit: "colors",
+            kind: "custom",
+            pick: function (d) { return d.custom_colors || []; }
+        },
+        {
             /*
-             * One count per subsection, and the total over the section head.
-             * The breakdown used to live up there as four figures separated by
-             * dots, which asked the reader to hold the whole page in their head
-             * to read the top of it; each number now sits against the grid it
-             * counts, and the head says how much there is altogether.
+             * What the record names but cannot show. Built to mix — a pattern
+             * with no capture belongs here as much as a colour does, sorted in
+             * by name, because a reader looking for a name should not have to
+             * know which of the two it is.
              */
-            var total = 0;
-            sections.forEach(function (section) {
-                /*
-                 * An entry marked on_page: false stays in lt.json and is left
-                 * off the page — the file is the record and nothing is dropped
-                 * from it to change what is drawn. Each one says why in its own
-                 * off_page_reason.
-                 */
-                var key = section[0], entries = section[1].filter(onPage);
-                renderGrid("grid-" + key, entries, section[2]);
-                document.getElementById("count-" + key).textContent =
-                    entries.length + " " + section[3];
-                total += entries.length;
-            });
-            document.getElementById("lt-counts").textContent =
-                total + " colors and patterns";
-        })
-        .catch(function (error) {
-            var main = document.querySelector("main");
-            main.appendChild(el("p", "text-sm",
-                "Could not load lt.json — " + error.message +
-                ". Serve this page over HTTP rather than opening the file directly."));
+            key: "missing", label: "Missing image", unit: "colors",
+            grid: "record-grid grid grid-cols-4 gap-1",
+            kind: function (entry) {
+                return entry.pattern ? "pattern" : "historical";
+            },
+            pick: function (d) {
+                return (d.historical_colors || [])
+                    .concat((d.patterns || []).filter(blank))
+                    .sort(function (a, b) { return a.name.localeCompare(b.name); });
+            }
+        }
+    ];
+
+    var GRID_DEFAULT = "swatch-grid grid grid-cols-6 gap-1 mb-4";
+
+    function headRow(cls, tag, headClass, text) {
+        var row = el("div", cls +
+            " flex flex-row items-baseline justify-between flex-wrap gap-2 mb-2");
+        row.appendChild(el(tag, headClass, text));
+        var count = el("p", "section-label text-sm");
+        row.appendChild(count);
+        return { row: row, count: count };
+    }
+
+    /* Build one product's section. Returns null if it has nothing to draw. */
+    function renderProduct(data, cfg) {
+        var section = el("section");
+        section.id = cfg.id;
+
+        var head = el("div", "section-head flex flex-row items-baseline " +
+                             "justify-between flex-wrap gap-2 mb-3");
+        head.appendChild(el("h2", "text-2xl", cfg.label));
+        var counts = el("p", "section-label text-sm");
+        head.appendChild(counts);
+        section.appendChild(head);
+
+        var total = 0, kinds = 0;
+        SUBSECTIONS.forEach(function (sub) {
+            /*
+             * An entry marked on_page: false stays in the file and is left off
+             * the page — the file is the record and nothing is dropped from it
+             * to change what is drawn. Each one says why in off_page_reason.
+             */
+            var entries = sub.pick(data).filter(onPage);
+            if (!entries.length) { return; }
+
+            var hr = headRow("subsection-head-row", "h3",
+                             "subsection-head text-lg",
+                             (cfg.labels && cfg.labels[sub.key]) || sub.label);
+            hr.count.textContent = entries.length + " " + sub.unit;
+            section.appendChild(hr.row);
+
+            var grid = el("div", sub.grid || GRID_DEFAULT);
+            section.appendChild(grid);
+            renderGrid(grid, entries, sub.kind);
+
+            total += entries.length;
+            kinds += 1;
         });
+
+        if (!total) { return null; }
+
+        /*
+         * The head says how much there is altogether, and each subsection count
+         * sits against the grid it counts. A product with only one subsection
+         * would otherwise print the same number twice, so it says nothing.
+         */
+        counts.textContent = kinds > 1
+            ? total + " colors and patterns"
+            : "";
+        return section;
+    }
+
+    var main = document.querySelector("main");
+    var nav = document.getElementById("product-nav");
+
+    /*
+     * Fetched together but rendered in the configured order, and one product
+     * failing does not take the others down with it — a missing file costs its
+     * own section and a line saying so, not the page.
+     */
+    Promise.all(PRODUCTS.map(function (cfg) {
+        return fetch(cfg.file)
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error(cfg.file + ": HTTP " + response.status);
+                }
+                return response.json();
+            })
+            .then(function (data) { return { cfg: cfg, data: data }; })
+            .catch(function (error) { return { cfg: cfg, error: error }; });
+    })).then(function (results) {
+        var drawn = 0;
+        results.forEach(function (result) {
+            if (result.error) {
+                main.appendChild(el("p", "text-sm",
+                    "Could not load " + result.error.message + "."));
+                return;
+            }
+            var section = renderProduct(result.data, result.cfg);
+            if (!section) { return; }
+            main.appendChild(section);
+
+            var li = el("li");
+            var a = el("a", null, result.cfg.label);
+            a.href = "#" + result.cfg.id;   /* same page: not link(), which opens a tab */
+            li.appendChild(a);
+            nav.appendChild(li);
+            drawn += 1;
+        });
+        if (!drawn) {
+            main.appendChild(el("p", "text-sm",
+                "Nothing loaded. Serve this page over HTTP rather than opening " +
+                "the file directly."));
+        }
+    });
 }());
