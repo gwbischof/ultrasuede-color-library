@@ -24,11 +24,17 @@
     var DETAIL_PX = 512;
 
     /*
-     * Which of the two the popover is showing. Reset to the shader every time a
-     * swatch is opened rather than carried over: the choice belongs to the
-     * swatch being looked at, not to the reader, and a sticky "Photo" means the
-     * next swatch opens on whichever of the two it happens to have — the shader
-     * for one, a watermarked thumbnail for the next.
+     * Which of the two the popover is showing. Reset on every open rather than
+     * carried over: the choice belongs to the swatch being looked at, not to the
+     * reader, and a sticky setting means the next swatch opens on whichever of
+     * the two it happens to have.
+     *
+     * What it resets TO is per product, because the two sides are not equally
+     * good everywhere. LT's photographs are 100px archived thumbnails and
+     * thirteen of them are watermarked, so its shader is the better picture and
+     * leads. LX's are 800px frames from Toray's own storefront and beat the
+     * shader outright, so that product opens on the photo. A product declares
+     * which it wants with `preferPhoto`.
      */
     var showPhoto = false;
 
@@ -278,7 +284,7 @@
      * the panel, where the list of sightings gives them somewhere to mean
      * something.
      */
-    function record(entry, kind) {
+    function record(entry, kind, preferPhoto) {
         var button = el("button", "swatch record");
         button.type = "button";
 
@@ -288,14 +294,14 @@
         button.appendChild(text);
 
         button.addEventListener("click", function () {
-            show(entry, kind);
+            show(entry, kind, preferPhoto);
         });
 
         return button;
     }
 
-    function tile(entry, kind) {
-        if (blank(entry)) { return record(entry, kind); }
+    function tile(entry, kind, preferPhoto) {
+        if (blank(entry)) { return record(entry, kind, preferPhoto); }
 
         var button = el("button", "swatch");
         button.type = "button";
@@ -335,7 +341,7 @@
         button.appendChild(text);
 
         button.addEventListener("click", function () {
-            show(entry, kind);
+            show(entry, kind, preferPhoto);
         });
 
         return button;
@@ -345,10 +351,11 @@
      * `kind` is a string for a grid holding one kind of thing, or a function of
      * the entry for the one grid that mixes them.
      */
-    function renderGrid(grid, entries, kind) {
+    function renderGrid(grid, entries, kind, preferPhoto) {
         entries.forEach(function (entry) {
             grid.appendChild(
-                tile(entry, typeof kind === "function" ? kind(entry) : kind));
+                tile(entry, typeof kind === "function" ? kind(entry) : kind,
+                     preferPhoto));
         });
     }
 
@@ -744,10 +751,12 @@
         if (sides.photo) { sides.photo.hidden = !usePhoto; }
     }
 
-    function show(entry, kind) {
+    function show(entry, kind, preferPhoto) {
         clear(head);
         clear(body);
-        showPhoto = false;
+        /* Only meaningful where both sides exist; showSide() falls back to
+         * whichever one the entry actually has. */
+        showPhoto = Boolean(preferPhoto);
 
         /*
          * One panel serves every tile, so the box keeps whatever scroll the
@@ -797,7 +806,8 @@
      * prints and calling them that is worth more than calling them "Patterns".
      */
     var PRODUCTS = [
-        { id: "lx", file: "lx.json", label: "LX" },
+        /* 800px frames from Toray's storefront; better than the shader. */
+        { id: "lx", file: "lx.json", label: "LX", preferPhoto: true },
         { id: "st", file: "st.json", label: "ST" },
         { id: "lamous-th", file: "lamous-th.json", label: "Lamous TH" },
         { id: "shammy", file: "shammy.json", label: "Shammy 707J" },
@@ -892,7 +902,7 @@
 
             var grid = el("div", sub.grid || GRID_DEFAULT);
             section.appendChild(grid);
-            renderGrid(grid, entries, sub.kind);
+            renderGrid(grid, entries, sub.kind, cfg.preferPhoto);
 
             total += entries.length;
             kinds += 1;
