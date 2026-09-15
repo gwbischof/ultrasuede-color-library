@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>swatch render harness</title>
+<!--
+  Renders nap swatches to a grid so headless Chrome can screenshot them.
+
+  This exists so the shader stays in one place. Paneler needs a static image per
+  fabric and cannot run WebGL at build time; rather than reimplement nap.js in
+  another language — which would be the same maths maintained twice, drifting —
+  this drives the real shader and the renders are committed as artifacts.
+
+  Not part of the site. export/render_swatches.py loads it with ?from=&count=,
+  waits for #done, screenshots, and slices the grid back into files.
+-->
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; }
+  #grid { display: grid; gap: 0; width: max-content; }
+  canvas { display: block; }
+  #done { position: fixed; left: -9999px; }
+</style>
+
+<div id="grid"></div>
+<div id="done">pending</div>
+
+<script src="../site/js/nap.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // Same list, same order, as export/to_paneler.py — the slicer pairs cells to
+  // entries by index, so the two must not drift apart.
+  var FILES = ["lx.json", "st.json", "lamous-th.json", "shammy.json",
+               "texvision-ds102.json", "lt.json"];
+  var SECTIONS = ["colors", "custom_colors"];
+
+  var q = new URLSearchParams(location.search);
+  var from = parseInt(q.get("from") || "0", 10);
+  var count = parseInt(q.get("count") || "48", 10);
+  var size = parseInt(q.get("size") || "512", 10);
+  var cols = parseInt(q.get("cols") || "6", 10);
+
+  function fail(msg) {
+    document.getElementById("done").textContent = "ERROR " + msg;
+  }
+
+  Promise.all(FILES.map(function (f) {
+    return fetch("../" + f).then(function (r) {
+      if (!r.ok) { throw new Error(f + ": " + r.status); }
+      return r.json();
+    });
+  })).then(function (docs) {
+    // Every entry that has something to draw with, flattened in file order.
+    var all = [];
+    docs.forEach(function (d) {
+      SECTIONS.forEach(function (sec) {
+        (d[sec] || []).forEach(function (c) {
+          if (c.nap && (c.rgb || c.hex)) { all.push(c); }
+        });
+      });
+    });
+
+    if (!Nap.supported()) { return fail("no webgl"); }
+
+    var grid = document.getElementById("grid");
+    grid.style.gridTemplateColumns = "repeat(" + cols + ", " + size + "px)";
+
+    var slice = all.slice(from, from + count);
+    var drawn = 0;
+    slice.forEach(function (entry) {
+      var c = document.createElement("canvas");
+      grid.appendChild(c);
+      if (Nap.paint(c, entry, size)) { drawn += 1; }
+    });
+
+    // The screenshot is only meaningful once every cell is painted, so the
+    // count is published for the driver to assert against rather than trusting
+    // a timeout.
+    document.getElementById("done").textContent =
+      "READY total=" + all.length + " drawn=" + drawn + " from=" + from;
+  }).catch(function (e) { fail(String(e && e.message || e)); });
+}());
+</script>

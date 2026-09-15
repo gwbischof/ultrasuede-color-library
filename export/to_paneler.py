@@ -46,6 +46,19 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Products in the order Paneler should present them: what Garrett sews with
 # first, then the rest, then the discontinued line.
+# Products whose swatch comes from the SHADER rather than the photograph.
+# Their photographs are unusable as colour chips and no crop rescues them:
+# LT's custom colours carry a "Field's Fabrics" watermark stamped across the
+# middle, DS102's carry a numbered badge and the colour name printed into the
+# frame over draped cloth, and Shammy's are 93px cells off a printed card with
+# its cell edge in shot. The renders come from images/rendered/, drawn by the
+# real nap.js in headless Chrome — see export/render_swatches.py.
+#
+# LX and ST keep their photographs: theirs are clean 400-800px frames from
+# Toray, and they beat what the shader draws.
+FROM_SHADER = {'lt', 'ds102', 'sham'}
+RENDERED = ROOT / 'images' / 'rendered'
+
 PRODUCTS = [
     ('lx.json', 'Ultrasuede LX', 'lx'),
     ('st.json', 'Ultrasuede ST', 'st'),
@@ -93,15 +106,20 @@ def paneler_lx(paneler):
                            src, re.I))
 
 
-def emit_images(entry, out_dir, slug):
+def emit_images(entry, out_dir, slug, rendered_key=None):
     """Chip and, where the source is big enough, a shelf-sized copy."""
     paths = {}
-    src = entry.get('image_large') or entry.get('image')
-    if not src:
-        return paths
-    p = ROOT / src
-    if not p.exists():
-        return paths
+    if rendered_key:
+        p = RENDERED / f'{rendered_key}.webp'
+        if not p.exists():
+            sys.exit(f'missing render {p.name} — run export/render_swatches.py')
+    else:
+        src = entry.get('image_large') or entry.get('image')
+        if not src:
+            return paths
+        p = ROOT / src
+        if not p.exists():
+            return paths
     im = Image.open(p).convert('RGB')
 
     chip = im.copy()
@@ -149,7 +167,12 @@ def main(paneler):
                 e = {'id': fid, 'label': c['name'], 'color': color}
                 if lifted:
                     e['lifted'] = True
-                e.update(emit_images(c, out_img, fid))
+                if prefix in FROM_SHADER:
+                    # the swatch is drawn, not photographed
+                    e['drawn'] = True
+                rk = (f"{fname.replace('.json', '')}-{c['code']}"
+                      if prefix in FROM_SHADER else None)
+                e.update(emit_images(c, out_img, fid, rk))
                 entries.append(e)
         if entries:
             groups.append({'label': label, 'entries': entries})
@@ -168,11 +191,14 @@ def main(paneler):
         'groups': groups,
     }, indent=1, ensure_ascii=False) + '\n')
 
+    shaded = sum(1 for g in groups for e in g['entries'] if e.get('drawn'))
     total = sum(len(g['entries']) for g in groups)
     size = sum(f.stat().st_size for f in out_img.iterdir())
     print(f'\n  {total} fabrics in {len(groups)} groups '
           f'({n_lifted} lifted, {total - n_lifted} passed through)')
     print(f'  {len(list(out_img.iterdir()))} images, {size/1024/1024:.1f} MB')
+    print(f'  {shaded} swatches drawn from the shader, '
+          f'{total - shaded} photographed')
     print(f'  -> {out_json.relative_to(paneler)}')
 
 
