@@ -815,8 +815,12 @@
      * prints and calling them that is worth more than calling them "Patterns".
      */
     var PRODUCTS = [
-        /* 800px frames from Toray's storefront; better than the shader. */
-        { id: "lx", file: "lx.json", label: "LX", preferPhoto: true },
+        /* 800px frames from Toray's storefront; better than the shader.
+         * sourceLabel for the same reason as the two below: sales.tum.toray is
+         * a shop that sells LX by the metre, not a datasheet, so the page names
+         * it without linking to it. */
+        { id: "lx", file: "lx.json", label: "LX", preferPhoto: true,
+          sourceLabel: "Toray storefront (Japan)" },
         { id: "st", file: "st.json", label: "ST" },
         /* sourceLabel: show what the source IS without linking to it. These two
          * are bought from small Japanese retailers and Garrett would rather not
