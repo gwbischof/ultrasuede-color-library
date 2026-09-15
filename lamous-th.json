@@ -1,0 +1,970 @@
+{
+ "meta": {
+  "product": "Lamous®-TH",
+  "also_known_as": [
+   "ラムース®-TH"
+  ],
+  "manufacturer": null,
+  "status": "current",
+  "color_count": 49,
+  "compiled": "2026-09-14",
+  "about": "Lamous® is a Japanese suede-like artificial leather, a different product from Toray’s Ultrasuede. It is here because it is the same kind of cloth bought for the same kind of work. Read from 美徳屋 (Mitokuya), a Japanese retailer, whose Lamous®-TH listing carries the whole grade as a colour picker on one page.",
+  "rebuild": "python3 scraping/build_lamous_th.py --fetch && python3 scraping/build_lamous_th.py",
+  "naming_note": "This line has no colour names. The picker and the cart both identify a colour by its code alone, so `name` is the code.",
+  "color_note": "hex/rgb are sampled from the retailer’s swatch photographs, not from official Lamous colour values, and are approximate. Each is the median of a centre crop — the same measurement used for LT and LX, so the three products’ values are comparable. The photographs carry a caption bar with the code printed across the bottom of the frame; it sits at 85-90% of frame height on all 49 and is cropped off on the way in, so neither the sample nor the tile contains it.",
+  "nap_note": "No nap block. The photographs are about 256px, and about 197px once the caption bar is cropped — under the 300px minimum nap contrast can be measured from. Contrast could be modelled instead, but the curve that models it was fitted on Ultrasuede LT, and using it here would assert that a different manufacturer’s fabric follows the same contrast-against-lightness relationship, which nothing here has measured. So these colours are drawn from their photographs.",
+  "coverage_note": "The page states the grade has 49 colours (\"49色取り揃え\") and the picker lists 49, so this is the whole TH range rather than one channel’s selection.",
+  "specifications": {
+   "thickness": "0.58 (±0.05) mm",
+   "width": "130cm",
+   "roll": "130cm × 30m",
+   "composition": "Polyester 92%, Polyurethane 8%",
+   "origin": "Made in Japan",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=44"
+  },
+  "not_recorded": [
+   "manufacturer — the listing names no company, only \"Made in Japan\"",
+   "weight"
+  ]
+ },
+ "sources": [
+  {
+   "id": "mitokuya-lamous-th",
+   "url": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=44",
+   "note": "retailer catalogue page; the colour picker carries the whole grade. Snapshotted in scraping/lamous_th_page.html"
+  }
+ ],
+ "colors": [
+  {
+   "name": "TH001",
+   "slug": "th001",
+   "sku": "TH001",
+   "code": "TH001",
+   "hex": "#f2f1ee",
+   "rgb": [
+    242,
+    241,
+    238
+   ],
+   "nap": null,
+   "image": "images/TH001.jpg",
+   "image_large": "images/large/TH001.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=5",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH003",
+   "slug": "th003",
+   "sku": "TH003",
+   "code": "TH003",
+   "hex": "#f8f7eb",
+   "rgb": [
+    248,
+    247,
+    235
+   ],
+   "nap": null,
+   "image": "images/TH003.jpg",
+   "image_large": "images/large/TH003.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=14",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH006",
+   "slug": "th006",
+   "sku": "TH006",
+   "code": "TH006",
+   "hex": "#f5efd3",
+   "rgb": [
+    245,
+    239,
+    211
+   ],
+   "nap": null,
+   "image": "images/TH006.jpg",
+   "image_large": "images/large/TH006.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=16",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH007",
+   "slug": "th007",
+   "sku": "TH007",
+   "code": "TH007",
+   "hex": "#f5f1d9",
+   "rgb": [
+    245,
+    241,
+    217
+   ],
+   "nap": null,
+   "image": "images/TH007.jpg",
+   "image_large": "images/large/TH007.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=15",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH101",
+   "slug": "th101",
+   "sku": "TH101",
+   "code": "TH101",
+   "hex": "#cfcbc3",
+   "rgb": [
+    207,
+    203,
+    195
+   ],
+   "nap": null,
+   "image": "images/TH101.jpg",
+   "image_large": "images/large/TH101.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=17",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH103",
+   "slug": "th103",
+   "sku": "TH103",
+   "code": "TH103",
+   "hex": "#bcbdaf",
+   "rgb": [
+    188,
+    189,
+    175
+   ],
+   "nap": null,
+   "image": "images/TH103.jpg",
+   "image_large": "images/large/TH103.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=56",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH105",
+   "slug": "th105",
+   "sku": "TH105",
+   "code": "TH105",
+   "hex": "#93928b",
+   "rgb": [
+    147,
+    146,
+    139
+   ],
+   "nap": null,
+   "image": "images/TH105.jpg",
+   "image_large": "images/large/TH105.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=58",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH111",
+   "slug": "th111",
+   "sku": "TH111",
+   "code": "TH111",
+   "hex": "#4d4e4c",
+   "rgb": [
+    77,
+    78,
+    76
+   ],
+   "nap": null,
+   "image": "images/TH111.jpg",
+   "image_large": "images/large/TH111.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=60",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH201",
+   "slug": "th201",
+   "sku": "TH201",
+   "code": "TH201",
+   "hex": "#dfd4b3",
+   "rgb": [
+    223,
+    212,
+    179
+   ],
+   "nap": null,
+   "image": "images/TH201.jpg",
+   "image_large": "images/large/TH201.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=21",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH204",
+   "slug": "th204",
+   "sku": "TH204",
+   "code": "TH204",
+   "hex": "#c6b186",
+   "rgb": [
+    198,
+    177,
+    134
+   ],
+   "nap": null,
+   "image": "images/TH204.jpg",
+   "image_large": "images/large/TH204.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=23",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH206",
+   "slug": "th206",
+   "sku": "TH206",
+   "code": "TH206",
+   "hex": "#cfc7ae",
+   "rgb": [
+    207,
+    199,
+    174
+   ],
+   "nap": null,
+   "image": "images/TH206.jpg",
+   "image_large": "images/large/TH206.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=22",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH208",
+   "slug": "th208",
+   "sku": "TH208",
+   "code": "TH208",
+   "hex": "#a69c82",
+   "rgb": [
+    166,
+    156,
+    130
+   ],
+   "nap": null,
+   "image": "images/TH208.jpg",
+   "image_large": "images/large/TH208.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=24",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH210",
+   "slug": "th210",
+   "sku": "TH210",
+   "code": "TH210",
+   "hex": "#d5ceb4",
+   "rgb": [
+    213,
+    206,
+    180
+   ],
+   "nap": null,
+   "image": "images/TH210.jpg",
+   "image_large": "images/large/TH210.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=19",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH211",
+   "slug": "th211",
+   "sku": "TH211",
+   "code": "TH211",
+   "hex": "#d4c8ae",
+   "rgb": [
+    212,
+    200,
+    174
+   ],
+   "nap": null,
+   "image": "images/TH211.jpg",
+   "image_large": "images/large/TH211.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=18",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH301",
+   "slug": "th301",
+   "sku": "TH301",
+   "code": "TH301",
+   "hex": "#a5453a",
+   "rgb": [
+    165,
+    69,
+    58
+   ],
+   "nap": null,
+   "image": "images/TH301.jpg",
+   "image_large": "images/large/TH301.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=40",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH302",
+   "slug": "th302",
+   "sku": "TH302",
+   "code": "TH302",
+   "hex": "#763131",
+   "rgb": [
+    118,
+    49,
+    49
+   ],
+   "nap": null,
+   "image": "images/TH302.jpg",
+   "image_large": "images/large/TH302.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=33",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH303",
+   "slug": "th303",
+   "sku": "TH303",
+   "code": "TH303",
+   "hex": "#864945",
+   "rgb": [
+    134,
+    73,
+    69
+   ],
+   "nap": null,
+   "image": "images/TH303.jpg",
+   "image_large": "images/large/TH303.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=34",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH304",
+   "slug": "th304",
+   "sku": "TH304",
+   "code": "TH304",
+   "hex": "#663c3d",
+   "rgb": [
+    102,
+    60,
+    61
+   ],
+   "nap": null,
+   "image": "images/TH304.jpg",
+   "image_large": "images/large/TH304.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=35",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH305",
+   "slug": "th305",
+   "sku": "TH305",
+   "code": "TH305",
+   "hex": "#673e4c",
+   "rgb": [
+    103,
+    62,
+    76
+   ],
+   "nap": null,
+   "image": "images/TH305.jpg",
+   "image_large": "images/large/TH305.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=36",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH306",
+   "slug": "th306",
+   "sku": "TH306",
+   "code": "TH306",
+   "hex": "#483b4a",
+   "rgb": [
+    72,
+    59,
+    74
+   ],
+   "nap": null,
+   "image": "images/TH306.jpg",
+   "image_large": "images/large/TH306.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=37",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH307",
+   "slug": "th307",
+   "sku": "TH307",
+   "code": "TH307",
+   "hex": "#92322a",
+   "rgb": [
+    146,
+    50,
+    42
+   ],
+   "nap": null,
+   "image": "images/TH307.jpg",
+   "image_large": "images/large/TH307.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=39",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH310",
+   "slug": "th310",
+   "sku": "TH310",
+   "code": "TH310",
+   "hex": "#ad8ca4",
+   "rgb": [
+    173,
+    140,
+    164
+   ],
+   "nap": null,
+   "image": "images/TH310.jpg",
+   "image_large": "images/large/TH310.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=41",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH311",
+   "slug": "th311",
+   "sku": "TH311",
+   "code": "TH311",
+   "hex": "#89357f",
+   "rgb": [
+    137,
+    53,
+    127
+   ],
+   "nap": null,
+   "image": "images/TH311.jpg",
+   "image_large": "images/large/TH311.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=42",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH312",
+   "slug": "th312",
+   "sku": "TH312",
+   "code": "TH312",
+   "hex": "#372352",
+   "rgb": [
+    55,
+    35,
+    82
+   ],
+   "nap": null,
+   "image": "images/TH312.jpg",
+   "image_large": "images/large/TH312.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=43",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH401",
+   "slug": "th401",
+   "sku": "TH401",
+   "code": "TH401",
+   "hex": "#e8dcc5",
+   "rgb": [
+    232,
+    220,
+    197
+   ],
+   "nap": null,
+   "image": "images/TH401.jpg",
+   "image_large": "images/large/TH401.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=20",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH403",
+   "slug": "th403",
+   "sku": "TH403",
+   "code": "TH403",
+   "hex": "#d65b6f",
+   "rgb": [
+    214,
+    91,
+    111
+   ],
+   "nap": null,
+   "image": "images/TH403.jpg",
+   "image_large": "images/large/TH403.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=32",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH411",
+   "slug": "th411",
+   "sku": "TH411",
+   "code": "TH411",
+   "hex": "#cf733e",
+   "rgb": [
+    207,
+    115,
+    62
+   ],
+   "nap": null,
+   "image": "images/TH411.jpg",
+   "image_large": "images/large/TH411.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=38",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH421",
+   "slug": "th421",
+   "sku": "TH421",
+   "code": "TH421",
+   "hex": "#d6cc7d",
+   "rgb": [
+    214,
+    204,
+    125
+   ],
+   "nap": null,
+   "image": "images/TH421.jpg",
+   "image_large": "images/large/TH421.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=26",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH431",
+   "slug": "th431",
+   "sku": "TH431",
+   "code": "TH431",
+   "hex": "#9aa347",
+   "rgb": [
+    154,
+    163,
+    71
+   ],
+   "nap": null,
+   "image": "images/TH431.jpg",
+   "image_large": "images/large/TH431.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=44",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH441",
+   "slug": "th441",
+   "sku": "TH441",
+   "code": "TH441",
+   "hex": "#b5d4b4",
+   "rgb": [
+    181,
+    212,
+    180
+   ],
+   "nap": null,
+   "image": "images/TH441.jpg",
+   "image_large": "images/large/TH441.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=49",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH451",
+   "slug": "th451",
+   "sku": "TH451",
+   "code": "TH451",
+   "hex": "#3c594a",
+   "rgb": [
+    60,
+    89,
+    74
+   ],
+   "nap": null,
+   "image": "images/TH451.jpg",
+   "image_large": "images/large/TH451.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=50",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH452",
+   "slug": "th452",
+   "sku": "TH452",
+   "code": "TH452",
+   "hex": "#344632",
+   "rgb": [
+    52,
+    70,
+    50
+   ],
+   "nap": null,
+   "image": "images/TH452.jpg",
+   "image_large": "images/large/TH452.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=51",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH511",
+   "slug": "th511",
+   "sku": "TH511",
+   "code": "TH511",
+   "hex": "#b8d9da",
+   "rgb": [
+    184,
+    217,
+    218
+   ],
+   "nap": null,
+   "image": "images/TH511.jpg",
+   "image_large": "images/large/TH511.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=46",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH512",
+   "slug": "th512",
+   "sku": "TH512",
+   "code": "TH512",
+   "hex": "#c3c4c1",
+   "rgb": [
+    195,
+    196,
+    193
+   ],
+   "nap": null,
+   "image": "images/TH512.jpg",
+   "image_large": "images/large/TH512.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=45",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH513",
+   "slug": "th513",
+   "sku": "TH513",
+   "code": "TH513",
+   "hex": "#78c1b0",
+   "rgb": [
+    120,
+    193,
+    176
+   ],
+   "nap": null,
+   "image": "images/TH513.jpg",
+   "image_large": "images/large/TH513.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=48",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH514",
+   "slug": "th514",
+   "sku": "TH514",
+   "code": "TH514",
+   "hex": "#65aac2",
+   "rgb": [
+    101,
+    170,
+    194
+   ],
+   "nap": null,
+   "image": "images/TH514.jpg",
+   "image_large": "images/large/TH514.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=47",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH521",
+   "slug": "th521",
+   "sku": "TH521",
+   "code": "TH521",
+   "hex": "#2d188a",
+   "rgb": [
+    45,
+    24,
+    138
+   ],
+   "nap": null,
+   "image": "images/TH521.jpg",
+   "image_large": "images/large/TH521.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=52",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH532",
+   "slug": "th532",
+   "sku": "TH532",
+   "code": "TH532",
+   "hex": "#303743",
+   "rgb": [
+    48,
+    55,
+    67
+   ],
+   "nap": null,
+   "image": "images/TH532.jpg",
+   "image_large": "images/large/TH532.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=59",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH533",
+   "slug": "th533",
+   "sku": "TH533",
+   "code": "TH533",
+   "hex": "#272842",
+   "rgb": [
+    39,
+    40,
+    66
+   ],
+   "nap": null,
+   "image": "images/TH533.jpg",
+   "image_large": "images/large/TH533.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=55",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH534",
+   "slug": "th534",
+   "sku": "TH534",
+   "code": "TH534",
+   "hex": "#373966",
+   "rgb": [
+    55,
+    57,
+    102
+   ],
+   "nap": null,
+   "image": "images/TH534.jpg",
+   "image_large": "images/large/TH534.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=53",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH535",
+   "slug": "th535",
+   "sku": "TH535",
+   "code": "TH535",
+   "hex": "#30365d",
+   "rgb": [
+    48,
+    54,
+    93
+   ],
+   "nap": null,
+   "image": "images/TH535.jpg",
+   "image_large": "images/large/TH535.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=54",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH601",
+   "slug": "th601",
+   "sku": "TH601",
+   "code": "TH601",
+   "hex": "#796846",
+   "rgb": [
+    121,
+    104,
+    70
+   ],
+   "nap": null,
+   "image": "images/TH601.jpg",
+   "image_large": "images/large/TH601.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=27",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH602",
+   "slug": "th602",
+   "sku": "TH602",
+   "code": "TH602",
+   "hex": "#645039",
+   "rgb": [
+    100,
+    80,
+    57
+   ],
+   "nap": null,
+   "image": "images/TH602.jpg",
+   "image_large": "images/large/TH602.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=28",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH603",
+   "slug": "th603",
+   "sku": "TH603",
+   "code": "TH603",
+   "hex": "#44382a",
+   "rgb": [
+    68,
+    56,
+    42
+   ],
+   "nap": null,
+   "image": "images/TH603.jpg",
+   "image_large": "images/large/TH603.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=25",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH604",
+   "slug": "th604",
+   "sku": "TH604",
+   "code": "TH604",
+   "hex": "#4e3a2f",
+   "rgb": [
+    78,
+    58,
+    47
+   ],
+   "nap": null,
+   "image": "images/TH604.jpg",
+   "image_large": "images/large/TH604.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=29",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH605",
+   "slug": "th605",
+   "sku": "TH605",
+   "code": "TH605",
+   "hex": "#2d2a25",
+   "rgb": [
+    45,
+    42,
+    37
+   ],
+   "nap": null,
+   "image": "images/TH605.jpg",
+   "image_large": "images/large/TH605.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=30",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH606",
+   "slug": "th606",
+   "sku": "TH606",
+   "code": "TH606",
+   "hex": "#2a2625",
+   "rgb": [
+    42,
+    38,
+    37
+   ],
+   "nap": null,
+   "image": "images/TH606.jpg",
+   "image_large": "images/large/TH606.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=31",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH997",
+   "slug": "th997",
+   "sku": "TH997",
+   "code": "TH997",
+   "hex": "#1b1c1e",
+   "rgb": [
+    27,
+    28,
+    30
+   ],
+   "nap": null,
+   "image": "images/TH997.jpg",
+   "image_large": "images/large/TH997.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=61",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  },
+  {
+   "name": "TH999",
+   "slug": "th999",
+   "sku": "TH999",
+   "code": "TH999",
+   "hex": "#1e1f1e",
+   "rgb": [
+    30,
+    31,
+    30
+   ],
+   "nap": null,
+   "image": "images/TH999.jpg",
+   "image_large": "images/large/TH999.jpg",
+   "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=62",
+   "sources": [
+    "mitokuya-lamous-th"
+   ]
+  }
+ ]
+}

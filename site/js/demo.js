@@ -302,10 +302,18 @@
 
         var well = el("span", "swatch-thumb");
         var canvas = canRender(entry) ? napCanvas(entry, TILE_PX, null) : null;
+        /*
+         * photoOf, not entry.image: the small copy is 100px and the well is
+         * about 117 CSS pixels, so on a 3x screen the small one is a 3.5x
+         * upscale and reads as blurred. Only entries with no shader come down
+         * this path — every Lamous colour, and the Jungle prints — so this is a
+         * minority of tiles, and they are lazy.
+         */
+        var photo = canvas ? null : photoOf(entry);
         if (canvas) {
             well.appendChild(canvas);
-        } else if (entry.image) {
-            well.appendChild(photoImg(entry, entry.image, true));
+        } else if (photo) {
+            well.appendChild(photoImg(entry, photo, true));
         } else {
             well.style.backgroundColor = entry.hex;
         }
@@ -790,6 +798,7 @@
      */
     var PRODUCTS = [
         { id: "lx", file: "lx.json", label: "LX" },
+        { id: "lamous-th", file: "lamous-th.json", label: "Lamous TH" },
         { id: "lt", file: "lt.json", label: "LT",
           labels: { patterns: "Jungle prints" } }
     ];
