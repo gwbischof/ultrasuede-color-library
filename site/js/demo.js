@@ -284,7 +284,7 @@
      * the panel, where the list of sightings gives them somewhere to mean
      * something.
      */
-    function record(entry, kind, preferPhoto) {
+    function record(entry, kind, preferPhoto, sourceLabel) {
         var button = el("button", "swatch record");
         button.type = "button";
 
@@ -294,14 +294,14 @@
         button.appendChild(text);
 
         button.addEventListener("click", function () {
-            show(entry, kind, preferPhoto);
+            show(entry, kind, preferPhoto, sourceLabel);
         });
 
         return button;
     }
 
-    function tile(entry, kind, preferPhoto) {
-        if (blank(entry)) { return record(entry, kind, preferPhoto); }
+    function tile(entry, kind, preferPhoto, sourceLabel) {
+        if (blank(entry)) { return record(entry, kind, preferPhoto, sourceLabel); }
 
         var button = el("button", "swatch");
         button.type = "button";
@@ -341,7 +341,7 @@
         button.appendChild(text);
 
         button.addEventListener("click", function () {
-            show(entry, kind, preferPhoto);
+            show(entry, kind, preferPhoto, sourceLabel);
         });
 
         return button;
@@ -351,11 +351,11 @@
      * `kind` is a string for a grid holding one kind of thing, or a function of
      * the entry for the one grid that mixes them.
      */
-    function renderGrid(grid, entries, kind, preferPhoto) {
+    function renderGrid(grid, entries, kind, preferPhoto, sourceLabel) {
         entries.forEach(function (entry) {
             grid.appendChild(
                 tile(entry, typeof kind === "function" ? kind(entry) : kind,
-                     preferPhoto));
+                     preferPhoto, sourceLabel));
         });
     }
 
@@ -450,7 +450,7 @@
      * what it was called or numbered before, and the capture it came from. The
      * rest was provenance for the dataset, not for the swatch.
      */
-    function facts_for(entry, kind) {
+    function facts_for(entry, kind, sourceLabel) {
         var facts = el("dl", "detail-facts");
 
         /*
@@ -551,9 +551,10 @@
             });
             fact(facts, "Seen in", list);
         } else if (entry.source) {
-            fact(facts, "Source", sourceValue(entry));
-            /* A per-colour destination where the source is a whole list. */
-            if (entry.sample_url) {
+            fact(facts, "Source", sourceValue(entry, sourceLabel));
+            /* A per-colour destination where the source is a whole list. Also
+             * withheld where the product's shopfront is. */
+            if (entry.sample_url && !sourceLabel) {
                 fact(facts, "Sample", link(entry.sample_url, "order this swatch"));
             }
         }
@@ -573,9 +574,13 @@
      * from — and `based_on` in lt.json carries the number and the catalogue
      * sheet that pairs the two, for anyone who wants to check it.
      */
-    function sourceValue(entry) {
+    function sourceValue(entry, sourceLabel) {
         var value = document.createDocumentFragment();
-        value.appendChild(link(entry.source, archiveLabel(entry.source)));
+        if (sourceLabel) {
+            value.appendChild(el("span", null, sourceLabel));
+        } else {
+            value.appendChild(link(entry.source, archiveLabel(entry.source)));
+        }
         if (entry.based_on) {
             value.appendChild(el("span", "fact-note",
                 "This swatch is based on the " + entry.based_on.weight +
@@ -755,7 +760,7 @@
         if (sides.photo) { sides.photo.hidden = !usePhoto; }
     }
 
-    function show(entry, kind, preferPhoto) {
+    function show(entry, kind, preferPhoto, sourceLabel) {
         clear(head);
         clear(body);
         /* Only meaningful where both sides exist; showSide() falls back to
@@ -796,7 +801,7 @@
         }
         if (way) { head.appendChild(colorwayLine(way)); }
 
-        body.appendChild(facts_for(entry, kind));
+        body.appendChild(facts_for(entry, kind, sourceLabel));
 
         popover.showPopover();
     }
@@ -813,8 +818,15 @@
         /* 800px frames from Toray's storefront; better than the shader. */
         { id: "lx", file: "lx.json", label: "LX", preferPhoto: true },
         { id: "st", file: "st.json", label: "ST" },
-        { id: "lamous-th", file: "lamous-th.json", label: "Lamous TH" },
-        { id: "shammy", file: "shammy.json", label: "Shammy 707J" },
+        /* sourceLabel: show what the source IS without linking to it. These two
+         * are bought from small Japanese retailers and Garrett would rather not
+         * hand their shopfronts to everyone reading. The URLs stay in the JSON
+         * and in scraping/ — the data has to stay checkable and rebuildable —
+         * this only keeps them off the rendered page. */
+        { id: "lamous-th", file: "lamous-th.json", label: "Lamous TH",
+          sourceLabel: "Japanese retailer catalogue" },
+        { id: "shammy", file: "shammy.json", label: "Shammy 707J",
+          sourceLabel: "Japanese retailer catalogue" },
         { id: "ds102", file: "texvision-ds102.json", label: "Texvision DS102" },
         { id: "lt", file: "lt.json", label: "LT",
           labels: { patterns: "Jungle prints" } }
@@ -935,7 +947,8 @@
 
             var grid = el("div", sub.grid || GRID_DEFAULT);
             section.appendChild(grid);
-            renderGrid(grid, entries, sub.kind, cfg.preferPhoto);
+            renderGrid(grid, entries, sub.kind, cfg.preferPhoto,
+                       cfg.sourceLabel);
 
             total += entries.length;
             kinds += 1;
