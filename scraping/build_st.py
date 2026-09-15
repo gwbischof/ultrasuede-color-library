@@ -39,6 +39,16 @@ from build_dataset import nap
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SNAPSHOT = ROOT / 'scraping' / 'st_page.html'
+# The last capture of the previous style. ST was restyled 2223 -> 8023 between
+# 2019-05 and 2021-09 and every colour renumbered, so this is what says which
+# old number a current colour used to carry, and which colours did not survive
+# the change. Committed rather than fetched: it is an archive capture and will
+# not change. Wayback holds no swatch IMAGES for style 2223 at all -- only 5538,
+# 5539, 5864 and 8801 (LT) -- so the dropped colours have a name and a number
+# and no picture, exactly like LT's historical_colors.
+SNAPSHOT_2019 = ROOT / 'scraping' / 'st_page_2019.html'
+ARCHIVE_2019 = ('https://web.archive.org/web/20190512050526/'
+                'http://swatches.ultrasuede.us/swatches/search_result.php?product=ST')
 IMAGES = ROOT / 'images'
 IMAGES_LARGE = IMAGES / 'large'
 OUT = ROOT / 'st.json'
@@ -47,6 +57,11 @@ SITE = 'https://swatches.ultrasuede.us'
 PAGE = f'{SITE}/swatches/search_result.php?product=ST'
 LARGE_URL = f'{SITE}/swatches/images_enlarged_view/'
 SMALL_EDGE = 100
+
+# The markup the site used before the restyle.
+OLD_ITEM_RE = re.compile(
+    r'images/(\d{4})-(\d{4})\.jpg" alt=""></a><span>(.*?)</em><br>\s*(.*?)</span>',
+    re.S)
 
 ITEM_RE = re.compile(
     r'<li>\s*<p class="swatchesImg">.*?'
@@ -87,6 +102,14 @@ def parse_page(text):
     return out
 
 
+def parse_old(text):
+    """{code: (style, name)} from a pre-restyle capture."""
+    out = {}
+    for style, code, _meta, name in OLD_ITEM_RE.findall(text):
+        out[code] = (style, html.unescape(re.sub('<[^>]+>', '', name)).strip())
+    return out
+
+
 def fetch():
     text = get(PAGE)
     SNAPSHOT.write_text(text, encoding='utf-8')
@@ -124,6 +147,17 @@ def build():
         sys.exit('no snapshot — run with --fetch first')
     rows = parse_page(SNAPSHOT.read_text(encoding='utf-8'))
 
+    # Match the previous style's list to the current one BY NAME: the restyle
+    # kept every surviving colour's name and changed its number, so a name is
+    # what carries identity across it. Fuchsia is the one that also changed --
+    # respelled "Fushia" on the new list -- and is paired explicitly.
+    old = parse_old(SNAPSHOT_2019.read_text(encoding='utf-8')) \
+        if SNAPSHOT_2019.exists() else {}
+    RESPELLED = {'fuchsia': 'fushia'}
+    old_by_name = {}
+    for code, (style, name) in old.items():
+        old_by_name[RESPELLED.get(name.lower(), name.lower())] = (style, code, name)
+
     colors = []
     for r in rows:
         large = IMAGES_LARGE / f"{r['sku']}.jpg"
@@ -147,9 +181,37 @@ def build():
             'source': PAGE,
             'sources': ['swatches-st'],
         })
+        was = old_by_name.get(r['name'].lower())
+        if was:
+            colors[-1]['former_skus'] = [f'{was[0]}-{was[1]}']
+            if was[2].lower() != r['name'].lower():
+                colors[-1]['name_variants'] = [was[2]]
 
     colors.sort(key=lambda c: c['code'])
     styles = sorted({r['style'] for r in rows})
+
+    # Colours on the old list whose name is on no current one: dropped at the
+    # restyle. They keep everything the record has -- name, number, the capture
+    # that shows them -- and have no hex, because no photograph of style 2223
+    # survives anywhere to sample.
+    current_names = {c['name'].lower() for c in colors}
+    historical = []
+    for key, (style, code, name) in sorted(old_by_name.items(), key=lambda kv: kv[1][2]):
+        if key in current_names:
+            continue
+        historical.append({
+            'name': name,
+            'slug': ''.join(ch if ch.isalnum() else '-' for ch in name.lower()).strip('-'),
+            'sku': f'{style}-{code}',
+            'code': code,
+            'style': style,
+            'hex': None, 'rgb': None, 'nap': None,
+            'image': None, 'image_large': None,
+            'last_seen': '2019-05-12',
+            'evidence': ['swatches.ultrasuede.us ST list, style 2223'],
+            'source': ARCHIVE_2019,
+            'sources': ['swatches-st-2019'],
+        })
     measured = sum(1 for c in colors if c['nap']
                    and c['nap']['contrast_source'] == 'measured')
 
@@ -203,10 +265,11 @@ def build():
              'note': 'live Toray swatch site; snapshotted in scraping/st_page.html'},
         ],
         'colors': colors,
+        'historical_colors': historical,
     }
     OUT.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + '\n')
     print(f'wrote {OUT.relative_to(ROOT)}: {len(colors)} colours, '
-          f'{measured} with measured nap')
+          f'{measured} with measured nap, {len(historical)} historical')
 
 
 if __name__ == '__main__':

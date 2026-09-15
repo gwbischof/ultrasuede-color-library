@@ -873,7 +873,7 @@
         head.appendChild(counts);
         section.appendChild(head);
 
-        var total = 0, kinds = 0;
+        var total = 0, kinds = 0, hasPatterns = false;
         SUBSECTIONS.forEach(function (sub) {
             /*
              * An entry marked on_page: false stays in the file and is left off
@@ -895,6 +895,7 @@
 
             total += entries.length;
             kinds += 1;
+            if (sub.key === "patterns") { hasPatterns = true; }
         });
 
         if (!total) { return null; }
@@ -905,7 +906,7 @@
          * would otherwise print the same number twice, so it says nothing.
          */
         counts.textContent = kinds > 1
-            ? total + " colors and patterns"
+            ? total + (hasPatterns ? " colors and patterns" : " colors")
             : "";
         return section;
     }
