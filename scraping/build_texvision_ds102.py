@@ -160,10 +160,15 @@ def build():
                         'python3 scraping/build_texvision_ds102.py'),
             'identity_note': (
                 'Brand "Texvision" and MPN "0.6T DS102" are the listing’s own Item '
-                'Specifics, filled in by the seller. Texvision appears to be a Seoul '
-                'textile company, but nothing found establishes whether it is the mill '
-                'that makes this cloth or a trading name the seller buys under, so '
-                'manufacturer is left null rather than asserted.'
+                'Specifics. Texvision is NOT the mill: searching the seller’s own store '
+                'for it returns 66 listings spanning satin, spandex, lamb-skin faux '
+                'leather, cheetah-print doe suede and more, so it is the house brand '
+                'they file everything under. DS102 is the only identifier here that '
+                'points at this particular cloth, and who actually weaves it is not '
+                'recorded anywhere on the listing — hence manufacturer: null. For '
+                'contrast, the same seller’s 0.6mm Chamude listing (eBay 370722409147) '
+                'carries a real product brand and real mill colour codes (#6101, #6103, '
+                '…); this one does not.'
             ),
             'naming_note': (
                 'Colour names are the seller’s, and several are Pantone fashion-colour '
@@ -191,10 +196,16 @@ def build():
                 'nap, so there is nothing here to measure however large the image is.'
             ),
             'coverage_note': (
-                'This listing offers 41 colours. The seller’s own sample-set option on '
-                'the same listing is captioned "Sample set 2026 ver (122 colors)", so '
-                'the full range is around 122 and this is roughly a third of it. The '
-                'rest would have to come from their other listings.'
+                'This listing offers 41 colours, and its own sample-set option is '
+                'captioned "Sample set 2026 ver (122 colors)", so the range is around '
+                '122 and this is roughly a third of it. The other 81 are not for sale '
+                'anywhere online that could be found: the seller’s store was searched '
+                'for further DS102 listings and has none — their other suede listings '
+                'are different products at other thicknesses (0.5, 0.7, 1, 1.4mm) or '
+                'different cloths entirely, and the 122-colour set is specific to this '
+                'listing rather than store-wide, since the Chamude listing carries its '
+                'own separate sample swatch. Short of buying the physical sample set, '
+                'the remaining 81 have no online source.'
             ),
             'specifications': {
                 'thickness': '0.6mm',
