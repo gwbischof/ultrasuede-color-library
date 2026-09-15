@@ -33,7 +33,36 @@
     1.18
    ]
   },
-  "nap_note": "No nap block. What varies across one of these frames is folds, not nap, so there is nothing here to measure however large the image is.",
+  "nap_note": "One nap block, shared by all 41. It cannot come from the drape photographs: measuring the same nine colours off the drapes and off the listing’s one labelled chart, the drapes read 2.18-5.05x the chart (median 3.48, stdev 0.84) — fold shadow rather than nap, and too variable to divide out the way Shammy’s is. So contrast is measured on the chart’s nine cells, which are flat fabric at 533px, and the median given to every colour. Nine is what exists, and they say the cloth is consistent (5.01-8.22, stdev 0.91) with only a -0.33 correlation to lightness across a sample holding no dark colours — enough for a constant, not enough for a per-colour value or a curve. meta.nap_source records the measurement.",
+  "nap_source": {
+   "chart": "https://i.ebayimg.com/images/g/ZOUAAOSwBlFeoLCS/s-l1600.jpg",
+   "cells_measured": 9,
+   "cell_contrasts": [
+    5.01,
+    5.62,
+    5.62,
+    5.66,
+    5.69,
+    5.78,
+    6.22,
+    6.97,
+    8.22
+   ],
+   "median": 5.69,
+   "colors_covered": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+   ],
+   "axis": "neutral — the nine average [0.942, 1.021, 0.957], within 0.06 of it",
+   "why_not_per_color": "The drape photographs read 2.18-5.05x the chart for the same nine colours (median 3.48, stdev 0.84). That is fold shadow rather than nap, and the spread is too wide to divide out as a factor."
+  },
   "coverage_note": "This listing offers 41 colours, and its own sample-set option is captioned \"Sample set 2026 ver (122 colors)\", so the range is around 122 and this is roughly a third of it. The other 81 are not for sale anywhere online that could be found: the seller’s store was searched for further DS102 listings and has none — their other suede listings are different products at other thicknesses (0.5, 0.7, 1, 1.4mm) or different cloths entirely, and the 122-colour set is specific to this listing rather than store-wide, since the Chamude listing carries its own separate sample swatch. Short of buying the physical sample set, the remaining 81 have no online source.",
   "specifications": {
    "thickness": "0.6mm",
@@ -66,7 +95,15 @@
     68,
     46
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-01.jpg",
    "image_large": "images/large/ds102-01.jpg",
    "in_stock": true,
@@ -87,7 +124,15 @@
     114,
     83
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-02.jpg",
    "image_large": "images/large/ds102-02.jpg",
    "in_stock": false,
@@ -108,7 +153,15 @@
     217,
     223
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-03.jpg",
    "image_large": "images/large/ds102-03.jpg",
    "in_stock": true,
@@ -129,7 +182,15 @@
     182,
     157
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-04.jpg",
    "image_large": "images/large/ds102-04.jpg",
    "in_stock": true,
@@ -150,7 +211,15 @@
     170,
     145
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-05.jpg",
    "image_large": "images/large/ds102-05.jpg",
    "in_stock": true,
@@ -171,7 +240,15 @@
     99,
     89
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-06.jpg",
    "image_large": "images/large/ds102-06.jpg",
    "in_stock": false,
@@ -192,7 +269,15 @@
     45,
     47
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-07.jpg",
    "image_large": "images/large/ds102-07.jpg",
    "in_stock": true,
@@ -213,7 +298,15 @@
     44,
     40
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-08.jpg",
    "image_large": "images/large/ds102-08.jpg",
    "in_stock": true,
@@ -234,7 +327,15 @@
     117,
     81
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-09.jpg",
    "image_large": "images/large/ds102-09.jpg",
    "in_stock": false,
@@ -255,7 +356,15 @@
     190,
     196
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-10.jpg",
    "image_large": "images/large/ds102-10.jpg",
    "in_stock": true,
@@ -276,7 +385,15 @@
     197,
     100
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-11.jpg",
    "image_large": "images/large/ds102-11.jpg",
    "in_stock": false,
@@ -297,7 +414,15 @@
     230,
     107
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-12.jpg",
    "image_large": "images/large/ds102-12.jpg",
    "in_stock": false,
@@ -318,7 +443,15 @@
     200,
     224
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-13.jpg",
    "image_large": "images/large/ds102-13.jpg",
    "in_stock": true,
@@ -339,7 +472,15 @@
     147,
     201
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-14.jpg",
    "image_large": "images/large/ds102-14.jpg",
    "in_stock": true,
@@ -360,7 +501,15 @@
     146,
     128
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-15.jpg",
    "image_large": "images/large/ds102-15.jpg",
    "in_stock": false,
@@ -381,7 +530,15 @@
     104,
     70
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-16.jpg",
    "image_large": "images/large/ds102-16.jpg",
    "in_stock": true,
@@ -402,7 +559,15 @@
     90,
     137
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-17.jpg",
    "image_large": "images/large/ds102-17.jpg",
    "in_stock": true,
@@ -423,7 +588,15 @@
     95,
     162
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-18.jpg",
    "image_large": "images/large/ds102-18.jpg",
    "in_stock": false,
@@ -444,7 +617,15 @@
     46,
     52
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-19.jpg",
    "image_large": "images/large/ds102-19.jpg",
    "in_stock": true,
@@ -465,7 +646,15 @@
     45,
     52
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-20.jpg",
    "image_large": "images/large/ds102-20.jpg",
    "in_stock": false,
@@ -486,7 +675,15 @@
     70,
     81
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-21.jpg",
    "image_large": "images/large/ds102-21.jpg",
    "in_stock": true,
@@ -507,7 +704,15 @@
     76,
     101
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-22.jpg",
    "image_large": "images/large/ds102-22.jpg",
    "in_stock": true,
@@ -528,7 +733,15 @@
     62,
     105
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-23.jpg",
    "image_large": "images/large/ds102-23.jpg",
    "in_stock": false,
@@ -549,7 +762,15 @@
     114,
     139
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-24.jpg",
    "image_large": "images/large/ds102-24.jpg",
    "in_stock": false,
@@ -570,7 +791,15 @@
     104,
     82
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-25.jpg",
    "image_large": "images/large/ds102-25.jpg",
    "in_stock": true,
@@ -591,7 +820,15 @@
     62,
     51
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-26.jpg",
    "image_large": "images/large/ds102-26.jpg",
    "in_stock": true,
@@ -612,7 +849,15 @@
     80,
     119
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-27.jpg",
    "image_large": "images/large/ds102-27.jpg",
    "in_stock": true,
@@ -633,7 +878,15 @@
     46,
     122
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-28.jpg",
    "image_large": "images/large/ds102-28.jpg",
    "in_stock": false,
@@ -654,7 +907,15 @@
     63,
     163
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-29.jpg",
    "image_large": "images/large/ds102-29.jpg",
    "in_stock": true,
@@ -675,7 +936,15 @@
     43,
     64
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-30.jpg",
    "image_large": "images/large/ds102-30.jpg",
    "in_stock": true,
@@ -696,7 +965,15 @@
     43,
     65
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-31.jpg",
    "image_large": "images/large/ds102-31.jpg",
    "in_stock": true,
@@ -717,7 +994,15 @@
     96,
     93
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-32.jpg",
    "image_large": "images/large/ds102-32.jpg",
    "in_stock": true,
@@ -738,7 +1023,15 @@
     229,
     233
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-33.jpg",
    "image_large": "images/large/ds102-33.jpg",
    "in_stock": true,
@@ -759,7 +1052,15 @@
     196,
     189
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-34.jpg",
    "image_large": "images/large/ds102-34.jpg",
    "in_stock": true,
@@ -780,7 +1081,15 @@
     197,
     202
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-35.jpg",
    "image_large": "images/large/ds102-35.jpg",
    "in_stock": true,
@@ -801,7 +1110,15 @@
     139,
     142
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-36.jpg",
    "image_large": "images/large/ds102-36.jpg",
    "in_stock": true,
@@ -822,7 +1139,15 @@
     82,
     82
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-37.jpg",
    "image_large": "images/large/ds102-37.jpg",
    "in_stock": false,
@@ -843,7 +1168,15 @@
     66,
     71
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-38.jpg",
    "image_large": "images/large/ds102-38.jpg",
    "in_stock": true,
@@ -864,7 +1197,15 @@
     72,
     79
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-39.jpg",
    "image_large": "images/large/ds102-39.jpg",
    "in_stock": true,
@@ -885,7 +1226,15 @@
     51,
     54
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-40.jpg",
    "image_large": "images/large/ds102-40.jpg",
    "in_stock": true,
@@ -906,7 +1255,15 @@
     35,
     41
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "contrast": 5.69,
+    "contrast_source": "product-constant"
+   },
    "image": "images/ds102-41.jpg",
    "image_large": "images/large/ds102-41.jpg",
    "in_stock": true,

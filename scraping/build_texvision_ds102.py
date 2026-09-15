@@ -46,6 +46,8 @@ import urllib.request
 import numpy as np
 from PIL import Image
 
+from build_dataset import nap_contrast
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 VARIATIONS = ROOT / 'scraping' / 'texvision_ds102_variations.json'
 IMAGES = ROOT / 'images'
@@ -61,6 +63,12 @@ PREFIX = 'ds102'
 # ZOUAAOSwBlFeoLCS, upper band of each 3x3 cell, clear of the badge and the
 # printed name), against the same colours read off their drape photographs.
 # Kept so the claim in the docstring can be re-checked rather than trusted.
+# The listing carries exactly one labelled 3x3 chart, covering colours 10-18,
+# at 533px a cell — flat fabric, and large enough for the plain measurement.
+# It is the only DS102 image nap can honestly be read from, so it is committed.
+CHART = ROOT / 'colorcards' / 'ds102_chart_10-18.jpg'
+CHART_URL = 'https://i.ebayimg.com/images/g/ZOUAAOSwBlFeoLCS/s-l1600.jpg'
+
 MEASURED_AGAINST_CHART = {
     'chart_image': 'https://i.ebayimg.com/images/g/ZOUAAOSwBlFeoLCS/s-l1600.jpg',
     'colors_compared': list(range(10, 19)),
@@ -120,7 +128,70 @@ def drape_color(path):
     return [int(v) for v in np.median(keep, axis=0).round().astype(int)]
 
 
+def chart_nap():
+    """One nap block for the whole product, measured off the labelled chart.
+
+    The drape photographs cannot give this. Measuring the same nine colours both
+    ways, the drapes read 2.18x to 5.05x the chart (median 3.48, stdev 0.84) —
+    fold shadow, not nap, and the spread is too wide to be a factor worth
+    dividing out the way Shammy's is. So contrast comes from the chart cells,
+    which are flat fabric at 533px.
+
+    It is one number for all 41 rather than one each, because nine cells is what
+    exists and they say the cloth is consistent: contrast 5.01-8.22, stdev 0.91,
+    and its correlation with lightness is -0.33 over a sample that holds no dark
+    colours at all. That supports a constant. It does not support a per-colour
+    value, and it certainly does not support extrapolating a lightness curve
+    down into blacks the chart never shows.
+
+    The axis is set neutral. The nine measure [0.942, 1.021, 0.957] on average,
+    within 0.06 of neutral and about two standard errors off it — reading a
+    colour lean into that would be fitting nine samples harder than they can
+    carry.
+    """
+    if not CHART.exists():
+        return None, None
+    im = Image.open(CHART).convert('RGB')
+    S = im.size[0] // 3
+    vals = []
+    for r in range(3):
+        for c in range(3):
+            # top 60% of the cell: clear of the numbered badge and printed name,
+            # and still 533x320, so the short edge clears NAP_MEASURABLE
+            cell = im.crop((c*S + 8, r*S + 8, (c+1)*S - 8, r*S + int(S*0.60)))
+            tmp = CHART.with_suffix('.cell.jpg')
+            cell.save(tmp, 'JPEG', quality=96)
+            v = nap_contrast(str(tmp))
+            tmp.unlink()
+            if v:
+                vals.append(v)
+    if not vals:
+        return None, None
+    vals.sort()
+    contrast = round(vals[len(vals)//2], 2)
+    block = {
+        'axis': [1.0, 1.0, 1.0],
+        'contrast': contrast,
+        'contrast_source': 'product-constant',
+    }
+    detail = {
+        'chart': CHART_URL,
+        'cells_measured': len(vals),
+        'cell_contrasts': [round(v, 2) for v in vals],
+        'median': contrast,
+        'colors_covered': list(range(10, 19)),
+        'axis': 'neutral — the nine average [0.942, 1.021, 0.957], within 0.06 of it',
+        'why_not_per_color': (
+            'The drape photographs read 2.18-5.05x the chart for the same nine '
+            'colours (median 3.48, stdev 0.84). That is fold shadow rather than '
+            'nap, and the spread is too wide to divide out as a factor.'
+        ),
+    }
+    return block, detail
+
+
 def build():
+    nap_block, nap_detail = chart_nap()
     colors = []
     for n, name, oos, _size, _iid, vid in rows():
         large = IMAGES_LARGE / f'{PREFIX}-{n:02d}.jpg'
@@ -134,7 +205,7 @@ def build():
             'code': f'{n:02d}',
             'hex': '#%02x%02x%02x' % tuple(rgb),
             'rgb': rgb,
-            'nap': None,
+            'nap': dict(nap_block) if nap_block else None,
             'image': f'images/{PREFIX}-{n:02d}.jpg',
             'image_large': f'images/large/{PREFIX}-{n:02d}.jpg',
             'in_stock': not oos,
@@ -195,9 +266,19 @@ def build():
             ),
             'measured_against_chart': MEASURED_AGAINST_CHART,
             'nap_note': (
-                'No nap block. What varies across one of these frames is folds, not '
-                'nap, so there is nothing here to measure however large the image is.'
+                'One nap block, shared by all 41. It cannot come from the drape '
+                'photographs: measuring the same nine colours off the drapes and off '
+                'the listing’s one labelled chart, the drapes read 2.18-5.05x the chart '
+                '(median 3.48, stdev 0.84) — fold shadow rather than nap, and too '
+                'variable to divide out the way Shammy’s is. So contrast is measured on '
+                'the chart’s nine cells, which are flat fabric at 533px, and the median '
+                'given to every colour. Nine is what exists, and they say the cloth is '
+                'consistent (5.01-8.22, stdev 0.91) with only a -0.33 correlation to '
+                'lightness across a sample holding no dark colours — enough for a '
+                'constant, not enough for a per-colour value or a curve. meta.nap_source '
+                'records the measurement.'
             ),
+            'nap_source': nap_detail,
             'coverage_note': (
                 'This listing offers 41 colours, and its own sample-set option is '
                 'captioned "Sample set 2026 ver (122 colors)", so the range is around '
