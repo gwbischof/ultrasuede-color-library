@@ -1,0 +1,919 @@
+{
+ "meta": {
+  "product": "Shammy® 707J",
+  "also_known_as": [
+   "シャミー®707J"
+  ],
+  "manufacturer": null,
+  "status": "current",
+  "color_count": 42,
+  "compiled": "2026-09-14",
+  "about": "Shammy® 707J is a Japanese suede-like artificial leather, a different product from Toray’s Ultrasuede. Read from 浅草ゆうらぶ (Asakusa Youlove), whose product page carries the whole range as one printed colour card plus a colour list naming every code.",
+  "rebuild": "python3 scraping/build_shammy.py --fetch && python3 scraping/build_shammy.py",
+  "naming_note": "Names are printed in Japanese only. `name_ja` is as printed; `name` is a transliteration — every one is a katakana rendering of an English colour word — and is not source data.",
+  "color_note": "hex/rgb are read from one photographed colour card, not from official values, and are approximate. Each is the median of a centre crop of its cell, inset to keep the printed cell edge out of the sample. Because all 42 come from a single capture under one light they are unusually consistent with each other, and correspondingly less comparable with the other products here than those are with each other — those were photographed a colour at a time.",
+  "nap_note": "No nap block. A cell is 93px tall, which is the ceiling — there is no larger version of the card — and well under the 300px minimum nap contrast can be measured from. These colours are drawn from their crops instead.",
+  "coverage_note": "The card header, the page body and the colour list all say 42 (\"全42色\") and all three agree on the same 42 codes. The page <title> says 全37色; it is stale and is not used.",
+  "specifications": {
+   "width": "1,150mm",
+   "thickness": "0.5mm",
+   "source": "http://www.youlove.co.jp/shammy707j.html"
+  },
+  "not_recorded": [
+   "manufacturer — the listing names no company",
+   "composition",
+   "weight"
+  ]
+ },
+ "sources": [
+  {
+   "id": "youlove-shammy-707j",
+   "url": "http://www.youlove.co.jp/shammy707j.html",
+   "note": "retailer product page; colour card at shammy-color.jpg, snapshotted to colorcards/"
+  }
+ ],
+ "colors": [
+  {
+   "name": "Greige",
+   "name_ja": "グレージュ",
+   "name_source": "ja",
+   "slug": "03y",
+   "sku": "03Y",
+   "code": "03Y",
+   "hex": "#a58e76",
+   "rgb": [
+    165,
+    142,
+    118
+   ],
+   "nap": null,
+   "image": "images/shammy-03Y.jpg",
+   "image_large": "images/large/shammy-03Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Tan",
+   "name_ja": "タン",
+   "name_source": "ja",
+   "slug": "05y",
+   "sku": "05Y",
+   "code": "05Y",
+   "hex": "#e9c998",
+   "rgb": [
+    233,
+    201,
+    152
+   ],
+   "nap": null,
+   "image": "images/shammy-05Y.jpg",
+   "image_large": "images/large/shammy-05Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Oak Beige",
+   "name_ja": "オークベージュ",
+   "name_source": "ja",
+   "slug": "06y",
+   "sku": "06Y",
+   "code": "06Y",
+   "hex": "#83624f",
+   "rgb": [
+    131,
+    98,
+    79
+   ],
+   "nap": null,
+   "image": "images/shammy-06Y.jpg",
+   "image_large": "images/large/shammy-06Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Camel",
+   "name_ja": "キャメル",
+   "name_source": "ja",
+   "slug": "08y",
+   "sku": "08Y",
+   "code": "08Y",
+   "hex": "#bc9161",
+   "rgb": [
+    188,
+    145,
+    97
+   ],
+   "nap": null,
+   "image": "images/shammy-08Y.jpg",
+   "image_large": "images/large/shammy-08Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Light Beige",
+   "name_ja": "ライトベージュ",
+   "name_source": "ja",
+   "slug": "09y",
+   "sku": "09Y",
+   "code": "09Y",
+   "hex": "#d2ad87",
+   "rgb": [
+    210,
+    173,
+    135
+   ],
+   "nap": null,
+   "image": "images/shammy-09Y.jpg",
+   "image_large": "images/large/shammy-09Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Off White",
+   "name_ja": "オフホワイト",
+   "name_source": "ja",
+   "slug": "15y",
+   "sku": "15Y",
+   "code": "15Y",
+   "hex": "#f2e3c1",
+   "rgb": [
+    242,
+    227,
+    193
+   ],
+   "nap": null,
+   "image": "images/shammy-15Y.jpg",
+   "image_large": "images/large/shammy-15Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Royal Blue",
+   "name_ja": "ロイヤルブルー",
+   "name_source": "ja",
+   "slug": "18r",
+   "sku": "18R",
+   "code": "18R",
+   "hex": "#10225a",
+   "rgb": [
+    16,
+    34,
+    90
+   ],
+   "nap": null,
+   "image": "images/shammy-18R.jpg",
+   "image_large": "images/large/shammy-18R.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Lavender",
+   "name_ja": "ラベンダー",
+   "name_source": "ja",
+   "slug": "20r",
+   "sku": "20R",
+   "code": "20R",
+   "hex": "#a088a6",
+   "rgb": [
+    160,
+    136,
+    166
+   ],
+   "nap": null,
+   "image": "images/shammy-20R.jpg",
+   "image_large": "images/large/shammy-20R.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Yellow",
+   "name_ja": "イエロー",
+   "name_source": "ja",
+   "slug": "20y",
+   "sku": "20Y",
+   "code": "20Y",
+   "hex": "#fec86b",
+   "rgb": [
+    254,
+    200,
+    107
+   ],
+   "nap": null,
+   "image": "images/shammy-20Y.jpg",
+   "image_large": "images/large/shammy-20Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Brown",
+   "name_ja": "ブラウン",
+   "name_source": "ja",
+   "slug": "21w",
+   "sku": "21W",
+   "code": "21W",
+   "hex": "#602d10",
+   "rgb": [
+    96,
+    45,
+    16
+   ],
+   "nap": null,
+   "image": "images/shammy-21W.jpg",
+   "image_large": "images/large/shammy-21W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Khaki Brown",
+   "name_ja": "カーキブラウン",
+   "name_source": "ja",
+   "slug": "24w",
+   "sku": "24W",
+   "code": "24W",
+   "hex": "#44341a",
+   "rgb": [
+    68,
+    52,
+    26
+   ],
+   "nap": null,
+   "image": "images/shammy-24W.jpg",
+   "image_large": "images/large/shammy-24W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Coffee Brown",
+   "name_ja": "コーヒーブラウン",
+   "name_source": "ja",
+   "slug": "25w",
+   "sku": "25W",
+   "code": "25W",
+   "hex": "#391f0a",
+   "rgb": [
+    57,
+    31,
+    10
+   ],
+   "nap": null,
+   "image": "images/shammy-25W.jpg",
+   "image_large": "images/large/shammy-25W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Sunset Orange",
+   "name_ja": "サンセットオレンジ",
+   "name_source": "ja",
+   "slug": "26y",
+   "sku": "26Y",
+   "code": "26Y",
+   "hex": "#d78050",
+   "rgb": [
+    215,
+    128,
+    80
+   ],
+   "nap": null,
+   "image": "images/shammy-26Y.jpg",
+   "image_large": "images/large/shammy-26Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Green Tea",
+   "name_ja": "グリーンティー",
+   "name_source": "ja",
+   "slug": "32y",
+   "sku": "32Y",
+   "code": "32Y",
+   "hex": "#5e6541",
+   "rgb": [
+    94,
+    101,
+    65
+   ],
+   "nap": null,
+   "image": "images/shammy-32Y.jpg",
+   "image_large": "images/large/shammy-32Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Forest Green",
+   "name_ja": "フォレストグリーン",
+   "name_source": "ja",
+   "slug": "33w",
+   "sku": "33W",
+   "code": "33W",
+   "hex": "#0b3030",
+   "rgb": [
+    11,
+    48,
+    48
+   ],
+   "nap": null,
+   "image": "images/shammy-33W.jpg",
+   "image_large": "images/large/shammy-33W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Grey",
+   "name_ja": "グレー",
+   "name_source": "ja",
+   "slug": "40w",
+   "sku": "40W",
+   "code": "40W",
+   "hex": "#3a444b",
+   "rgb": [
+    58,
+    68,
+    75
+   ],
+   "nap": null,
+   "image": "images/shammy-40W.jpg",
+   "image_large": "images/large/shammy-40W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Light Grey",
+   "name_ja": "ライトグレー",
+   "name_source": "ja",
+   "slug": "40y",
+   "sku": "40Y",
+   "code": "40Y",
+   "hex": "#8f858c",
+   "rgb": [
+    143,
+    133,
+    140
+   ],
+   "nap": null,
+   "image": "images/shammy-40Y.jpg",
+   "image_large": "images/large/shammy-40Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Sand Beige",
+   "name_ja": "サンドベージュ",
+   "name_source": "ja",
+   "slug": "41y",
+   "sku": "41Y",
+   "code": "41Y",
+   "hex": "#c6b59b",
+   "rgb": [
+    198,
+    181,
+    155
+   ],
+   "nap": null,
+   "image": "images/shammy-41Y.jpg",
+   "image_large": "images/large/shammy-41Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Charcoal Grey",
+   "name_ja": "チャコールグレー",
+   "name_source": "ja",
+   "slug": "43y",
+   "sku": "43Y",
+   "code": "43Y",
+   "hex": "#726563",
+   "rgb": [
+    114,
+    101,
+    99
+   ],
+   "nap": null,
+   "image": "images/shammy-43Y.jpg",
+   "image_large": "images/large/shammy-43Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Wasabi",
+   "name_ja": "ワサビ",
+   "name_source": "ja",
+   "slug": "46y",
+   "sku": "46Y",
+   "code": "46Y",
+   "hex": "#7b8f83",
+   "rgb": [
+    123,
+    143,
+    131
+   ],
+   "nap": null,
+   "image": "images/shammy-46Y.jpg",
+   "image_large": "images/large/shammy-46Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Deep Green",
+   "name_ja": "ディープグリーン",
+   "name_source": "ja",
+   "slug": "51w",
+   "sku": "51W",
+   "code": "51W",
+   "hex": "#0c2117",
+   "rgb": [
+    12,
+    33,
+    23
+   ],
+   "nap": null,
+   "image": "images/shammy-51W.jpg",
+   "image_large": "images/large/shammy-51W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Orange",
+   "name_ja": "オレンジ",
+   "name_source": "ja",
+   "slug": "52y",
+   "sku": "52Y",
+   "code": "52Y",
+   "hex": "#fb6831",
+   "rgb": [
+    251,
+    104,
+    49
+   ],
+   "nap": null,
+   "image": "images/shammy-52Y.jpg",
+   "image_large": "images/large/shammy-52Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Pink",
+   "name_ja": "ピンク",
+   "name_source": "ja",
+   "slug": "53y",
+   "sku": "53Y",
+   "code": "53Y",
+   "hex": "#f290ad",
+   "rgb": [
+    242,
+    144,
+    173
+   ],
+   "nap": null,
+   "image": "images/shammy-53Y.jpg",
+   "image_large": "images/large/shammy-53Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Rose Red",
+   "name_ja": "ローズレッド",
+   "name_source": "ja",
+   "slug": "61w",
+   "sku": "61W",
+   "code": "61W",
+   "hex": "#520105",
+   "rgb": [
+    82,
+    1,
+    5
+   ],
+   "nap": null,
+   "image": "images/shammy-61W.jpg",
+   "image_large": "images/large/shammy-61W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Wine",
+   "name_ja": "ワイン",
+   "name_source": "ja",
+   "slug": "66w",
+   "sku": "66W",
+   "code": "66W",
+   "hex": "#2f020e",
+   "rgb": [
+    47,
+    2,
+    14
+   ],
+   "nap": null,
+   "image": "images/shammy-66W.jpg",
+   "image_large": "images/large/shammy-66W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Cobalt Blue",
+   "name_ja": "コバルトブルー",
+   "name_source": "ja",
+   "slug": "70y",
+   "sku": "70Y",
+   "code": "70Y",
+   "hex": "#406bbb",
+   "rgb": [
+    64,
+    107,
+    187
+   ],
+   "nap": null,
+   "image": "images/shammy-70Y.jpg",
+   "image_large": "images/large/shammy-70Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Emerald",
+   "name_ja": "エメラルド",
+   "name_source": "ja",
+   "slug": "71y",
+   "sku": "71Y",
+   "code": "71Y",
+   "hex": "#0a6363",
+   "rgb": [
+    10,
+    99,
+    99
+   ],
+   "nap": null,
+   "image": "images/shammy-71Y.jpg",
+   "image_large": "images/large/shammy-71Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Purple",
+   "name_ja": "パープル",
+   "name_source": "ja",
+   "slug": "73w",
+   "sku": "73W",
+   "code": "73W",
+   "hex": "#3d375d",
+   "rgb": [
+    61,
+    55,
+    93
+   ],
+   "nap": null,
+   "image": "images/shammy-73W.jpg",
+   "image_large": "images/large/shammy-73W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Indigo",
+   "name_ja": "インディゴ",
+   "name_source": "ja",
+   "slug": "80w",
+   "sku": "80W",
+   "code": "80W",
+   "hex": "#161f37",
+   "rgb": [
+    22,
+    31,
+    55
+   ],
+   "nap": null,
+   "image": "images/shammy-80W.jpg",
+   "image_large": "images/large/shammy-80W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Black",
+   "name_ja": "ブラック",
+   "name_source": "ja",
+   "slug": "89w",
+   "sku": "89W",
+   "code": "89W",
+   "hex": "#101417",
+   "rgb": [
+    16,
+    20,
+    23
+   ],
+   "nap": null,
+   "image": "images/shammy-89W.jpg",
+   "image_large": "images/large/shammy-89W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Blue Grey",
+   "name_ja": "ブルーグレー",
+   "name_source": "ja",
+   "slug": "90y",
+   "sku": "90Y",
+   "code": "90Y",
+   "hex": "#8c9db0",
+   "rgb": [
+    140,
+    157,
+    176
+   ],
+   "nap": null,
+   "image": "images/shammy-90Y.jpg",
+   "image_large": "images/large/shammy-90Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Sky Blue",
+   "name_ja": "スカイブルー",
+   "name_source": "ja",
+   "slug": "96y",
+   "sku": "96Y",
+   "code": "96Y",
+   "hex": "#82a6c5",
+   "rgb": [
+    130,
+    166,
+    197
+   ],
+   "nap": null,
+   "image": "images/shammy-96Y.jpg",
+   "image_large": "images/large/shammy-96Y.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Navy",
+   "name_ja": "ネイビー",
+   "name_source": "ja",
+   "slug": "97w",
+   "sku": "97W",
+   "code": "97W",
+   "hex": "#121939",
+   "rgb": [
+    18,
+    25,
+    57
+   ],
+   "nap": null,
+   "image": "images/shammy-97W.jpg",
+   "image_large": "images/large/shammy-97W.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Dark Grey",
+   "name_ja": "ダークグレー",
+   "name_source": "ja",
+   "slug": "sr12",
+   "sku": "SR12",
+   "code": "SR12",
+   "hex": "#242c36",
+   "rgb": [
+    36,
+    44,
+    54
+   ],
+   "nap": null,
+   "image": "images/shammy-SR12.jpg",
+   "image_large": "images/large/shammy-SR12.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Coral Pink",
+   "name_ja": "コーラルピンク",
+   "name_source": "ja",
+   "slug": "sr13",
+   "sku": "SR13",
+   "code": "SR13",
+   "hex": "#eea7a8",
+   "rgb": [
+    238,
+    167,
+    168
+   ],
+   "nap": null,
+   "image": "images/shammy-SR13.jpg",
+   "image_large": "images/large/shammy-SR13.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Dark Greige",
+   "name_ja": "濃グレージュ",
+   "name_source": "ja",
+   "slug": "sr22",
+   "sku": "SR22",
+   "code": "SR22",
+   "hex": "#55453e",
+   "rgb": [
+    85,
+    69,
+    62
+   ],
+   "nap": null,
+   "image": "images/shammy-SR22.jpg",
+   "image_large": "images/large/shammy-SR22.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Red",
+   "name_ja": "レッド",
+   "name_source": "ja",
+   "slug": "sr23",
+   "sku": "SR23",
+   "code": "SR23",
+   "hex": "#700b12",
+   "rgb": [
+    112,
+    11,
+    18
+   ],
+   "nap": null,
+   "image": "images/shammy-SR23.jpg",
+   "image_large": "images/large/shammy-SR23.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Green",
+   "name_ja": "グリーン",
+   "name_source": "ja",
+   "slug": "sr24",
+   "sku": "SR24",
+   "code": "SR24",
+   "hex": "#073a09",
+   "rgb": [
+    7,
+    58,
+    9
+   ],
+   "nap": null,
+   "image": "images/shammy-SR24.jpg",
+   "image_large": "images/large/shammy-SR24.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Ice Grey",
+   "name_ja": "アイスグレー",
+   "name_source": "ja",
+   "slug": "sr25",
+   "sku": "SR25",
+   "code": "SR25",
+   "hex": "#afa6a7",
+   "rgb": [
+    175,
+    166,
+    167
+   ],
+   "nap": null,
+   "image": "images/shammy-SR25.jpg",
+   "image_large": "images/large/shammy-SR25.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "White",
+   "name_ja": "ホワイト",
+   "name_source": "ja",
+   "slug": "sr26",
+   "sku": "SR26",
+   "code": "SR26",
+   "hex": "#f2f3ed",
+   "rgb": [
+    242,
+    243,
+    237
+   ],
+   "nap": null,
+   "image": "images/shammy-SR26.jpg",
+   "image_large": "images/large/shammy-SR26.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Dark Brown",
+   "name_ja": "ダークブラウン",
+   "name_source": "ja",
+   "slug": "sr4",
+   "sku": "SR4",
+   "code": "SR4",
+   "hex": "#231905",
+   "rgb": [
+    35,
+    25,
+    5
+   ],
+   "nap": null,
+   "image": "images/shammy-SR4.jpg",
+   "image_large": "images/large/shammy-SR4.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  },
+  {
+   "name": "Turquoise",
+   "name_ja": "ターコイズ",
+   "name_source": "ja",
+   "slug": "sr9",
+   "sku": "SR9",
+   "code": "SR9",
+   "hex": "#0a9389",
+   "rgb": [
+    10,
+    147,
+    137
+   ],
+   "nap": null,
+   "image": "images/shammy-SR9.jpg",
+   "image_large": "images/large/shammy-SR9.jpg",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "sources": [
+    "youlove-shammy-707j"
+   ]
+  }
+ ]
+}

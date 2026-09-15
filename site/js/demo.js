@@ -799,6 +799,7 @@
     var PRODUCTS = [
         { id: "lx", file: "lx.json", label: "LX" },
         { id: "lamous-th", file: "lamous-th.json", label: "Lamous TH" },
+        { id: "shammy", file: "shammy.json", label: "Shammy 707J" },
         { id: "lt", file: "lt.json", label: "LT",
           labels: { patterns: "Jungle prints" } }
     ];
