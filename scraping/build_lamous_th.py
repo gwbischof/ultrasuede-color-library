@@ -26,14 +26,14 @@ Three things differ from LX, all forced by the source:
     the top 84% on the way in — the bar is the seller's overlay, not the cloth,
     and leaving it in would put it in the tile as well as in the sample.
 
-  * NO NAP BLOCK. The photographs are ~256px and ~197px once the caption is
-    off, well under build_dataset's NAP_MEASURABLE of 300, so contrast cannot
-    be measured. It could be *modelled* from NAP_FIT, but that curve was fitted
-    on Ultrasuede LT, and applying it here would assert that a different
-    manufacturer's fabric follows the same contrast-against-lightness
-    relationship — which nothing here has measured. So Lamous entries carry no
-    nap and the site draws their photographs instead, which is what the
-    fallback in demo.js is for.
+  * Contrast is measured on a SMALL FRAME. These are ~200px once the caption is
+    off, under build_dataset's NAP_MEASURABLE of 300 — but that threshold is
+    cautious: downsampling LX's 800px frames to 197px and re-measuring loses a
+    median of 5% across 21 colours. So contrast is measured and the calibrated
+    bias divided out, via nap_small. Each entry records contrast_frame_px and
+    contrast_res_factor so the correction stays visible. Nothing is modelled —
+    the curve that would model it was fitted on Ultrasuede LT and has no
+    business describing a different manufacturer's cloth.
 """
 
 import argparse
@@ -47,6 +47,11 @@ import urllib.request
 
 import numpy as np
 from PIL import Image
+
+# Shared with the Toray products so a Lamous shader and an LT shader are the
+# same kind of picture. nap_small measures a frame under the 300px threshold
+# and divides out the resolution bias calibrated there.
+from build_dataset import nap_small
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SNAPSHOT = ROOT / 'scraping' / 'lamous_th_page.html'
@@ -159,6 +164,9 @@ def build():
         if not large.exists():
             sys.exit(f'missing image {large.name} — run with --fetch')
         rgb = sample_color(large)
+        # corners=False: the caption bar is already cropped off, so the frame
+        # is fabric edge to edge.
+        nap_block = nap_small(str(large), rgb)
         colors.append({
             # No names exist for this line; the code is the identity.
             'name': code,
@@ -167,7 +175,7 @@ def build():
             'code': code,
             'hex': hexstr(rgb),
             'rgb': rgb,
-            'nap': None,
+            'nap': nap_block,
             'image': f'images/{code}.jpg',
             'image_large': f'images/large/{code}.jpg',
             'source': f'https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1={sku}',
@@ -207,13 +215,17 @@ def build():
                 'neither the sample nor the tile contains it.'
             ),
             'nap_note': (
-                'No nap block. The photographs are about 256px, and about 197px once '
-                'the caption bar is cropped — under the 300px minimum nap contrast can '
-                'be measured from. Contrast could be modelled instead, but the curve '
-                'that models it was fitted on Ultrasuede LT, and using it here would '
-                'assert that a different manufacturer’s fabric follows the same '
-                'contrast-against-lightness relationship, which nothing here has '
-                'measured. So these colours are drawn from their photographs.'
+                'Every colour carries a `nap` block, measured from its own photograph '
+                'and meaning the same thing as LT’s. These frames are about 200px once '
+                'the caption bar is cropped, under build_dataset’s 300px threshold — but '
+                'that threshold turns out to be cautious. Downsampling LX’s 800px frames '
+                'to 197px and re-measuring loses a median of 5% (21 colours, stdev 0.05), '
+                'so the shortfall is a correctable bias rather than an absence. Contrast '
+                'here is measured and then divided by that calibrated factor; each entry '
+                'records contrast_frame_px and contrast_res_factor so the correction is '
+                'visible rather than baked in. Nothing is modelled — the curve that would '
+                'model it was fitted on Ultrasuede LT and has no business describing a '
+                'different manufacturer’s cloth.'
             ),
             'coverage_note': (
                 'The page states the grade has 49 colours ("49色取り揃え") and the picker '

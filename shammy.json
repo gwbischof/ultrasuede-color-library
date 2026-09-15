@@ -12,17 +12,37 @@
   "rebuild": "python3 scraping/build_shammy.py --fetch && python3 scraping/build_shammy.py",
   "naming_note": "Names are printed in Japanese only. `name_ja` is as printed; `name` is a transliteration — every one is a katakana rendering of an English colour word — and is not source data.",
   "color_note": "hex/rgb are read from one photographed colour card, not from official values, and are approximate. Each is the median of a centre crop of its cell, inset to keep the printed cell edge out of the sample. Because all 42 come from a single capture under one light they are unusually consistent with each other, and correspondingly less comparable with the other products here than those are with each other — those were photographed a colour at a time.",
-  "nap_note": "No nap block. A cell is 93px tall, which is the ceiling — there is no larger version of the card — and well under the 300px minimum nap contrast can be measured from. These colours are drawn from their crops instead.",
+  "nap_note": "Every colour carries a `nap` block, and it goes through two corrections rather than one. A cell is 93px tall, far under build_dataset’s 300px threshold, so contrast is measured on the small frame and the bias calibrated on LX divided out. That alone left these 1.4-1.6x above what the same cloth measures on a properly sized frame: the LX calibration was built by downsampling clean originals, while these cells are crops of a scan that was JPEG’d once already, and the blocking survives the de-noise step as if it were cloth. So they are anchored as well — the seller’s own 678x445 close-up is the control, measured the plain way and compared against the card cells nearest its lightness. meta.nap_anchor records that comparison. Even so this is the roughest contrast in the library: good enough to draw a swatch that reads as suede, not good enough to compare against LT or ST.",
   "coverage_note": "The card header, the page body and the colour list all say 42 (\"全42色\") and all three agree on the same 42 codes. The page <title> says 全37色; it is stale and is not used.",
   "specifications": {
-   "width": "1,150mm",
-   "thickness": "0.5mm",
-   "source": "http://www.youlove.co.jp/shammy707j.html"
+   "width": "1,150mm (115cm)",
+   "roll": "115cm × 30m",
+   "thickness": "0.5mm (+0.1 / -0.05)",
+   "composition": "Polyester 65%, Polyurethane 35%",
+   "weight": "140 g/m²",
+   "product_code": "707J",
+   "source": "http://www.youlove.co.jp/shammy707j.html",
+   "spec_sheet": "http://www.youlove.co.jp/shammy-about.jpg"
+  },
+  "nap_anchor": {
+   "closeup": "http://www.youlove.co.jp/SHAMMY-br.JPG",
+   "closeup_crop_px": [
+    420,
+    340
+   ],
+   "closeup_contrast": 13.63,
+   "closeup_luminance": 92.4,
+   "card_contrast_at_that_lightness": [
+    20.01,
+    19.19,
+    22.01,
+    19.05,
+    19.98
+   ],
+   "factor": 1.466
   },
   "not_recorded": [
-   "manufacturer — the listing names no company",
-   "composition",
-   "weight"
+   "manufacturer — the listing names no company"
   ]
  },
  "sources": [
@@ -46,7 +66,18 @@
     142,
     118
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9869,
+     1.0039,
+     1.0001
+    ],
+    "contrast": 13.34,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-03Y.jpg",
    "image_large": "images/large/shammy-03Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -67,7 +98,18 @@
     201,
     152
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9881,
+     1.0072,
+     0.964
+    ],
+    "contrast": 7.63,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-05Y.jpg",
    "image_large": "images/large/shammy-05Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -88,7 +130,18 @@
     98,
     79
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0034,
+     0.999,
+     0.9996
+    ],
+    "contrast": 13.0,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-06Y.jpg",
    "image_large": "images/large/shammy-06Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -109,7 +162,18 @@
     145,
     97
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0003,
+     1.0023,
+     0.9764
+    ],
+    "contrast": 11.33,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 95,
+    "contrast_res_factor": 0.803,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-08Y.jpg",
    "image_large": "images/large/shammy-08Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -130,7 +194,18 @@
     173,
     135
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0177,
+     0.9941,
+     1.0062
+    ],
+    "contrast": 8.75,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-09Y.jpg",
    "image_large": "images/large/shammy-09Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -151,7 +226,18 @@
     227,
     193
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9894,
+     1.0019,
+     1.0125
+    ],
+    "contrast": 5.17,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 93,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-15Y.jpg",
    "image_large": "images/large/shammy-15Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -172,7 +258,18 @@
     34,
     90
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.866,
+     1.0326,
+     1.072
+    ],
+    "contrast": 17.6,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-18R.jpg",
    "image_large": "images/large/shammy-18R.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -193,7 +290,18 @@
     136,
     166
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.005,
+     0.9999,
+     0.9866
+    ],
+    "contrast": 11.49,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 93,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-20R.jpg",
    "image_large": "images/large/shammy-20R.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -214,7 +322,18 @@
     200,
     107
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.371,
+     1.1627,
+     1.2409
+    ],
+    "contrast": 4.97,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 93,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-20Y.jpg",
    "image_large": "images/large/shammy-20Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -235,7 +354,18 @@
     45,
     16
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0379,
+     1.0026,
+     0.8628
+    ],
+    "contrast": 16.15,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-21W.jpg",
    "image_large": "images/large/shammy-21W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -256,7 +386,18 @@
     52,
     26
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0204,
+     1.0012,
+     0.928
+    ],
+    "contrast": 16.95,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-24W.jpg",
    "image_large": "images/large/shammy-24W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -277,7 +418,18 @@
     31,
     10
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0303,
+     1.0119,
+     0.7927
+    ],
+    "contrast": 17.95,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 95,
+    "contrast_res_factor": 0.803,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-25W.jpg",
    "image_large": "images/large/shammy-25W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -298,7 +450,18 @@
     128,
     80
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9795,
+     1.0069,
+     0.9917
+    ],
+    "contrast": 10.99,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-26Y.jpg",
    "image_large": "images/large/shammy-26Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -319,7 +482,18 @@
     101,
     65
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0036,
+     0.9994,
+     0.9955
+    ],
+    "contrast": 13.65,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 95,
+    "contrast_res_factor": 0.803,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-32Y.jpg",
    "image_large": "images/large/shammy-32Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -340,7 +514,18 @@
     48,
     48
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.8871,
+     1.033,
+     1.005
+    ],
+    "contrast": 16.57,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-33W.jpg",
    "image_large": "images/large/shammy-33W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -361,7 +546,18 @@
     68,
     75
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9975,
+     1.0011,
+     0.9962
+    ],
+    "contrast": 15.83,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-40W.jpg",
    "image_large": "images/large/shammy-40W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -382,7 +578,18 @@
     133,
     140
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9964,
+     1.0022,
+     0.9894
+    ],
+    "contrast": 11.76,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 93,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-40Y.jpg",
    "image_large": "images/large/shammy-40Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -403,7 +610,18 @@
     181,
     155
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9982,
+     1.0003,
+     1.0018
+    ],
+    "contrast": 7.93,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-41Y.jpg",
    "image_large": "images/large/shammy-41Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -424,7 +642,18 @@
     101,
     99
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9853,
+     1.0063,
+     0.9805
+    ],
+    "contrast": 13.09,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-43Y.jpg",
    "image_large": "images/large/shammy-43Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -445,7 +674,18 @@
     143,
     131
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9952,
+     1.002,
+     0.9944
+    ],
+    "contrast": 11.05,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-46Y.jpg",
    "image_large": "images/large/shammy-46Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -466,7 +706,18 @@
     33,
     23
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.942,
+     1.0156,
+     1.0159
+    ],
+    "contrast": 18.34,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-51W.jpg",
    "image_large": "images/large/shammy-51W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -487,7 +738,18 @@
     104,
     49
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.7209,
+     1.0806,
+     1.023
+    ],
+    "contrast": 10.05,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-52Y.jpg",
    "image_large": "images/large/shammy-52Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -508,7 +770,18 @@
     144,
     173
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.8642,
+     1.0425,
+     0.9788
+    ],
+    "contrast": 8.39,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 93,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-53Y.jpg",
    "image_large": "images/large/shammy-53Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -529,7 +802,18 @@
     1,
     5
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.8369,
+     0.7457,
+     1.0549
+    ],
+    "contrast": 18.63,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-61W.jpg",
    "image_large": "images/large/shammy-61W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -550,7 +834,18 @@
     2,
     14
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.1258,
+     0.9572,
+     1.0533
+    ],
+    "contrast": 19.47,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-66W.jpg",
    "image_large": "images/large/shammy-66W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -571,7 +866,18 @@
     107,
     187
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9769,
+     1.0077,
+     0.9914
+    ],
+    "contrast": 15.02,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 95,
+    "contrast_res_factor": 0.803,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-70Y.jpg",
    "image_large": "images/large/shammy-70Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -592,7 +898,18 @@
     99,
     99
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.8401,
+     1.0483,
+     0.9918
+    ],
+    "contrast": 13.63,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-71Y.jpg",
    "image_large": "images/large/shammy-71Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -613,7 +930,18 @@
     55,
     93
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0016,
+     0.9983,
+     1.0125
+    ],
+    "contrast": 14.63,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 93,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-73W.jpg",
    "image_large": "images/large/shammy-73W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -634,7 +962,18 @@
     31,
     55
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9508,
+     1.0129,
+     1.0177
+    ],
+    "contrast": 17.92,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-80W.jpg",
    "image_large": "images/large/shammy-80W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -655,7 +994,18 @@
     20,
     23
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9675,
+     1.0095,
+     1.0017
+    ],
+    "contrast": 19.82,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-89W.jpg",
    "image_large": "images/large/shammy-89W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -676,7 +1026,18 @@
     157,
     176
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9877,
+     1.0082,
+     0.9549
+    ],
+    "contrast": 10.55,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 93,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-90Y.jpg",
    "image_large": "images/large/shammy-90Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -697,7 +1058,18 @@
     166,
     197
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0039,
+     0.998,
+     1.008
+    ],
+    "contrast": 10.11,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-96Y.jpg",
    "image_large": "images/large/shammy-96Y.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -718,7 +1090,18 @@
     25,
     57
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0595,
+     0.9914,
+     0.91
+    ],
+    "contrast": 17.22,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-97W.jpg",
    "image_large": "images/large/shammy-97W.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -739,7 +1122,18 @@
     44,
     54
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9827,
+     1.0066,
+     0.986
+    ],
+    "contrast": 16.43,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR12.jpg",
    "image_large": "images/large/shammy-SR12.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -760,7 +1154,18 @@
     167,
     168
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9364,
+     1.0173,
+     1.0163
+    ],
+    "contrast": 7.72,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 92,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR13.jpg",
    "image_large": "images/large/shammy-SR13.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -781,7 +1186,18 @@
     69,
     62
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0151,
+     0.9963,
+     0.9925
+    ],
+    "contrast": 15.9,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR22.jpg",
    "image_large": "images/large/shammy-SR22.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -802,7 +1218,18 @@
     11,
     18
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.1516,
+     0.9556,
+     0.9937
+    ],
+    "contrast": 16.49,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR23.jpg",
    "image_large": "images/large/shammy-SR23.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -823,7 +1250,18 @@
     58,
     9
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.8185,
+     1.0663,
+     0.878
+    ],
+    "contrast": 16.22,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR24.jpg",
    "image_large": "images/large/shammy-SR24.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -844,7 +1282,18 @@
     166,
     167
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9946,
+     1.0021,
+     0.9955
+    ],
+    "contrast": 8.97,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 92,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR25.jpg",
    "image_large": "images/large/shammy-SR25.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -865,7 +1314,18 @@
     243,
     237
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0011,
+     0.9995,
+     1.0015
+    ],
+    "contrast": 6.41,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 92,
+    "contrast_res_factor": 0.8,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR26.jpg",
    "image_large": "images/large/shammy-SR26.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -886,7 +1346,18 @@
     25,
     5
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9647,
+     1.0374,
+     0.734
+    ],
+    "contrast": 17.15,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR4.jpg",
    "image_large": "images/large/shammy-SR4.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",
@@ -907,7 +1378,18 @@
     147,
     137
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.8643,
+     1.0391,
+     1.0123
+    ],
+    "contrast": 12.23,
+    "contrast_source": "measured-small-frame-anchored",
+    "contrast_frame_px": 94,
+    "contrast_res_factor": 0.801,
+    "contrast_anchor_factor": 1.466
+   },
    "image": "images/shammy-SR9.jpg",
    "image_large": "images/large/shammy-SR9.jpg",
    "source": "http://www.youlove.co.jp/shammy707j.html",

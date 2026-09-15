@@ -1,5 +1,5 @@
 /*
- * Ultrasuede Color Library — demo page.
+ * Synthetic Suede Fabric Library — demo page.
  *
  * Reads one JSON file per product, renders each product's subsections as swatch
  * grids, and fills a single shared popover with the entry that was clicked.
@@ -552,6 +552,10 @@
             fact(facts, "Seen in", list);
         } else if (entry.source) {
             fact(facts, "Source", sourceValue(entry));
+            /* A per-colour destination where the source is a whole list. */
+            if (entry.sample_url) {
+                fact(facts, "Sample", link(entry.sample_url, "order this swatch"));
+            }
         }
 
         return facts;
@@ -863,6 +867,32 @@
 
     var GRID_DEFAULT = "swatch-grid grid grid-cols-6 gap-1 mb-4";
 
+    /*
+     * The fabric itself, under the product heading: what it is made of, how
+     * wide, how heavy, how thick. Read from meta.specifications where a builder
+     * writes one, and from the top level of meta where LT keeps the same four
+     * facts — normalised here rather than rewriting lt.json, because that file
+     * is a record and its shape is part of it.
+     */
+    var SPEC_FIELDS = [
+        ["composition", "Composition"],
+        ["fiber_content", "Composition"],   /* DS102 spells it this way */
+        ["width", "Width"],
+        ["weight", "Weight"],
+        ["thickness", "Thickness"]
+    ];
+
+    function specLine(meta) {
+        var src = meta.specifications || meta;
+        var parts = [];
+        SPEC_FIELDS.forEach(function (f) {
+            if (src[f[0]]) { parts.push(f[1] + " " + src[f[0]]); }
+        });
+        if (!parts.length) { return null; }
+        var p = el("p", "product-spec text-sm", parts.join("  ·  "));
+        return p;
+    }
+
     function headRow(cls, tag, headClass, text) {
         var row = el("div", cls +
             " flex flex-row items-baseline justify-between flex-wrap gap-2 mb-2");
@@ -883,6 +913,9 @@
         var counts = el("p", "section-label text-sm");
         head.appendChild(counts);
         section.appendChild(head);
+
+        var spec = specLine(data.meta || {});
+        if (spec) { section.appendChild(spec); }
 
         var total = 0, kinds = 0, hasPatterns = false;
         SUBSECTIONS.forEach(function (sub) {

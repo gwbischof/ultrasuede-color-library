@@ -40,9 +40,21 @@ import urllib.request
 import numpy as np
 from PIL import Image
 
+# Shared with the Toray products; nap_small measures a sub-300px frame and
+# divides out the resolution bias calibrated there.
+from build_dataset import nap_small, nap_contrast
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SNAPSHOT = ROOT / 'scraping' / 'shammy_page.html'
 CARD = ROOT / 'colorcards' / 'shammy_707j_color_card.jpg'
+# A 678x445 close-up of the cloth from the same seller's page. It is the only
+# Shammy image big enough for the plain contrast measurement, and it is what
+# the card-derived contrasts are anchored to — see anchor_factor().
+CLOSEUP = ROOT / 'colorcards' / 'shammy_707j_closeup.jpg'
+CLOSEUP_URL = 'http://www.youlove.co.jp/SHAMMY-br.JPG'
+# Clean fabric inside that frame: below the headline text, left of the
+# "shmmy" watermark. 420x340, so the short edge clears NAP_MEASURABLE.
+CLOSEUP_CROP = (10, 100, 430, 440)
 IMAGES = ROOT / 'images'
 IMAGES_LARGE = IMAGES / 'large'
 OUT = ROOT / 'shammy.json'
@@ -114,6 +126,46 @@ def parse_page(text):
     return out
 
 
+def lum(rgb):
+    return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]
+
+
+def anchor_factor(card_naps):
+    """How much the 93px card cells overstate contrast, measured not assumed.
+
+    nap_small already divides out the resolution bias calibrated on LX, but that
+    calibration was built by downsampling clean 800px originals. These cells are
+    crops of a scan that was JPEG'd once already, and the blocking survives the
+    de-noise step as if it were cloth — so they come out high even after the
+    correction.
+
+    The close-up is the control: same fabric, same seller, 445px short edge, so
+    the plain measurement applies. Comparing it against the card cells nearest
+    its own lightness gives the factor the card is out by. Divided out below.
+    """
+    im = Image.open(CLOSEUP).convert('RGB').crop(CLOSEUP_CROP)
+    tmp = CLOSEUP.with_suffix('.crop.jpg')
+    im.save(tmp, 'JPEG', quality=96)
+    truth = nap_contrast(str(tmp))
+    rgb = np.median(np.asarray(im).reshape(-1, 3), axis=0).round().astype(int)
+    tmp.unlink()
+    if truth is None:
+        return 1.0, None
+
+    L = lum(rgb)
+    near = sorted(card_naps, key=lambda cn: abs(lum(cn[0]) - L))[:5]
+    ratios = sorted(cn[1] / truth for cn in near)
+    factor = ratios[len(ratios) // 2]
+    return factor, {
+        'closeup': CLOSEUP_URL,
+        'closeup_crop_px': [im.size[0], im.size[1]],
+        'closeup_contrast': round(truth, 2),
+        'closeup_luminance': round(float(L), 1),
+        'card_contrast_at_that_lightness': [round(cn[1], 2) for cn in near],
+        'factor': round(factor, 3),
+    }
+
+
 def cells():
     """Card cells in column-major order — the order the page lists colours in."""
     out = []
@@ -179,12 +231,26 @@ def build():
             'code': code,
             'hex': '#%02x%02x%02x' % tuple(rgb),
             'rgb': rgb,
-            'nap': None,
+            'nap': None,       # filled in below, once the anchor is known
             'image': f'images/shammy-{code}.jpg',
             'image_large': f'images/large/shammy-{code}.jpg',
             'source': PAGE,
             'sources': ['youlove-shammy-707j'],
         })
+
+    # Contrast for every cell, then the anchor, then divide it out.
+    raw_naps = []
+    for c in out:
+        blk = nap_small(str(IMAGES_LARGE / f"shammy-{c['code']}.jpg"), c['rgb'])
+        c['nap'] = blk
+        if blk:
+            raw_naps.append((c['rgb'], blk['contrast']))
+    factor, anchor = anchor_factor(raw_naps)
+    for c in out:
+        if c['nap']:
+            c['nap']['contrast'] = round(c['nap']['contrast'] / factor, 2)
+            c['nap']['contrast_source'] = 'measured-small-frame-anchored'
+            c['nap']['contrast_anchor_factor'] = round(factor, 3)
 
     out.sort(key=lambda c: c['code'])
 
@@ -219,10 +285,19 @@ def build():
                 'photographed a colour at a time.'
             ),
             'nap_note': (
-                'No nap block. A cell is 93px tall, which is the ceiling — there is no '
-                'larger version of the card — and well under the 300px minimum nap '
-                'contrast can be measured from. These colours are drawn from their '
-                'crops instead.'
+                'Every colour carries a `nap` block, and it goes through two corrections '
+                'rather than one. A cell is 93px tall, far under build_dataset’s 300px '
+                'threshold, so contrast is measured on the small frame and the bias '
+                'calibrated on LX divided out. That alone left these 1.4-1.6x above what '
+                'the same cloth measures on a properly sized frame: the LX calibration '
+                'was built by downsampling clean originals, while these cells are crops '
+                'of a scan that was JPEG’d once already, and the blocking survives the '
+                'de-noise step as if it were cloth. So they are anchored as well — the '
+                'seller’s own 678x445 close-up is the control, measured the plain way and '
+                'compared against the card cells nearest its lightness. meta.nap_anchor '
+                'records that comparison. Even so this is the roughest contrast in the '
+                'library: good enough to draw a swatch that reads as suede, not good '
+                'enough to compare against LT or ST.'
             ),
             'coverage_note': (
                 'The card header, the page body and the colour list all say 42 '
@@ -230,13 +305,18 @@ def build():
                 'says 全37色; it is stale and is not used.'
             ),
             'specifications': {
-                'width': '1,150mm',
-                'thickness': '0.5mm',
+                'width': '1,150mm (115cm)',
+                'roll': '115cm × 30m',
+                'thickness': '0.5mm (+0.1 / -0.05)',
+                'composition': 'Polyester 65%, Polyurethane 35%',
+                'weight': '140 g/m²',
+                'product_code': '707J',
                 'source': PAGE,
+                'spec_sheet': 'http://www.youlove.co.jp/shammy-about.jpg',
             },
+            'nap_anchor': anchor,
             'not_recorded': [
                 'manufacturer — the listing names no company',
-                'composition', 'weight',
             ],
         },
         'sources': [

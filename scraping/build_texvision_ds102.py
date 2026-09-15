@@ -81,7 +81,7 @@ def rows():
 def fetch():
     IMAGES.mkdir(exist_ok=True)
     IMAGES_LARGE.mkdir(exist_ok=True)
-    for n, name, _oos, size, iid in rows():
+    for n, name, _oos, size, iid, _vid in rows():
         large = IMAGES_LARGE / f'{PREFIX}-{n:02d}.jpg'
         small = IMAGES / f'{PREFIX}-{n:02d}.jpg'
         if large.exists() and small.exists():
@@ -122,7 +122,7 @@ def drape_color(path):
 
 def build():
     colors = []
-    for n, name, oos, _size, _iid in rows():
+    for n, name, oos, _size, _iid, vid in rows():
         large = IMAGES_LARGE / f'{PREFIX}-{n:02d}.jpg'
         if not large.exists():
             sys.exit(f'missing {large.name} — run with --fetch')
@@ -138,7 +138,10 @@ def build():
             'image': f'images/{PREFIX}-{n:02d}.jpg',
             'image_large': f'images/large/{PREFIX}-{n:02d}.jpg',
             'in_stock': not oos,
-            'source': LISTING,
+            # Deep link: ?var= selects this colour on the listing rather than
+            # dropping the reader on whichever one eBay defaults to.
+            'source': f'{LISTING}?var={vid}',
+            'variation_id': vid,
             'sources': ['ebay-whatmorefabric-ds102'],
         })
 

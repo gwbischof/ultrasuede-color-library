@@ -235,10 +235,18 @@ def build():
                 'This is what the sales catalogue lists, which is not necessarily the '
                 'whole LX line — it is the set offered for sale through this channel.'
             ),
-            'not_recorded': [
-                'composition', 'width', 'weight', 'thickness',
-                'The storefront publishes no specification text; these want a Toray datasheet.'
-            ],
+            'specifications': {
+                'composition': ('80% polyester ultra-fine fiber non-woven with '
+                                '20% non-fibrous polyurethane binder'),
+                'width': '51" / 1,300mm',
+                'weight': 'approx. 6.5 oz per sq. yard / 220g per sq. meter',
+                'thickness': '0.6mm',
+                'style_number': '3942',
+                'source': 'https://www.ultrasuede.us/products/lx.html',
+                'note': ('From Toray’s own product page, not the storefront, which '
+                         'publishes no specification text. Its style number agrees with '
+                         'the LX_3942 vendor field on every storefront listing.'),
+            },
         },
         'sources': [
             {'id': 'sales-tum-toray-lx', 'url': COLLECTION,

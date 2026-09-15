@@ -178,6 +178,11 @@ def build():
             'image': f"images/{r['sku']}.jpg",
             'image_large': f"images/large/{r['sku']}.jpg",
             'orderable': r['orderable'],
+            # Toray publishes no per-colour PAGE, but it does publish a
+            # per-colour sample request. `source` stays the list the data was
+            # actually read from; this is the deep link for the reader.
+            'sample_url': (f'{SITE}/sample_request/index.php?addsku={r["sku"]}'
+                           if r['orderable'] else None),
             'source': PAGE,
             'sources': ['swatches-st'],
         })
@@ -255,10 +260,18 @@ def build():
                 'numbers that were later restyled to 58" ones — and none of that history '
                 'is here; see research/FINDINGS.md for what is known of it.'
             ),
-            'not_recorded': [
-                'composition', 'width', 'weight', 'thickness',
-                'The swatch listing publishes no specification text.',
-            ],
+            'specifications': {
+                'composition': ('75% polyester ultra-microfiber non-woven (30% '
+                                'plant-based) with 25% non-fibrous polyurethane binder'),
+                'width': '58" / 1,480mm',
+                'weight': 'approx. 6.8 oz per sq. yard / 230g per sq. meter',
+                'thickness': '0.7mm',
+                'style_number': '8023',
+                'source': 'https://www.ultrasuede.us/products/st.html',
+                'note': ('From Toray’s own product page; the swatch listing publishes '
+                         'no specification text. Style number agrees with the 8023- '
+                         'prefix on every current swatch number.'),
+            },
         },
         'sources': [
             {'id': 'swatches-st', 'url': PAGE,

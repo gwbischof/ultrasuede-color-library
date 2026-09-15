@@ -12,7 +12,7 @@
   "rebuild": "python3 scraping/build_lamous_th.py --fetch && python3 scraping/build_lamous_th.py",
   "naming_note": "This line has no colour names. The picker and the cart both identify a colour by its code alone, so `name` is the code.",
   "color_note": "hex/rgb are sampled from the retailer’s swatch photographs, not from official Lamous colour values, and are approximate. Each is the median of a centre crop — the same measurement used for LT and LX, so the three products’ values are comparable. The photographs carry a caption bar with the code printed across the bottom of the frame; it sits at 85-90% of frame height on all 49 and is cropped off on the way in, so neither the sample nor the tile contains it.",
-  "nap_note": "No nap block. The photographs are about 256px, and about 197px once the caption bar is cropped — under the 300px minimum nap contrast can be measured from. Contrast could be modelled instead, but the curve that models it was fitted on Ultrasuede LT, and using it here would assert that a different manufacturer’s fabric follows the same contrast-against-lightness relationship, which nothing here has measured. So these colours are drawn from their photographs.",
+  "nap_note": "Every colour carries a `nap` block, measured from its own photograph and meaning the same thing as LT’s. These frames are about 200px once the caption bar is cropped, under build_dataset’s 300px threshold — but that threshold turns out to be cautious. Downsampling LX’s 800px frames to 197px and re-measuring loses a median of 5% (21 colours, stdev 0.05), so the shortfall is a correctable bias rather than an absence. Contrast here is measured and then divided by that calibrated factor; each entry records contrast_frame_px and contrast_res_factor so the correction is visible rather than baked in. Nothing is modelled — the curve that would model it was fitted on Ultrasuede LT and has no business describing a different manufacturer’s cloth.",
   "coverage_note": "The page states the grade has 49 colours (\"49色取り揃え\") and the picker lists 49, so this is the whole TH range rather than one channel’s selection.",
   "specifications": {
    "thickness": "0.58 (±0.05) mm",
@@ -46,7 +46,17 @@
     241,
     238
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0017,
+     0.9994,
+     1.0012
+    ],
+    "contrast": 2.48,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 205,
+    "contrast_res_factor": 0.957
+   },
    "image": "images/TH001.jpg",
    "image_large": "images/large/TH001.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=5",
@@ -65,7 +75,17 @@
     247,
     235
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0089,
+     0.9991,
+     0.9833
+    ],
+    "contrast": 2.51,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH003.jpg",
    "image_large": "images/large/TH003.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=14",
@@ -84,7 +104,17 @@
     239,
     211
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9696,
+     1.0107,
+     0.9835
+    ],
+    "contrast": 4.55,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 199,
+    "contrast_res_factor": 0.952
+   },
    "image": "images/TH006.jpg",
    "image_large": "images/large/TH006.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=16",
@@ -103,7 +133,17 @@
     241,
     217
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9543,
+     1.0087,
+     1.0485
+    ],
+    "contrast": 3.0,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 201,
+    "contrast_res_factor": 0.954
+   },
    "image": "images/TH007.jpg",
    "image_large": "images/large/TH007.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=15",
@@ -122,7 +162,17 @@
     203,
     195
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0032,
+     0.998,
+     1.0107
+    ],
+    "contrast": 9.02,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 199,
+    "contrast_res_factor": 0.952
+   },
    "image": "images/TH101.jpg",
    "image_large": "images/large/TH101.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=17",
@@ -141,7 +191,17 @@
     189,
     175
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0155,
+     0.9961,
+     0.993
+    ],
+    "contrast": 7.82,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 199,
+    "contrast_res_factor": 0.952
+   },
    "image": "images/TH103.jpg",
    "image_large": "images/large/TH103.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=56",
@@ -160,7 +220,17 @@
     146,
     139
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0057,
+     1.0013,
+     0.9708
+    ],
+    "contrast": 8.73,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 200,
+    "contrast_res_factor": 0.953
+   },
    "image": "images/TH105.jpg",
    "image_large": "images/large/TH105.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=58",
@@ -179,7 +249,17 @@
     78,
     76
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0014,
+     0.9998,
+     0.9978
+    ],
+    "contrast": 6.87,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 200,
+    "contrast_res_factor": 0.953
+   },
    "image": "images/TH111.jpg",
    "image_large": "images/large/TH111.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=60",
@@ -198,7 +278,17 @@
     212,
     179
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9978,
+     0.9973,
+     1.0333
+    ],
+    "contrast": 7.01,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 199,
+    "contrast_res_factor": 0.952
+   },
    "image": "images/TH201.jpg",
    "image_large": "images/large/TH201.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=21",
@@ -217,7 +307,17 @@
     177,
     134
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0039,
+     0.9991,
+     0.9977
+    ],
+    "contrast": 6.45,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH204.jpg",
    "image_large": "images/large/TH204.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=23",
@@ -236,7 +336,17 @@
     199,
     174
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0038,
+     0.9991,
+     0.9977
+    ],
+    "contrast": 6.7,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH206.jpg",
    "image_large": "images/large/TH206.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=22",
@@ -255,7 +365,17 @@
     156,
     130
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9972,
+     1.0009,
+     0.999
+    ],
+    "contrast": 7.03,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 204,
+    "contrast_res_factor": 0.956
+   },
    "image": "images/TH208.jpg",
    "image_large": "images/large/TH208.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=24",
@@ -274,7 +394,17 @@
     206,
     180
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0027,
+     0.9987,
+     1.0053
+    ],
+    "contrast": 9.18,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 197,
+    "contrast_res_factor": 0.951
+   },
    "image": "images/TH210.jpg",
    "image_large": "images/large/TH210.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=19",
@@ -293,7 +423,17 @@
     200,
     174
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0002,
+     0.9998,
+     1.0018
+    ],
+    "contrast": 9.92,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 201,
+    "contrast_res_factor": 0.954
+   },
    "image": "images/TH211.jpg",
    "image_large": "images/large/TH211.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=18",
@@ -312,7 +452,17 @@
     69,
     58
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.091,
+     0.9804,
+     0.9264
+    ],
+    "contrast": 5.21,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH301.jpg",
    "image_large": "images/large/TH301.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=40",
@@ -331,7 +481,17 @@
     49,
     49
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0431,
+     0.9861,
+     1.0105
+    ],
+    "contrast": 4.42,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH302.jpg",
    "image_large": "images/large/TH302.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=33",
@@ -350,7 +510,17 @@
     73,
     69
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0256,
+     0.9977,
+     0.9474
+    ],
+    "contrast": 5.78,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH303.jpg",
    "image_large": "images/large/TH303.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=34",
@@ -369,7 +539,17 @@
     60,
     61
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0625,
+     0.9813,
+     1.0008
+    ],
+    "contrast": 4.8,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH304.jpg",
    "image_large": "images/large/TH304.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=35",
@@ -388,7 +568,17 @@
     62,
     76
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0604,
+     0.9812,
+     1.0089
+    ],
+    "contrast": 6.08,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH305.jpg",
    "image_large": "images/large/TH305.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=36",
@@ -407,7 +597,17 @@
     59,
     74
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0171,
+     0.9891,
+     1.0572
+    ],
+    "contrast": 6.64,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH306.jpg",
    "image_large": "images/large/TH306.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=37",
@@ -426,7 +626,17 @@
     50,
     42
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0417,
+     0.9888,
+     0.9883
+    ],
+    "contrast": 3.86,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH307.jpg",
    "image_large": "images/large/TH307.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=39",
@@ -445,7 +655,17 @@
     140,
     164
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9978,
+     1.0007,
+     0.9991
+    ],
+    "contrast": 6.84,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH310.jpg",
    "image_large": "images/large/TH310.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=41",
@@ -464,7 +684,17 @@
     53,
     127
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0871,
+     0.9722,
+     1.019
+    ],
+    "contrast": 6.57,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 204,
+    "contrast_res_factor": 0.956
+   },
    "image": "images/TH311.jpg",
    "image_large": "images/large/TH311.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=42",
@@ -483,7 +713,17 @@
     35,
     82
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.1049,
+     0.9553,
+     1.1342
+    ],
+    "contrast": 5.38,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH312.jpg",
    "image_large": "images/large/TH312.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=43",
@@ -502,7 +742,17 @@
     220,
     197
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9868,
+     1.0004,
+     1.0347
+    ],
+    "contrast": 6.68,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 199,
+    "contrast_res_factor": 0.952
+   },
    "image": "images/TH401.jpg",
    "image_large": "images/large/TH401.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=20",
@@ -521,7 +771,17 @@
     91,
     111
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9982,
+     0.9998,
+     1.0071
+    ],
+    "contrast": 6.32,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH403.jpg",
    "image_large": "images/large/TH403.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=32",
@@ -540,7 +800,17 @@
     115,
     62
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0382,
+     0.9924,
+     0.9629
+    ],
+    "contrast": 7.13,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH411.jpg",
    "image_large": "images/large/TH411.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=38",
@@ -559,7 +829,17 @@
     204,
     125
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9743,
+     1.0078,
+     0.9983
+    ],
+    "contrast": 6.12,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 200,
+    "contrast_res_factor": 0.953
+   },
    "image": "images/TH421.jpg",
    "image_large": "images/large/TH421.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=26",
@@ -578,7 +858,17 @@
     163,
     71
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0005,
+     1.0018,
+     0.9812
+    ],
+    "contrast": 5.97,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH431.jpg",
    "image_large": "images/large/TH431.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=44",
@@ -597,7 +887,17 @@
     212,
     180
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0117,
+     0.9971,
+     0.9945
+    ],
+    "contrast": 6.79,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 204,
+    "contrast_res_factor": 0.956
+   },
    "image": "images/TH441.jpg",
    "image_large": "images/large/TH441.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=49",
@@ -616,7 +916,17 @@
     89,
     74
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9556,
+     1.0142,
+     0.9906
+    ],
+    "contrast": 9.49,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH451.jpg",
    "image_large": "images/large/TH451.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=50",
@@ -635,7 +945,17 @@
     70,
     50
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9936,
+     1.0026,
+     0.9934
+    ],
+    "contrast": 6.82,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 204,
+    "contrast_res_factor": 0.956
+   },
    "image": "images/TH452.jpg",
    "image_large": "images/large/TH452.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=51",
@@ -654,7 +974,17 @@
     217,
     218
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9711,
+     1.0088,
+     0.9977
+    ],
+    "contrast": 5.88,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH511.jpg",
    "image_large": "images/large/TH511.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=46",
@@ -673,7 +1003,17 @@
     196,
     193
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.004,
+     0.9989,
+     0.9993
+    ],
+    "contrast": 8.01,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 200,
+    "contrast_res_factor": 0.953
+   },
    "image": "images/TH512.jpg",
    "image_large": "images/large/TH512.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=45",
@@ -692,7 +1032,17 @@
     193,
     176
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9879,
+     1.0068,
+     0.9681
+    ],
+    "contrast": 5.09,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 204,
+    "contrast_res_factor": 0.956
+   },
    "image": "images/TH513.jpg",
    "image_large": "images/large/TH513.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=48",
@@ -711,7 +1061,17 @@
     170,
     194
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9896,
+     1.0049,
+     0.9816
+    ],
+    "contrast": 5.57,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 201,
+    "contrast_res_factor": 0.954
+   },
    "image": "images/TH514.jpg",
    "image_large": "images/large/TH514.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=47",
@@ -730,7 +1090,17 @@
     24,
     138
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0851,
+     0.9331,
+     1.4119
+    ],
+    "contrast": 5.77,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH521.jpg",
    "image_large": "images/large/TH521.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=52",
@@ -749,7 +1119,17 @@
     55,
     67
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.985,
+     1.0055,
+     0.9897
+    ],
+    "contrast": 5.52,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 200,
+    "contrast_res_factor": 0.953
+   },
    "image": "images/TH532.jpg",
    "image_large": "images/large/TH532.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=59",
@@ -768,7 +1148,17 @@
     40,
     66
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0025,
+     0.9715,
+     1.2752
+    ],
+    "contrast": 6.98,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH533.jpg",
    "image_large": "images/large/TH533.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=55",
@@ -787,7 +1177,17 @@
     57,
     102
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9775,
+     0.9819,
+     1.2457
+    ],
+    "contrast": 6.85,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH534.jpg",
    "image_large": "images/large/TH534.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=53",
@@ -806,7 +1206,17 @@
     54,
     93
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9594,
+     1.0007,
+     1.1128
+    ],
+    "contrast": 7.24,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH535.jpg",
    "image_large": "images/large/TH535.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=54",
@@ -825,7 +1235,17 @@
     104,
     70
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9877,
+     1.0062,
+     0.9747
+    ],
+    "contrast": 5.28,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 204,
+    "contrast_res_factor": 0.956
+   },
    "image": "images/TH601.jpg",
    "image_large": "images/large/TH601.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=27",
@@ -844,7 +1264,17 @@
     80,
     57
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.986,
+     1.0084,
+     0.9581
+    ],
+    "contrast": 3.61,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH602.jpg",
    "image_large": "images/large/TH602.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=28",
@@ -863,7 +1293,17 @@
     56,
     42
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0296,
+     0.999,
+     0.9229
+    ],
+    "contrast": 5.33,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 205,
+    "contrast_res_factor": 0.957
+   },
    "image": "images/TH603.jpg",
    "image_large": "images/large/TH603.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=25",
@@ -882,7 +1322,17 @@
     58,
     47
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0108,
+     0.9992,
+     0.9759
+    ],
+    "contrast": 3.23,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH604.jpg",
    "image_large": "images/large/TH604.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=29",
@@ -901,7 +1351,17 @@
     42,
     37
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9994,
+     1.0004,
+     0.9975
+    ],
+    "contrast": 3.42,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 203,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH605.jpg",
    "image_large": "images/large/TH605.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=30",
@@ -920,7 +1380,17 @@
     38,
     37
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9957,
+     1.0016,
+     0.997
+    ],
+    "contrast": 3.31,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 201,
+    "contrast_res_factor": 0.954
+   },
    "image": "images/TH606.jpg",
    "image_large": "images/large/TH606.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=31",
@@ -939,7 +1409,17 @@
     28,
     30
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     0.9912,
+     1.0036,
+     0.9903
+    ],
+    "contrast": 3.75,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH997.jpg",
    "image_large": "images/large/TH997.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=61",
@@ -958,7 +1438,17 @@
     31,
     30
    ],
-   "nap": null,
+   "nap": {
+    "axis": [
+     1.0416,
+     0.9872,
+     1.0046
+    ],
+    "contrast": 4.39,
+    "contrast_source": "measured-small-frame",
+    "contrast_frame_px": 202,
+    "contrast_res_factor": 0.955
+   },
    "image": "images/TH999.jpg",
    "image_large": "images/large/TH999.jpg",
    "source": "https://mitokuya.co.jp/shop/detail.html?item_number=1&sku1=62",
